@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService{
 	
 		 
 		  if(userRepo.findByName(user.getName()) !=null) {
-			  throw  new ResourceAllReadyExist(user.getName());
+			  throw new ResourceAllReadyExist(user.getName());
 	        
 		  }
 		  if (userRepo.findByEmailId(user.getEmailId() ) !=null) {

@@ -11,7 +11,7 @@ import shreesevak.api.payloads.UserDto;
 
 public interface UserRepo extends JpaRepository<User,Integer> {
 
-	   User findByPhoneNumber(String phoneNumber);
+	  User findByPhoneNumber(String phoneNumber);
 	User findByEmailId(String emailId);
       User findByName(String name);
       List<User> findAllByStatus(String status);

@@ -1,18 +1,16 @@
 package shreesevak.api.services.impl;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import shreesevak.api.exceptions.ResourceAllReadyExist;
 import shreesevak.api.exceptions.ResourceNotFoundException;
 import shreesevak.api.model.Location;
-import shreesevak.api.model.User;
 import shreesevak.api.payloads.LocationDto;
-import shreesevak.api.payloads.UserDto;
 import shreesevak.api.repository.LocationRepo;
 import shreesevak.api.repository.UserRepo;
 import shreesevak.api.services.LocationService;
@@ -33,16 +31,19 @@ public class LocationServiceImpl implements LocationService {
 
 	@Override
 	public LocationDto createLocation(LocationDto locDto) {
+		
 		Location loc=this.dtoToLocation(locDto);
-		Location saveLoc=this.locationRepo.save(loc);
-		return locationToDto(saveLoc);
+	
+	      
+	 Location saveLoc=this.locationRepo.save(loc);
+		return this.locationToDto(saveLoc);
 	}
 
 	//Update Location 
 	@Override
 	public LocationDto updateLocation(LocationDto locDto, Integer locId) {
 	   Location loc= this.locationRepo.findById(locId).orElseThrow(()-> new ResourceNotFoundException("Location","id",locId));
-	    loc.setState(locDto.getAddress());
+	    loc.setState(locDto.getState());
 	    loc.setCity(locDto.getCity());
 	    loc.setCountry(locDto.getCountry());
 	    loc.setAddress(locDto.getAddress());
@@ -79,8 +80,9 @@ public class LocationServiceImpl implements LocationService {
 	//
 	@Override
 	public List<Location> searchLocations(String keyword) {
+	List<Location>locatinoKeyword	=locationRepo.searchLocation(keyword);
 	
-            return locationRepo.searchLocation(keyword);
+            return locatinoKeyword ;
 	}
 	
 	

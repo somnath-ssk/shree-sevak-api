@@ -31,7 +31,7 @@ public class LocationController {
 	
 	// create Location Details
 	@PostMapping("/")
-	public  ResponseEntity<LocationDto> createLocation(@RequestBody LocationDto locDto) {
+	public  ResponseEntity<LocationDto> createLocations(@RequestBody LocationDto locDto) {
 	LocationDto locDto1= this.locationService.createLocation(locDto);
 	return new ResponseEntity<>(locDto1,HttpStatus.OK);
 		
@@ -54,7 +54,7 @@ public class LocationController {
 	}
 	 
 	@PutMapping("/{locId}")
-	public ResponseEntity<LocationDto> updateLocation(@RequestBody LocationDto locDto,Integer locId){
+	public ResponseEntity<LocationDto> updateLocation(@RequestBody LocationDto locDto,@PathVariable  Integer locId){
 		  LocationDto newLocDto= locationService.updateLocation(locDto, locId);
 		return ResponseEntity.ok(newLocDto);
 	}
