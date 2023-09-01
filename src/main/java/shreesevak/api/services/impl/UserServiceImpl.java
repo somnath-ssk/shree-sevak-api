@@ -1,24 +1,16 @@
 package shreesevak.api.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-import jakarta.persistence.Query;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import shreesevak.api.exceptions.ResourceAllReadyExist;
 import shreesevak.api.exceptions.ResourceNotFoundException;
-import shreesevak.api.model.Location;
 import shreesevak.api.model.Role;
 import shreesevak.api.model.User;
 import shreesevak.api.payloads.UserDto;
@@ -41,13 +33,15 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private RoleRepo roleRepo;
-
+   
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		 User user=this.dtoToUser(userDto);
-		
 	
+		 user.setPassword(passwordEncoder.encode(user.getPassword()));
 		 
 		  if(userRepo.findByName(user.getName()) !=null) {
 			  throw new ResourceAllReadyExist(user.getName());
@@ -71,6 +65,7 @@ public class UserServiceImpl implements UserService{
 	
 		user.setUserId(userDto.getUserId());
 		user.setName(userDto.getName());
+		user.setPassword(user.getPassword());
 		user.setEmailId(userDto.getEmailId());
 		user.setPhoneNumber(userDto.getPhoneNumber());
 		user.setPhotoUrl(userDto.getPhotoUrl());
@@ -157,7 +152,8 @@ public class UserServiceImpl implements UserService{
     User updatedUser  = this.userRepo.save(user);
           return updatedUser;
 	}
-	
+
+
 	
 
 	

@@ -2,15 +2,23 @@ package shreesevak.api.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import shreesevak.api.security.JwtAuthenticationEntryPoint;
 import shreesevak.api.security.JwtAuthenticationFilter;
+import shreesevak.api.services.UserService;
 
+
+@Configuration
 public class SecurityConfig {
    
 	
@@ -20,18 +28,38 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter filter;
     
+    @Autowired 
+    private UserDetailsService userDetailsService;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     	
     	// Configuration
+    	//STATELESS - not storing anything on a servor
     	
-    	http.csrf(csrf->csrf.disable()).cors(corp->corp.disable()).authorizeHttpRequests(auth->auth.requestMatchers("/api/**").authenticated().requestMatchers("/auth/login")
-    			.permitAll()
-    			.anyRequest().authenticated()).exceptionHandling(ex->ex.authenticationEntryPoint(point)).sessionManagement(session->
+    	http.csrf(csrf->csrf.disable()).cors(corp->corp.disable()).authorizeHttpRequests(auth->auth
+    			.requestMatchers("/auth/login")
+    			.permitAll().requestMatchers("/api/users/").authenticated()
+    			).exceptionHandling(ex->ex.authenticationEntryPoint(point)).sessionManagement(session->
     			session.sessionCreationPolicy(SessionCreationPolicy.STATELESS ));
     	
     	http.addFilterBefore(filter,UsernamePasswordAuthenticationFilter.class);
     	
     	return http.build();
 	
+    }
+    
+    @Bean
+    public DaoAuthenticationProvider doDaoAuthenticationProvider() {
+    	DaoAuthenticationProvider provider =new DaoAuthenticationProvider();
+    	provider.setUserDetailsService(userDetailsService);
+    	provider.setPasswordEncoder(passwordEncoder);
+    	return provider;
+    	
+    	
+    	
     }
 }

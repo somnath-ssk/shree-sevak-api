@@ -22,7 +22,7 @@ import shreesevak.api.services.RoleService;
 import shreesevak.api.services.UserService;
 
 @RestController
-@RequestMapping("api/filter")
+@RequestMapping("/api/filter")
 public class FilterController {
 	
 	@Autowired

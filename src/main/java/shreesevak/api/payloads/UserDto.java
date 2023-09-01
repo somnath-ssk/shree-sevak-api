@@ -19,10 +19,10 @@ public class UserDto {
 	
 	
 	private int userId;
-	
 	@NotEmpty
 	@Size(min=4 , message="User Name must min 4 charactor")
 	private String name;
+	private String password;
 	
 
 	private String emailId;

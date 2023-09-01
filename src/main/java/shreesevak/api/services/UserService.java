@@ -3,12 +3,13 @@ package shreesevak.api.services;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import shreesevak.api.model.User;
 import shreesevak.api.payloads.RoleDto;
 import shreesevak.api.payloads.UserDto;
 
-public interface UserService {
+public interface UserService  {
 
 	UserDto createUser(UserDto user);
 UserDto updateUser(UserDto user,Integer userId);
