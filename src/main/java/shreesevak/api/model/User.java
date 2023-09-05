@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -22,10 +23,12 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import shreesevak.api.payloads.RoleDto;
 
 @Entity
 @Table(name="user")
@@ -38,6 +41,8 @@ public class User implements UserDetails{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
 	private String name;
+	
+	@NotEmpty
 	private String password;
 	private String emailId;
 	private String phoneNumber;
@@ -91,6 +96,11 @@ public class User implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+public void addRole(Role role) {
+	this.roles.add(role);
+}
+
 
   
 

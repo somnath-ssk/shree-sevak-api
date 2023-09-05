@@ -50,6 +50,8 @@ public class FilterController {
 		List<Location> foundLocation	=locationService.searchLocations(keyword);
 		return ResponseEntity.ok(foundLocation);
 	}
+	
+	// To search role using keyword from Role Entity properties
 	@GetMapping("/search/role")
 	public ResponseEntity<List<Role>> searchRoleByKeyword(@RequestParam("keyword") String keyword) {
 		List<Role> foundLocation	=roleService.searchRole(keyword);

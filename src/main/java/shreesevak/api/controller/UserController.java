@@ -26,7 +26,7 @@ import shreesevak.api.services.RoleService;
 import shreesevak.api.services.UserService;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
 
 	
@@ -37,7 +37,7 @@ public class UserController {
 	private RoleService roleService;
 	 //POST -create User
 	
-	@PostMapping("/") 
+	@PostMapping("/signup") 
 	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto ){
 		
 		UserDto createUserDto=this.userService.createUser(userDto);
@@ -48,7 +48,7 @@ public class UserController {
 	
 	// Assigning role to all ready present user  
 	
-	@PostMapping("/user/{userId}/assignroles")
+	@PostMapping("/{userId}/assignroles")
 	public ResponseEntity<User> assignUserRole(@PathVariable Integer userId,@RequestBody List<Integer> roleId){
 		User createdUser=this.userService.assignUserRole(userId,roleId);
 		

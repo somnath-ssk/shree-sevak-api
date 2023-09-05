@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import shreesevak.api.payloads.LocationDto;
+import shreesevak.api.payloads.UserDto;
 import shreesevak.api.services.LocationService;
 
 @RestController
@@ -58,6 +59,11 @@ public class LocationController {
 		  LocationDto newLocDto= locationService.updateLocation(locDto, locId);
 		return ResponseEntity.ok(newLocDto);
 	}
-
+	
+	// All active locations
+	@GetMapping("/active/{status}")
+	public ResponseEntity<List<LocationDto>> getAllActiveLocations(@PathVariable String status){
+		return ResponseEntity.ok(this.locationService. getAllActiveLocation(status));
+	}
 
 }

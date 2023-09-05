@@ -20,7 +20,7 @@ public class RoleDto {
 	private String status;
 	
 	
-   private UserDto user;
+ 
    
 	
 }

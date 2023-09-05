@@ -37,7 +37,7 @@ public class AuthController {
 
 	    private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-
+        
 	    @PostMapping("/login")
 	    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
 

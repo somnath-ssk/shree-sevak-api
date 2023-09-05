@@ -1,5 +1,8 @@
 package shreesevak.api.payloads;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.management.relation.Role;
 
 import jakarta.validation.constraints.Email;
@@ -38,7 +41,7 @@ public class UserDto {
 	@NotEmpty
 	private String status;
 
-  private RoleDto role;
+	private List<RoleDto>roles=new ArrayList<>();
 
 	
 }

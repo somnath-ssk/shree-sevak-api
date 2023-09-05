@@ -15,4 +15,5 @@ public interface RoleRepo extends JpaRepository<Role,Integer>{
             List<Role> findByStatus(String status);
             @Query("SELECT e FROM Role e WHERE CONCAT(e.roleId,' ', e.roleCode,' ', e.roleName,' ',e.status) LIKE %:keyword%")
             List<Role> searchRole( String keyword);
+	
 }

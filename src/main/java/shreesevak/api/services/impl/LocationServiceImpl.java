@@ -7,10 +7,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import shreesevak.api.exceptions.ResourceAllReadyExist;
 import shreesevak.api.exceptions.ResourceNotFoundException;
 import shreesevak.api.model.Location;
+import shreesevak.api.model.User;
 import shreesevak.api.payloads.LocationDto;
+import shreesevak.api.payloads.UserDto;
 import shreesevak.api.repository.LocationRepo;
 import shreesevak.api.repository.UserRepo;
 import shreesevak.api.services.LocationService;
@@ -63,6 +66,7 @@ public class LocationServiceImpl implements LocationService {
 	}
 
 	
+	//get loction by id
 	@Override
 	public LocationDto getLocationById(Integer locId) {
 		Location loc=this.locationRepo.findById(locId).orElseThrow(()-> new ResourceNotFoundException("Location", "id",locId));
@@ -70,6 +74,8 @@ public class LocationServiceImpl implements LocationService {
 		return this.locationToDto(loc);
 	}
      
+	
+	//get all location
 	@Override
 	public List<LocationDto> getAllLocations() {
 	List<Location> locList=	this.locationRepo.findAll();
@@ -77,14 +83,20 @@ public class LocationServiceImpl implements LocationService {
 		return locDtos;
 	}
 	
-	//
+	//search location
 	@Override
 	public List<Location> searchLocations(String keyword) {
 	List<Location>locatinoKeyword	=locationRepo.searchLocation(keyword);
 	
             return locatinoKeyword ;
 	}
+	//get all active locations
 	
+	public List<LocationDto> getAllActiveLocation(String status) {
+		List<Location> activeLoc= this.locationRepo.findAllByStatus(status);
+		List<LocationDto>allActiveLoc=activeLoc.stream().map(location ->this.locationToDto(location)).collect(Collectors.toList());
+		return allActiveLoc;
+	}
 	
 	
 	public Location dtoToLocation(LocationDto locDto)
@@ -97,6 +109,9 @@ public class LocationServiceImpl implements LocationService {
 		LocationDto locDto=this.modelMapper.map(loc,LocationDto.class);
 		return locDto;
 	}
+	
+
+
 
 
 	

@@ -1,8 +1,12 @@
 package shreesevak.api.services.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.hibernate.mapping.Array;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +17,7 @@ import shreesevak.api.exceptions.ResourceAllReadyExist;
 import shreesevak.api.exceptions.ResourceNotFoundException;
 import shreesevak.api.model.Role;
 import shreesevak.api.model.User;
+import shreesevak.api.payloads.RoleDto;
 import shreesevak.api.payloads.UserDto;
 import shreesevak.api.repository.LocationRepo;
 import shreesevak.api.repository.RoleRepo;
@@ -37,11 +42,22 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	
+	//sign up user 
 	@Override
 	public UserDto createUser(UserDto userDto) {
-		 User user=this.dtoToUser(userDto);
+          
+
+	 User user=this.dtoToUser(userDto);
+	      
+	 user.setPassword(passwordEncoder.encode(user.getPassword()));
 	
-		 user.setPassword(passwordEncoder.encode(user.getPassword()));
+		 Role roleUser   =  roleRepo.findByRoleName("USER");
+		 user.addRole(roleUser);
+		  
+		 
+	 
+	    
 		 
 		  if(userRepo.findByName(user.getName()) !=null) {
 			  throw new ResourceAllReadyExist(user.getName());
@@ -54,10 +70,15 @@ public class UserServiceImpl implements UserService{
 	        if (userRepo.findByPhoneNumber(user.getPhoneNumber())!= null) {
 	        	 throw new ResourceAllReadyExist(user.getPhoneNumber());
 	        }
-//	        user.setRoles(1);
+	       
+	   
+	        
 		User saveUser= this.userRepo.save(user);
+		System.out.println(saveUser.toString());
 		return this.userToDto(saveUser);
 	}
+	
+	//update user Details
 
 	@Override
 	public UserDto updateUser(UserDto userDto, Integer userId) {
@@ -70,6 +91,7 @@ public class UserServiceImpl implements UserService{
 		user.setPhoneNumber(userDto.getPhoneNumber());
 		user.setPhotoUrl(userDto.getPhotoUrl());
 		user.setProviderId(userDto.getProviderId());
+//		user.setRoles(userDto.getRoles());
 		user.setStatus(userDto.getStatus());
 		
 		
@@ -78,6 +100,7 @@ public class UserServiceImpl implements UserService{
 		return userDto1;
 	}
 
+	//get user by Id
 	@Override
 	public UserDto getUserById(Integer userId) {
 		User user=this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("user","id",userId));
@@ -86,6 +109,8 @@ public class UserServiceImpl implements UserService{
 		return this.userToDto(user);
 	}
 
+	
+	// get all users
 	@Override
 	public List<UserDto> getAllUsers() {
 	List<User> users   = this.userRepo.findAll();
@@ -101,7 +126,7 @@ public class UserServiceImpl implements UserService{
 		this.userRepo.delete(user);
 		
 	}
-  // get all active user by status 1 & o 
+  // get all active user by status 1 & 0
 	
 	@Override
 	public List<UserDto> getAllActiveUsers(String status) {
@@ -111,6 +136,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	
+	//converting dto to user
 	public User dtoToUser(UserDto userDto) {
 		User user= this.modelMapper.map(userDto,User.class);
 	
@@ -131,6 +157,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	// searching user
 	@Override
 	public List<User> searchUsers(String keyword) {
 	List<User>users1= userRepo.searchUser(keyword);
@@ -139,9 +166,12 @@ public class UserServiceImpl implements UserService{
 		
 	}
 	
-	//saving the role into user
 	
 	
+	
+	
+	
+	/// assigning user role base on all ready created user
 	@Override
 	public User assignUserRole(Integer userId, List<Integer> roleId) {
 //	  User user=userRepo.findById(userId).orElseThrow(()->new ResourceNotFoundException("user ID","id", userId));
@@ -152,6 +182,8 @@ public class UserServiceImpl implements UserService{
     User updatedUser  = this.userRepo.save(user);
           return updatedUser;
 	}
+
+
 
 
 	

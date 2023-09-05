@@ -1,6 +1,7 @@
 package shreesevak.api.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +22,7 @@ UserDto updateUser(UserDto user,Integer userId);
 	User assignUserRole(Integer userId, List<Integer> roleId);
 	List<User> searchUsers(String keyword);
 	
-
+//    @Query("select u from User u join fetch u.userRoles where u.userId=?1")
+//    Optional<User> findByUserIdRole(Integer id);
 //	User assignLocationToUser(Integer locId,Integer userId);
 }
