@@ -25,6 +25,8 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	
+	//create member
 	@PostMapping("/createmember")
 	public ResponseEntity<MemberDto> createMember(@RequestBody MemberDto memberDto ){
 	  MemberDto saveMember	=this.memberService.createMember(memberDto);
@@ -39,24 +41,30 @@ public class MemberController {
 		return new ResponseEntity<MemberDto>(saveMember,HttpStatus.CREATED);
 	}
 	
-	//update member
+	//delete member
 	@DeleteMapping("/delete-member/{memberId}")
 	public ResponseEntity<ApiResponse> deleteMember(@PathVariable Integer memberId ){
 		this.memberService.deleteMember(memberId);
 		return new ResponseEntity<ApiResponse>(new ApiResponse("member deleted succesfully ",true),HttpStatus.OK);
 	}
 	
+	//select single member
+	
 	@GetMapping("/{memberId}")
 	public ResponseEntity<MemberDto> selectSingleMember(@PathVariable Integer memberId ){
 	MemberDto memberDto	=this.memberService.getSingleMember(memberId);
 		return ResponseEntity.ok(memberDto);
 	}
+	
+	//get all user
 	@GetMapping("/all-members")
 	public ResponseEntity<List<MemberDto>> selectAllMembers() {
 		List<MemberDto>members=this.memberService.getAllMember();
 		return new ResponseEntity<List<MemberDto>>(members, HttpStatus.OK) ;
 		
 	}
+	
+	//get all active member
 	
 	@GetMapping("/active/{status}")
 public ResponseEntity<List<MemberDto>> selectAllSctiveMembers(@PathVariable String status) {
