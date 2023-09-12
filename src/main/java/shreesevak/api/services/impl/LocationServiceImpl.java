@@ -36,7 +36,18 @@ public class LocationServiceImpl implements LocationService {
 	public LocationDto createLocation(LocationDto locDto) {
 		
 		Location loc=this.dtoToLocation(locDto);
-	
+		  if(locationRepo.findByAddress(loc.getAddress()) !=null) {
+			  throw new ResourceAllReadyExist(loc.getAddress());
+	        
+		  }
+		  if(locationRepo.findByCity(loc.getCity()) !=null) {
+			  throw new ResourceAllReadyExist(loc.getCity());
+			  
+		  }
+		  if(locationRepo.findByState(loc.getState()) !=null) {
+			  throw new ResourceAllReadyExist(loc.getState());
+			  
+		  }
 	      
 	 Location saveLoc=this.locationRepo.save(loc);
 		return this.locationToDto(saveLoc);
@@ -50,7 +61,13 @@ public class LocationServiceImpl implements LocationService {
 	    loc.setCity(locDto.getCity());
 	    loc.setCountry(locDto.getCountry());
 	    loc.setAddress(locDto.getAddress());
+	    loc.setAdd1(locDto.getAdd1());
+	    loc.setAdd2(locDto.getAdd2());
+	    loc.setPincode(locDto.getPincode());
 	    loc.setDivision(locDto.getDivision());
+	    loc.setPhoneNumber(locDto.getPhoneNumber());
+	    loc.setLongitude(locDto.getLongitude());
+	    loc.setLatitude(locDto.getLatitude());
         loc.setStatus(locDto.getStatus());
       Location saveLoc=  this.locationRepo.save(loc);
        return locationToDto(saveLoc);

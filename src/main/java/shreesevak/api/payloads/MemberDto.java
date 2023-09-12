@@ -1,6 +1,9 @@
 package shreesevak.api.payloads;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -8,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import shreesevak.api.model.Baithak;
+import shreesevak.api.model.Location;
 
 
 @NoArgsConstructor
@@ -80,5 +85,7 @@ public class MemberDto {
 	private String vehicleDetails;
 	private String vehicleType;
 	private String weeklyOffs;
-
+	
+	private Location location;
+	private List<Baithak>baithaks=new ArrayList<>();
 }

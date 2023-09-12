@@ -173,15 +173,18 @@ public class UserServiceImpl implements UserService{
 	
 	/// assigning user role base on all ready created user
 	@Override
-	public User assignUserRole(Integer userId, List<Integer> roleId) {
+	public UserDto assignUserRole(Integer userId, List<Integer> roleId) {
 //	  User user=userRepo.findById(userId).orElseThrow(()->new ResourceNotFoundException("user ID","id", userId));
 	  User user=userRepo.findById(userId).get();
 //	  Role role=roleRepo.findById(roleId).orElseThrow(()->new ResourceNotFoundException("Role","id", roleId));;
 	  List<Role> roles= roleRepo.findAllById(roleId);
 	   user.setRoles(roles);
     User updatedUser  = this.userRepo.save(user);
-          return updatedUser;
+          return this.userToDto(updatedUser);
 	}
+
+	
+	
 
 
 

@@ -51,9 +51,13 @@ public class User implements UserDetails{
 	private String status;
 	
 	
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany()
 	@JoinTable(name="users_roles",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="role_id"))
 	private List<Role>roles=new ArrayList<>();
+//	
+//	@ManyToMany(fetch=FetchType.EAGER)
+//	@JoinTable(name="users_locations",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="location_id"))
+//	private List<Location>locations=new ArrayList<>();
 
 
 	@Override

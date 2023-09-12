@@ -1,6 +1,8 @@
 package shreesevak.api.services.impl;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,20 +61,23 @@ public class BaithakServiceImpl implements BaithakService{
 
 	@Override
 	public BaithakDto getSingleBiathakDetails(Integer baithakId) {
-		// TODO Auto-generated method stub
-		return null;
+		Baithak baithak=this.baithakRepo.findByBithakId(baithakId);
+		
+		return this.baithakToDto(baithak);
 	}
 
 	@Override
 	public List<BaithakDto> getAllBaithak() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Baithak> baiList=this.baithakRepo.findAll();
+		List<BaithakDto>allBaithak=  baiList.stream().map((baithak)-> this.baithakToDto(baithak)).collect(Collectors.toList());
+		return allBaithak;
 	}
 
 	
 	public List<BaithakDto> getAllActiveStatus(String status) {
-		// TODO Auto-generated method stub
-		return null;
+	List<Baithak>baithaks=this.baithakRepo.findByStatus(status);
+	List<BaithakDto>allBaithak= baithaks.stream().map((base)-> this.baithakToDto(base)).collect(Collectors.toList());
+		return allBaithak;
 	}
 	
 

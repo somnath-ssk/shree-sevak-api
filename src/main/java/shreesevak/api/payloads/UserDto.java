@@ -43,5 +43,5 @@ public class UserDto {
 
 	private List<RoleDto>roles=new ArrayList<>();
 
-	
+//	private List<Location>locations=new ArrayList<>();
 }

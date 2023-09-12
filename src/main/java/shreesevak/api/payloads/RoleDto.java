@@ -1,5 +1,8 @@
 package shreesevak.api.payloads;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -18,8 +21,8 @@ public class RoleDto {
 	private String roleCode;
 	private String roleName;
 	private String status;
-	
-	
+//	
+
  
    
 	

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,9 +23,11 @@ import shreesevak.api.model.User;
 import shreesevak.api.payloads.ApiResponse;
 import shreesevak.api.payloads.RoleDto;
 import shreesevak.api.payloads.UserDto;
+import shreesevak.api.repository.RoleRepo;
 import shreesevak.api.services.RoleService;
 import shreesevak.api.services.UserService;
 
+@CrossOrigin()
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -36,6 +39,8 @@ public class UserController {
 	@Autowired
 	private RoleService roleService;
 	 //POST -create User
+	@Autowired
+	private RoleRepo roleRepo;
 	
 	@PostMapping("/signup") 
 	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto ){
@@ -48,11 +53,11 @@ public class UserController {
 	
 	// Assigning role to all ready present user  
 	
-	@PostMapping("/{userId}/assignroles")
-	public ResponseEntity<User> assignUserRole(@PathVariable Integer userId,@RequestBody List<Integer> roleId){
-		User createdUser=this.userService.assignUserRole(userId,roleId);
+	@PutMapping("/{userId}/assignroles")
+	public ResponseEntity<UserDto> assignUserRole(@PathVariable Integer userId,@RequestBody List<Integer> roleId){
+		UserDto createdUserDto=this.userService.assignUserRole(userId,roleId);
 		
-		return new ResponseEntity<User>(createdUser,HttpStatus.CREATED);
+		return new ResponseEntity<UserDto>(createdUserDto,HttpStatus.CREATED);
 		
 	}
 	
@@ -93,6 +98,8 @@ public class UserController {
 	public ResponseEntity<List<UserDto>> getAllActiveUser(@PathVariable String status){
 		return ResponseEntity.ok(this.userService.getAllActiveUsers(status));
 	}
+	
+
 	
 //	@PutMapping("/{userId}/location/{locId}")
 //	public ResponseEntity<User> assignLocationToUser(@PathVariable Integer locId,@PathVariable Integer userId){

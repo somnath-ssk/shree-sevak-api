@@ -9,5 +9,7 @@ import java.util.List;
 public interface BaithakRepo extends JpaRepository<Baithak,Integer>{
 	
 	Baithak findByBithakId(int bithakId);
+	List<Baithak> findByStatus(String status);
+
 
 }

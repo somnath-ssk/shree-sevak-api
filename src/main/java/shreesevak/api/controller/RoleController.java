@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import shreesevak.api.payloads.RoleDto;
 import shreesevak.api.payloads.UserDto;
 import shreesevak.api.services.RoleService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/role")
 public class RoleController {
@@ -50,7 +52,7 @@ public class RoleController {
 		   RoleDto roleDto= this.roleService.getRoleById(roleId);
 		   return new ResponseEntity<RoleDto>(roleDto,HttpStatus.OK );
 	}
-	@GetMapping("/")
+	@GetMapping("/all-roles")
 	public ResponseEntity<List<RoleDto>> getAllRoles(){
 		
 		return ResponseEntity.ok(this.roleService.getAllRoles());

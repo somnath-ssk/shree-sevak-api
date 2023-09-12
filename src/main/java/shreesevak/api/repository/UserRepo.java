@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 import shreesevak.api.model.User;
 import shreesevak.api.payloads.UserDto;
+import shreesevak.api.model.Role;
+
 
 public interface UserRepo extends JpaRepository<User,Integer> {
 
@@ -17,6 +19,7 @@ public interface UserRepo extends JpaRepository<User,Integer> {
       User findByName(String name);
       List<User> findAllByStatus(String status);
       
+     
      
      
 //   @Query("SELECT u FROM User u WHERE " + "u.name LIKE CONCAT('%',:keyword,'%')"+"u.emailId LIKE CONCAT('%',:keyword,'%')"+"u.phoneNumber LIKE CONCAT('%',:keyword,'%')"+"u.status LIKE CONCAT('%',:keyword,'%')")

@@ -1,14 +1,22 @@
 package shreesevak.api.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Generated;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -68,8 +76,11 @@ private String weeklyOffs;
 //private String roles;
 //private string bithakId;
 
+@ManyToMany(mappedBy = "member" ,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+private List<Baithak>baithaks=new ArrayList<>();
 
-	
-	
-	
+@ManyToOne()
+@JoinTable(name="member_location",joinColumns=@JoinColumn(name="memberId"),inverseJoinColumns=@JoinColumn(name="locationId"))
+private Location location;
+
 }

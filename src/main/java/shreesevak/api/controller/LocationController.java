@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +20,7 @@ import shreesevak.api.payloads.LocationDto;
 import shreesevak.api.payloads.UserDto;
 import shreesevak.api.services.LocationService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/location")
 public class LocationController {
@@ -61,9 +62,11 @@ public class LocationController {
 	}
 	
 	// All active locations
-	@GetMapping("/active/{status}")
-	public ResponseEntity<List<LocationDto>> getAllActiveLocations(@PathVariable String status){
-		return ResponseEntity.ok(this.locationService. getAllActiveLocation(status));
+	@GetMapping("/status/{statustype}")
+	public ResponseEntity<List<LocationDto>> getAllActiveLocations(@PathVariable String statustype){
+		return ResponseEntity.ok(this.locationService. getAllActiveLocation(statustype));
 	}
-
+   
+	// assigning the bithak and member to the location
+	
 }

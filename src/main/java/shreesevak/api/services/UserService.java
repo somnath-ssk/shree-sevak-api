@@ -19,7 +19,7 @@ UserDto updateUser(UserDto user,Integer userId);
 	void deleteUser(Integer userId);
 	List<UserDto> getAllActiveUsers(String status);
 
-	User assignUserRole(Integer userId, List<Integer> roleId);
+	UserDto assignUserRole(Integer userId, List<Integer> roleId);
 	List<User> searchUsers(String keyword);
 	
 //    @Query("select u from User u join fetch u.userRoles where u.userId=?1")
