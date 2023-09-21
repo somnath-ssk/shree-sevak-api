@@ -86,6 +86,7 @@ public class MemberDto {
 	private String vehicleType;
 	private String weeklyOffs;
 	
-	private Location location;
-	private List<Baithak>baithaks=new ArrayList<>();
+	private Baithak baithak;
+//	private Location location;
+//	private List<Baithak>baithaks=new ArrayList<>();
 }

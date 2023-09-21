@@ -21,7 +21,7 @@ import shreesevak.api.model.User;
 public class LocationDto {
 	
 	private int locationId;
-	private String address;
+	private String locationName;
 	private String add1;
 	private String add2;
 	private String division;
@@ -45,8 +45,8 @@ public class LocationDto {
 
 //	private List<UserDto>users=new ArrayList<>();
 //	  private List<BaithakDto> baithak=new ArrayList<>();
-	
-	private List<Baithak> baithak=new ArrayList<>();
-	private List<Member>membersLoc=new ArrayList<>();
+//	
+//	private List<Baithak> baithak=new ArrayList<>();
+//	private List<Member>membersLoc=new ArrayList<>();
 	
 }

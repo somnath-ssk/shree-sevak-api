@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.persistence.PostUpdate;
+import shreesevak.api.model.Baithak;
 import shreesevak.api.payloads.BaithakDto;
 import shreesevak.api.services.BaithakService;
 
@@ -28,9 +29,7 @@ public class BaithakController {
 	
 	@PostMapping("/createbaithak")
 	public ResponseEntity<BaithakDto> createBaithaks(@RequestBody BaithakDto baithakDto){
-		System.out.println(baithakDto.toString());
-		System.out.println("conreoler");
-		System.out.println("create baithak");
+		
 	 BaithakDto saveBaithak =this.baithakService.createBaithak(baithakDto);
 	 return new ResponseEntity<BaithakDto>(saveBaithak,HttpStatus.CREATED);
 	}
@@ -60,6 +59,15 @@ public class BaithakController {
 	List<BaithakDto>activeInactive	=this.baithakService.getAllActiveStatus(statustype);
 	return ResponseEntity.ok(activeInactive);
 	
+	}
+// stroring the all baithak location and memeberDetails
+	@PostMapping("/createbaithak/{locationId}/{memberId}")
+	public ResponseEntity<Baithak> createBaithaks(@RequestBody BaithakDto baithakDto,@PathVariable Integer locationId,@PathVariable List<Integer> memberId){
+		System.out.println(baithakDto);
+		System.out.println(locationId);
+		System.out.println(memberId);
+		Baithak saveBaithak =this.baithakService.createBaithak2(baithakDto,locationId,memberId);
+	 return new ResponseEntity<Baithak>(saveBaithak,HttpStatus.CREATED);
 	}
 	
 }

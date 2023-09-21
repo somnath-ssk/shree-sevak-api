@@ -33,12 +33,12 @@ public class MemberServiceImpl implements MemberService {
 	Member member	=this.dtoToMember(memberDto);
 	
 
-	  if (memberRepo.findByEmail(member.getEmail() ) !=null) {
-            throw new ResourceAllReadyExist(member.getEmail());
-        }
-	  if (memberRepo.findByAddharNumber(member.getAddharNumber() ) !=null) {
-		  throw new ResourceAllReadyExist(member.getAddharNumber());
-	  }
+//	  if (memberRepo.findByEmail(member.getEmail() ) !=null) {
+//            throw new ResourceAllReadyExist(member.getEmail());
+//        }
+//	  if (memberRepo.findByAddharNumber(member.getAddharNumber() ) !=null) {
+//		  throw new ResourceAllReadyExist(member.getAddharNumber());
+//	  }
 
         if (memberRepo.findByPhone(member.getPhone())!= null) {
         	 throw new ResourceAllReadyExist(member.getPhone());

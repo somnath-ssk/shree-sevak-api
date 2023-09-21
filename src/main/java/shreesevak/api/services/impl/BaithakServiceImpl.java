@@ -1,5 +1,6 @@
 package shreesevak.api.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -10,8 +11,12 @@ import org.springframework.stereotype.Service;
 
 import shreesevak.api.exceptions.ResourceNotFoundException;
 import shreesevak.api.model.Baithak;
+import shreesevak.api.model.Location;
+import shreesevak.api.model.Member;
 import shreesevak.api.payloads.BaithakDto;
 import shreesevak.api.repository.BaithakRepo;
+import shreesevak.api.repository.LocationRepo;
+import shreesevak.api.repository.MemberRepo;
 import shreesevak.api.services.BaithakService;
 
 @Service
@@ -24,11 +29,21 @@ public class BaithakServiceImpl implements BaithakService{
 	@Autowired
 	private BaithakRepo baithakRepo;
 	
-	
+	@Autowired
+	private MemberRepo memberRepo;
+	@Autowired
+	private LocationRepo locationRepo;
 	@Override
 	public BaithakDto createBaithak(BaithakDto baithakDto) {
 	
-    Baithak baithak =this.dtoToBaithak(baithakDto);    
+    Baithak baithak =this.dtoToBaithak(baithakDto);
+//    Location location=locationRepo.findByLocationId(baithakDto.getLocation());
+//    
+//    baithak.setLocation(location);
+    
+//    System.out.println(members);
+    System.out.println("member detail");
+    
     Baithak saveBaithak =this.baithakRepo.save(baithak);
     System.out.println(saveBaithak);
     System.out.println("baithakserviceImpl");
@@ -45,6 +60,8 @@ public class BaithakServiceImpl implements BaithakService{
 			baithak.setFromTime(baithakDto.getFromTime());
 			baithak.setToTime(baithakDto.getToTime());
 			baithak.setStatus(baithakDto.getStatus());
+			baithak.setLocation(baithakDto.getLocation());
+			baithak.setMembers(baithakDto.getMembers());
 			return this.baithakToDto(baithak);
 		}catch (Exception e) {
 		  throw new ResourceNotFoundException("Baithak ", "Id", baithakId);
@@ -81,6 +98,25 @@ public class BaithakServiceImpl implements BaithakService{
 	}
 	
 
+
+
+	@Override
+	public Baithak createBaithak2(BaithakDto baithakDto, Integer locationId, List<Integer> memberIds) {
+		 Baithak baithak =this.dtoToBaithak(baithakDto);
+		    Location location=locationRepo.findByLocationId(locationId);
+		    
+		    baithak.setLocation(location);
+		  
+		    System.out.println("member detail");
+		    List<Member>members=memberIds.stream().map(memId->this.memberRepo.findByMemberId(memId)).collect(Collectors.toList());
+		    baithak.setMembers(members);
+		    Baithak saveBaithak =this.baithakRepo.save(baithak);
+		    System.out.println(saveBaithak.toString());
+		    System.out.println("baithakserviceImpl");
+				return saveBaithak;
+	
+	}
+	
 	public BaithakDto baithakToDto(Baithak baithak) {
 	BaithakDto baithakDto =this.modelMapper.map(baithak, BaithakDto.class);
 		return baithakDto;
@@ -90,6 +126,4 @@ public class BaithakServiceImpl implements BaithakService{
 	Baithak baithak	=this.modelMapper.map(baithakDto,Baithak.class);
 		return baithak;
 	}
-	
-	
 }

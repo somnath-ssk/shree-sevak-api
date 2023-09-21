@@ -68,7 +68,7 @@ public class MemberController {
 	
 	//get all active member
 	
-	@GetMapping("/active/{status}")
+	@GetMapping("/status/{status}")
 public ResponseEntity<List<MemberDto>> selectAllSctiveMembers(@PathVariable String status) {
 		List<MemberDto>activemembers=this.memberService.getAllActiveMemebers(status);
 		return new ResponseEntity<List<MemberDto>>(activemembers, HttpStatus.OK) ;

@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -22,6 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 
 
@@ -31,6 +34,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name="member")
+
 public class Member {
 	
 	@Id
@@ -76,11 +80,14 @@ private String weeklyOffs;
 //private String roles;
 //private string bithakId;
 
-@ManyToMany(mappedBy = "member" ,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-private List<Baithak>baithaks=new ArrayList<>();
 
-@ManyToOne()
-@JoinTable(name="member_location",joinColumns=@JoinColumn(name="memberId"),inverseJoinColumns=@JoinColumn(name="locationId"))
-private Location location;
+@ManyToOne(cascade = CascadeType.ALL)
+@JoinColumn(name = "baithak_id")
+private Baithak baithak;
+
+//@JsonBackReference
+//@ManyToOne()
+//@JoinTable(name="member_location",joinColumns=@JoinColumn(name="memberId"),inverseJoinColumns=@JoinColumn(name="locationId"))
+//private Location location;
 
 }

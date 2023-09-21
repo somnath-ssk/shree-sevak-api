@@ -3,6 +3,9 @@ package shreesevak.api.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,6 +16,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,17 +42,26 @@ public class Baithak {
 	private String fromTime;
 	private String status;
 	private String toTime;
-//	private String locationId; relation ship
-
+	
+	@OneToOne
+	@JoinColumn(name="location_id")
+	private Location location;
+	
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+  List<Member>members=new ArrayList<>();
 	
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinTable(name="location_baithak",joinColumns=@JoinColumn(name="locationId"),inverseJoinColumns=@JoinColumn(name="bithakId"))
-private Location location;
-//	
-	@ManyToMany()
-	@JoinTable(name="member_baithak",joinColumns=@JoinColumn(name="member_id"),inverseJoinColumns=@JoinColumn(name="baithak_id"))
-	private List<Member> member=new ArrayList<>();
+	
+	
+	
+	
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinTable(name="location_baithak",joinColumns=@JoinColumn(name="locationId"),inverseJoinColumns=@JoinColumn(name="bithakId"))
+//private Location location;
+////	
+//	@ManyToMany()
+//	@JoinTable(name="member_baithak",joinColumns=@JoinColumn(name="member_id"),inverseJoinColumns=@JoinColumn(name="baithak_id"))
+//	private List<Member> member=new ArrayList<>();
 //	
 	
 }

@@ -27,6 +27,6 @@ public class BaithakDto {
 		
 		
 		private Location location;
-		private List<Member> member=new ArrayList<>();
+		private List<Member>members=new ArrayList<>();
 		
 }
