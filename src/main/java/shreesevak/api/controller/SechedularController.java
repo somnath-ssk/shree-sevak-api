@@ -16,19 +16,19 @@ import shreesevak.api.payloads.SchedularDto;
 import shreesevak.api.services.ScheduleService;
 
 @RestController
-@RequestMapping("/api/schedular")
+//@RequestMapping("/api/schedular")
 public class SechedularController {
 	
-	@Autowired
-	private ScheduleService scheduleService;
-	
-	@PostMapping("/create-schedule")
-	public ResponseEntity<SchedularDto>createSchedule(@RequestBody Integer locationId,@RequestBody Integer baithakId,@RequestBody List<Integer> memberIds){
-		System.out.println(locationId.toString());
-		System.out.println(baithakId.toString());
-		System.out.println(memberIds.toString());
-		SchedularDto createdScheduleDto =this.scheduleService.createSchedule(locationId, baithakId, memberIds);
-		return new ResponseEntity<SchedularDto>(createdScheduleDto,HttpStatus.CREATED);
-	}
+//	@Autowired
+//	private ScheduleService scheduleService;
+//	
+//	@PostMapping("/create-schedule")
+//	public ResponseEntity<SchedularDto>createSchedule(@RequestBody Integer locationId,@RequestBody Integer baithakId,@RequestBody List<Integer> memberIds){
+//		System.out.println(locationId.toString());
+//		System.out.println(baithakId.toString());
+//		System.out.println(memberIds.toString());
+//		SchedularDto createdScheduleDto =this.scheduleService.createSchedule(locationId, baithakId, memberIds);
+//		return new ResponseEntity<SchedularDto>(createdScheduleDto,HttpStatus.CREATED);
+//	}
 
 }

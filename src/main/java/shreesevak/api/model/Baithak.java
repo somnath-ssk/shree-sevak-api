@@ -48,6 +48,7 @@ public class Baithak {
 	private Location location;
 	
 	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	
   List<Member>members=new ArrayList<>();
 	
 	
