@@ -25,8 +25,7 @@ public class BaithakDto {
   //    private String locationId; relation ship
 //		private LocationDto location;
 		
-		
-		private Location location;
-		private List<Member>members=new ArrayList<>();
+		private int locationId;
+		private List<Integer>memberIds;
 		
 }

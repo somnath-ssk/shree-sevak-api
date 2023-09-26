@@ -47,7 +47,7 @@ public class Baithak {
 	@JoinColumn(name="location_id")
 	private Location location;
 	
-	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy ="baithak",cascade = CascadeType.ALL)
 	
   List<Member>members=new ArrayList<>();
 	

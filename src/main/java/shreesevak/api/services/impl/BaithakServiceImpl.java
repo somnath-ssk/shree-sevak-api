@@ -1,5 +1,6 @@
 package shreesevak.api.services.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collector;
@@ -9,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import shreesevak.api.exceptions.ResourceAllReadyExist;
 import shreesevak.api.exceptions.ResourceNotFoundException;
 import shreesevak.api.model.Baithak;
 import shreesevak.api.model.Location;
@@ -51,8 +53,8 @@ public class BaithakServiceImpl implements BaithakService{
 	}
 
 	@Override
-	public BaithakDto updateBaithak(BaithakDto baithakDto, Integer baithakId) {
-	
+	public Baithak updateBaithak(BaithakDto baithakDto, Integer baithakId) {
+	        
 		try {
 			Baithak baithak  = this.baithakRepo.findByBithakId(baithakId);
 			baithak.setBaithakType(baithakDto.getBaithakType());
@@ -60,11 +62,25 @@ public class BaithakServiceImpl implements BaithakService{
 			baithak.setFromTime(baithakDto.getFromTime());
 			baithak.setToTime(baithakDto.getToTime());
 			baithak.setStatus(baithakDto.getStatus());
-			baithak.setLocation(baithakDto.getLocation());
-			baithak.setMembers(baithakDto.getMembers());
-			return this.baithakToDto(baithak);
+			//updating location
+    Location location=locationRepo.findByLocationId(baithakDto.getLocationId());
+    baithak.setLocation(location);
+     
+   
+    //updating memebers
+  List<Member>members=baithakDto.getMemberIds().stream().map(memId->this.memberRepo.findByMemberId(memId)).collect(Collectors.toList());
+  for (Member member : members) {
+	  if(members.isEmpty()) {
+			member.setBaithak(null);
+	  }
+		member.setBaithak(baithak);
+	}
+ 
+  baithak.setMembers(members);
+		Baithak updatedBaithak	=this.baithakRepo.save(baithak);
+			return updatedBaithak;
 		}catch (Exception e) {
-		  throw new ResourceNotFoundException("Baithak ", "Id", baithakId);
+		  throw new ResourceAllReadyExist("Member or location ");
 		}
 		
 	}
@@ -77,10 +93,10 @@ public class BaithakServiceImpl implements BaithakService{
 	}
 
 	@Override
-	public BaithakDto getSingleBiathakDetails(Integer baithakId) {
+	public Baithak getSingleBiathakDetails(Integer baithakId) {
 		Baithak baithak=this.baithakRepo.findByBithakId(baithakId);
 		
-		return this.baithakToDto(baithak);
+		return baithak;
 	}
 
 	@Override
@@ -101,14 +117,19 @@ public class BaithakServiceImpl implements BaithakService{
 
 
 	@Override
-	public Baithak createBaithak2(BaithakDto baithakDto, Integer locationId, List<Integer> memberIds) {
+	public Baithak createBaithak2(BaithakDto baithakDto) {
 		 Baithak baithak =this.dtoToBaithak(baithakDto);
-		    Location location=locationRepo.findByLocationId(locationId);
+		    Location location=locationRepo.findByLocationId(baithakDto.getLocationId());
 		    
 		    baithak.setLocation(location);
 		  
 		    System.out.println("member detail");
-		    List<Member>members=memberIds.stream().map(memId->this.memberRepo.findByMemberId(memId)).collect(Collectors.toList());
+		    List<Member>members=baithakDto.getMemberIds().stream().map(memId->this.memberRepo.findByMemberId(memId)).collect(Collectors.toList());
+		  
+		    for (Member member : members) {
+					member.setBaithak(baithak);
+				}
+		    
 		    baithak.setMembers(members);
 		    Baithak saveBaithak =this.baithakRepo.save(baithak);
 		    System.out.println(saveBaithak.toString());

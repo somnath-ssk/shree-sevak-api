@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import shreesevak.api.exceptions.ResourceAllReadyExist;
 import shreesevak.api.exceptions.ResourceNotFoundException;
+import shreesevak.api.model.Baithak;
 import shreesevak.api.model.Member;
 import shreesevak.api.model.Role;
 import shreesevak.api.payloads.MemberDto;
+import shreesevak.api.repository.BaithakRepo;
 import shreesevak.api.repository.MemberRepo;
 import shreesevak.api.services.MemberService;
 
@@ -26,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberRepo memberRepo;
 	
-	
+	private BaithakRepo baithakRepo;
 	//crate memeber
 	@Override
 	public MemberDto createMember(MemberDto memberDto) {
@@ -85,7 +87,9 @@ public class MemberServiceImpl implements MemberService {
 		member.setStatus(memberDto.getStatus());
 		member.setVehicleDetails(memberDto.getVehicleDetails());
 		member.setVehicleType(memberDto.getVehicleType());
-		member.setWeeklyOffs(memberDto.getWeeklyOffs());
+		int baithak=(memberDto.getMemberId());
+		Baithak baithak2=this.baithakRepo.findByBithakId(baithak);
+		member.setBaithak(baithak2);
 		Member memberUpdated=this.memberRepo.save(member);
 		
 	return this.memberToDto(memberUpdated) ;

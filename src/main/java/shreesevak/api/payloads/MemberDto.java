@@ -33,6 +33,7 @@ public class MemberDto {
 		
 		@NotEmpty
 		private String hajeriNo;
+		private String hajeriNoDetails;
 		@NotEmpty
 		private String addharNumber;
 		@NotEmpty
@@ -85,8 +86,7 @@ public class MemberDto {
 	private String vehicleDetails;
 	private String vehicleType;
 	private String weeklyOffs;
-	
-	private Baithak baithak;
+  
 //	private Location location;
 //	private List<Baithak>baithaks=new ArrayList<>();
 }

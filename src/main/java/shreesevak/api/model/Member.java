@@ -45,6 +45,7 @@ public class Member {
 	private String lastName;
 	private String email;
 	private String hajeriNo;
+	private String hajeriNoDetails;
 	private String addharNumber;
 	private String Education;
 	private String add1;
@@ -81,7 +82,7 @@ private String weeklyOffs;
 //private string bithakId;
 
 
-@ManyToOne(cascade = CascadeType.ALL)
+@ManyToOne(targetEntity = Baithak.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 @JoinColumn(name = "baithak_id")
 private Baithak baithak;
 

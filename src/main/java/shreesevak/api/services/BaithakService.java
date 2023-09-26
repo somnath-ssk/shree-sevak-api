@@ -8,11 +8,11 @@ import shreesevak.api.payloads.BaithakDto;
 public interface BaithakService  {
 
 	BaithakDto createBaithak(BaithakDto baithakDto);
-	BaithakDto updateBaithak(BaithakDto baithakDto,Integer baithakId);
+	Baithak updateBaithak(BaithakDto baithakDto,Integer baithakId);
 	void deleteBaithak(Integer baithakId);
-	BaithakDto getSingleBiathakDetails(Integer baithakId);
+	Baithak getSingleBiathakDetails(Integer baithakId);
 	List<BaithakDto> getAllBaithak();
 	List<BaithakDto>getAllActiveStatus(String status);
-	Baithak createBaithak2(BaithakDto baithakDto, Integer locationId, List<Integer> memberId);
+	Baithak createBaithak2(BaithakDto baithakDto);
 		
 }
