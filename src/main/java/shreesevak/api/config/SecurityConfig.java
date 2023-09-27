@@ -41,8 +41,8 @@ public class SecurityConfig {
     	//STATELESS - not storing anything on a servor
     	
     	http.csrf(csrf->csrf.disable()).cors(corp->corp.disable()).authorizeHttpRequests(auth->auth
-    			.requestMatchers("/auth/login","/api/role/**","/api/user/**","/api/member/**","/api/baithak/**","/api/location/**","/api/schedular/**")
-    			.permitAll()
+    			.requestMatchers("/api/role/**","/api/user/**","/api/member/**","/api/baithak/**","/api/location/**","/api/schedular/**").authenticated()
+    		.requestMatchers("/auth/login")	.permitAll().anyRequest().authenticated()
     			).exceptionHandling(ex->ex.authenticationEntryPoint(point)).sessionManagement(session->
     			session.sessionCreationPolicy(SessionCreationPolicy.STATELESS ));
     	

@@ -21,7 +21,7 @@ import shreesevak.api.model.JwtRequest;
 import shreesevak.api.model.JwtResponse;
 import shreesevak.api.security.JwtHelper;
 
-@CrossOrigin()
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -45,7 +45,7 @@ public class AuthController {
 
 	        this.doAuthenticate(request.getEmail(), request.getPassword());
 
-
+      System.out.println(request.toString());
 	        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
 	        String token = this.helper.generateToken(userDetails);
 
