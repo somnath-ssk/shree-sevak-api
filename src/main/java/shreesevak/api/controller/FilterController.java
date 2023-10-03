@@ -22,7 +22,7 @@ import shreesevak.api.services.LocationService;
 import shreesevak.api.services.RoleService;
 import shreesevak.api.services.UserService;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/filter")
 public class FilterController {

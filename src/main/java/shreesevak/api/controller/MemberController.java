@@ -19,7 +19,7 @@ import shreesevak.api.payloads.ApiResponse;
 import shreesevak.api.payloads.MemberDto;
 import shreesevak.api.services.MemberService;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin()
 @RestController
 @RequestMapping("/api/member")
 public class MemberController {

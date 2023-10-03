@@ -16,7 +16,7 @@ import shreesevak.api.model.Schedular;
 import shreesevak.api.payloads.SchedularDto;
 import shreesevak.api.services.ScheduleService;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin()
 //@RequestMapping("/api/schedular")
 public class SechedularController {
 	

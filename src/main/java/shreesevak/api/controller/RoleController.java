@@ -18,7 +18,7 @@ import shreesevak.api.payloads.RoleDto;
 import shreesevak.api.payloads.UserDto;
 import shreesevak.api.services.RoleService;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin()
 @RestController
 @RequestMapping("/api/role")
 public class RoleController {
