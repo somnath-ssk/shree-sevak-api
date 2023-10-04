@@ -21,9 +21,9 @@ import shreesevak.api.model.JwtRequest;
 import shreesevak.api.model.JwtResponse;
 import shreesevak.api.security.JwtHelper;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "*")
 public class AuthController {
 
 	

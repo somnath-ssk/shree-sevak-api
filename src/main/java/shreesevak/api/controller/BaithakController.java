@@ -19,7 +19,7 @@ import shreesevak.api.model.Baithak;
 import shreesevak.api.payloads.BaithakDto;
 import shreesevak.api.services.BaithakService;
 
-@CrossOrigin()
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/baithak")
 public class BaithakController {

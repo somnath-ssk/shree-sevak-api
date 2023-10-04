@@ -27,7 +27,7 @@ import shreesevak.api.repository.RoleRepo;
 import shreesevak.api.services.RoleService;
 import shreesevak.api.services.UserService;
 
-@CrossOrigin()
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/user")
 public class UserController {

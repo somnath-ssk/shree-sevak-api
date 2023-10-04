@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +19,7 @@ import shreesevak.api.security.JwtAuthenticationEntryPoint;
 import shreesevak.api.security.JwtAuthenticationFilter;
 import shreesevak.api.services.UserService;
 
-
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig {
    
@@ -39,11 +41,10 @@ public class SecurityConfig {
     	
     	// Configuration
     	//STATELESS - not storing anything on a servor
-    	
+//    	"/api/role/**","/api/user/**","/api/member/**","/api/baithak/**","/api/location/**","/api/schedular/**",
     	http.csrf(csrf->csrf.disable()).cors(corp->corp.disable()).authorizeHttpRequests(auth->auth
-    			.requestMatchers("/auth/login","/api/user/**")
-    			.permitAll()
-//    			"/api/role/**","/api/user/**","/api/member/**","/api/baithak/**","/api/location/**","/api/schedular/**",
+    			.requestMatchers("/auth/login","api/user/signup")
+    			.permitAll().requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
     			.anyRequest().authenticated()
     			).exceptionHandling(ex->ex.authenticationEntryPoint(point)).sessionManagement(session->
     			session.sessionCreationPolicy(SessionCreationPolicy.STATELESS ));

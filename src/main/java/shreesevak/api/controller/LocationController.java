@@ -20,7 +20,7 @@ import shreesevak.api.payloads.LocationDto;
 import shreesevak.api.payloads.UserDto;
 import shreesevak.api.services.LocationService;
 
-@CrossOrigin()
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/location")
 public class LocationController {
