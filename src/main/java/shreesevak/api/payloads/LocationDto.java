@@ -28,17 +28,13 @@ public class LocationDto {
 	private String state ;
 	private String country;
 	private String city;
-	
-	
 	@NotEmpty(message = "Pincode  is required")
-	@Pattern(regexp="^[0-4]{4}$")
+//	@Pattern(regexp="^[0-4]{4}$")
 	private String pincode;
 	
 @NotEmpty(message = "Phone number is required")
-@Pattern(regexp="^[0-9]{10}$")
+//@Pattern(regexp="^[0-9]{10}$")
 	private String phoneNumber;
-	
-
 	private String longitude;
 	private String latitude;
 	private String status;
