@@ -49,8 +49,6 @@ public class Location {
 	private String city;
 	private String pincode;
 	private String phoneNumber;
-	
-
 	private String longitude;
 	private String latitude;
 	private String status;
