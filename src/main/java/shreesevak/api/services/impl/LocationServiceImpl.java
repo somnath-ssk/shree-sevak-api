@@ -54,10 +54,27 @@ public class LocationServiceImpl implements LocationService {
 	    loc.setAdd2(locDto.getAdd2());
 	    loc.setPincode(locDto.getPincode());
 	    loc.setDivision(locDto.getDivision());
-	    loc.setPhoneNumber(locDto.getPhoneNumber());
+	  
 	    loc.setLongitude(locDto.getLongitude());
 	    loc.setLatitude(locDto.getLatitude());
         loc.setStatus(locDto.getStatus());
+        loc.setGoogleMapLink(locDto.getGoogleMapLink());
+        loc.setAdd3(locDto.getAdd3());
+        loc.setAdd4(locDto.getAdd4());
+        loc.setAdditionalInfo(locDto.getAdditionalInfo());
+        loc.setContact1Email(locDto.getContact1Email());
+        loc.setContact1Initial(locDto.getContact1Initial());
+        loc.setContact1Name(locDto.getContact1Name());
+        loc.setContact1Occupation(locDto.getContact1Occupation());
+        loc.setContact1Phone1(locDto.getContact1Phone1());
+        loc.setContact1Phone2(locDto.getContact1Phone2());
+        loc.setContact2Email(locDto.getContact2Email());
+        loc.setContact2Initial(locDto.getContact2Initial());
+        loc.setContact2Name(locDto.getContact2Name());
+        loc.setContact2Occupation(locDto.getContact2Occupation());
+        loc.setContact2Phone1(locDto.getContact2Phone1());
+        loc.setContact2Phone2(locDto.getContact2Phone2());
+        
       Location saveLoc=  this.locationRepo.save(loc);
        return locationToDto(saveLoc);
 	}

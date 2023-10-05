@@ -36,9 +36,9 @@ public class BaithakServiceImpl implements BaithakService{
 	@Autowired
 	private LocationRepo locationRepo;
 	@Override
-	public BaithakDto createBaithak(BaithakDto baithakDto) {
+	public Baithak createBaithak(Baithak baithak) {
 	
-    Baithak baithak =this.dtoToBaithak(baithakDto);
+//    Baithak baithak =this.dtoToBaithak(baithakDto);
 //    Location location=locationRepo.findByLocationId(baithakDto.getLocation());
 //    
 //    baithak.setLocation(location);
@@ -49,7 +49,7 @@ public class BaithakServiceImpl implements BaithakService{
     Baithak saveBaithak =this.baithakRepo.save(baithak);
     System.out.println(saveBaithak);
     System.out.println("baithakserviceImpl");
-		return this.baithakToDto(saveBaithak);
+		return saveBaithak;
 	}
 
 	@Override

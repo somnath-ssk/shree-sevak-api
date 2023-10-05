@@ -27,12 +27,12 @@ public class BaithakController {
 	@Autowired
 	private BaithakService baithakService;
 //	
-//	@PostMapping("/createbaithak")
-//	public ResponseEntity<BaithakDto> createBaithaks(@RequestBody BaithakDto baithakDto){
-//		
-//	 BaithakDto saveBaithak =this.baithakService.createBaithak(baithakDto);
-//	 return new ResponseEntity<BaithakDto>(saveBaithak,HttpStatus.CREATED);
-//	}
+	@PostMapping("/createbaithak")
+	public ResponseEntity<Baithak> createBaithaks(@RequestBody Baithak baithak){
+		
+	 Baithak saveBaithak =this.baithakService.createBaithak(baithak);
+	 return new ResponseEntity<Baithak>(saveBaithak,HttpStatus.CREATED);
+	}
 	
 	@PutMapping("/update-baithak/{baithakId}")
 	public ResponseEntity<Baithak>updateBaithak(@RequestBody BaithakDto baithakDto,@PathVariable Integer baithakId ){
@@ -61,11 +61,11 @@ public class BaithakController {
 	
 	}
 // stroring the all baithak location and memeberDetails
-	@PostMapping("/createbaithak/")
-	public ResponseEntity<Baithak> createBaithaks(@RequestBody BaithakDto baithakDto){
-		
-		Baithak saveBaithak =this.baithakService.createBaithak2(baithakDto);
-	 return new ResponseEntity<Baithak>(saveBaithak,HttpStatus.CREATED);
-	}
-	
+//	@PostMapping("/createbaithak/")
+//	public ResponseEntity<Baithak> createBaithaks(@RequestBody BaithakDto baithakDto){
+//		
+//		Baithak saveBaithak =this.baithakService.createBaithak2(baithakDto);
+//	 return new ResponseEntity<Baithak>(saveBaithak,HttpStatus.CREATED);
+//	}
+//	
 }
