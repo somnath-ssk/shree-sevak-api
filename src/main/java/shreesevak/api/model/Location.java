@@ -53,33 +53,33 @@ public class Location {
 //	private String status;
 
 	private String locationName;
-		private String  add1 ;
-		private String add2 ;
-		private String division ;
-		private String city ;
-		private String  state ;
-		private String country; 
-	   private int  pincode ;
+	private String  add1 ;
+	private String add2 ;
+	private String division ;
+	private String city ;
+	private String  state ;
+	private String country; 
+   private String  pincode ;
+
+	private String  latitude ;
+	private String  longitude ;
+    private String  status ;
+	private String  googleMapLink;
+	private String  add3;
+	private String  add4;
+	private String  additionalInfo;
+	private String  contact1Email ;
+	private String  contact1Initial;
+	private String  contact1Name;
+	private String  contact1Occupation;
+	private String  contact1Phone1;
+	private String  contact1Phone2;
+	private String  contact2Email;
+	private String  contact2Initial;
+	private String  contact2Name;
 	
-		private String latitude ;
-		private String longitude ;
-	    private String  status ;
-		private String  googleMapLink;
-		private String add3;
-		private String add4;
-		private String additionalInfo;
-		private String  contact1Email ;
-		private String  contact1Initial;
-		private String  contact1Name;
-		private String  contact1Occupation;
-		private String contact1Phone1;
-		private String  contact1Phone2;
-		private String  contact2Email;
-		private String contact2Initial;
-		private String contact2Name;
-		private String  contact2Occupation;
-		private String  contact2Phone1;
-		private String  contact2Phone2;
+	private String  contact2Phone1;
+	private String  contact2Phone2;
 	
 //	@ManyToMany(mappedBy = "locations")
 //	private List<User>users=new ArrayList<>();

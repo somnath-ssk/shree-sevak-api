@@ -46,7 +46,7 @@ public class LocationDto {
 	private String city ;
 	private String  state ;
 	private String country; 
-   private int  pincode ;
+   private String  pincode ;
 
 	private String  latitude ;
 	private String  longitude ;
@@ -64,7 +64,7 @@ public class LocationDto {
 	private String  contact2Email;
 	private String  contact2Initial;
 	private String  contact2Name;
-	private String  contact2Occupation;
+	
 	private String  contact2Phone1;
 	private String  contact2Phone2;
 	

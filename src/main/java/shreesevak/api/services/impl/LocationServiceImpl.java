@@ -71,7 +71,6 @@ public class LocationServiceImpl implements LocationService {
         loc.setContact2Email(locDto.getContact2Email());
         loc.setContact2Initial(locDto.getContact2Initial());
         loc.setContact2Name(locDto.getContact2Name());
-        loc.setContact2Occupation(locDto.getContact2Occupation());
         loc.setContact2Phone1(locDto.getContact2Phone1());
         loc.setContact2Phone2(locDto.getContact2Phone2());
         
