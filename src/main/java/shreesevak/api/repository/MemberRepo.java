@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import shreesevak.api.model.Member;
 import shreesevak.api.model.Role;
-import shreesevak.api.model.Schedular;
+
 
 
 public interface MemberRepo extends JpaRepository<Member,Integer> {

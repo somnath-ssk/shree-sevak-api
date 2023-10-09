@@ -17,12 +17,14 @@ import shreesevak.api.model.Member;
 @Setter
 public class SchedularDto {
 
-	
-private int scheduleId;
+	private int scheduleId;
 
-private LocationDto location1;
+	private LocationDto location;
 
-private BaithakDto baithak1;
-private List<MemberDto>members=new ArrayList<>();
+	private BaithakDto baithak;
+	private List<MemberDto> members = new ArrayList<>();
+	private String status;
+
+	private String date;
 
 }

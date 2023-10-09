@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -15,37 +16,45 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import shreesevak.api.payloads.LocationDto;
 
 
 
 @Entity
-@Table(name="schedula")
+@Table(name="scheduler")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Schedular {
+public class Scheduler {
 	
 	@Id
 	  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int scheduleId;
 	
+	private String status;
+	
+	private String date;
+	
 	@OneToOne
-	@JoinColumn(name="locationId")
-	private Location location1;
+	@JoinColumn(name="location")
+	private Location location;
 	@OneToOne
 	@JoinColumn(name="baithakId")
-	private Baithak baithak1;
+	private Baithak baithak;
+	
+	
+	@JoinTable(name="schedule_members",joinColumns = @JoinColumn(name="schedule_id"),inverseJoinColumns =@JoinColumn(name="memberId"))
 	@OneToMany
 	private List<Member>members=new ArrayList<>();
 	 
 	
 	
-	public void addBaithak(Baithak baithak1) {
-		this.baithak1=baithak1;
-		
-	}
-	public void addMembers(Member  members) {
-		this.members.add(members);
-		
-	}
+//	public void addBaithak(Baithak baithak1) {
+//		this.baithak1=baithak1;
+//		
+//	}
+//	public void addMembers(Member  members) {
+//		this.members.add(members);
+//		
+//	}
 }
