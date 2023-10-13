@@ -59,6 +59,7 @@ public class BaithakServiceImpl implements BaithakService{
 			Baithak baithak  = this.baithakRepo.findByBithakId(baithakId);
 			baithak.setBaithakType(baithakDto.getBaithakType());
 			baithak.setDayOfWeek(baithakDto.getDayOfWeek());
+			baithak.setDayOfWeek(baithakDto.getDate());
 			baithak.setFromTime(baithakDto.getFromTime());
 			baithak.setToTime(baithakDto.getToTime());
 			baithak.setStatus(baithakDto.getStatus());

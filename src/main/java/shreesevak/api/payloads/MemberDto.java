@@ -45,6 +45,8 @@ public class MemberDto {
 		@NotEmpty
 		private String city;
 		@NotEmpty
+		private String role;
+		@NotEmpty
 		private String country;
 		@Size(min=4,message = "information shuld not empty")
 		private String additionalInfo;
@@ -56,11 +58,29 @@ public class MemberDto {
 		private String googleMapLink;
 		private String initial;
 		@NotEmpty
-	private String languagesRead;
+		private String eligibleForChild;
 		@NotEmpty
-	private String languagesSpeak;
+	private String eligibleForGents;
 		@NotEmpty
-	private String languagesWrite;
+	private String eligibleForLadies;
+		@NotEmpty
+	private String marathiRead;
+		@NotEmpty
+	private String marathiSpeak;
+		@NotEmpty
+	private String marathiWrite;
+		@NotEmpty
+	private String hindiRead;
+		@NotEmpty
+	private String hindiSpeak;
+		@NotEmpty
+	private String hindiWrite;
+		@NotEmpty
+	private String englishRead;
+		@NotEmpty
+	private String englishSpeak;
+		@NotEmpty
+	private String englishWrite;
 		
 	private String longitude;
 	private String latitude;
