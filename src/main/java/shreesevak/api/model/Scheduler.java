@@ -31,9 +31,6 @@ public class Scheduler {
 	  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int scheduleId;
 	
-	private String status;
-	
-	private String date;
 	
 	@OneToOne
 	@JoinColumn(name="location")
@@ -46,7 +43,9 @@ public class Scheduler {
 	@JoinTable(name="schedule_members",joinColumns = @JoinColumn(name="schedule_id"),inverseJoinColumns =@JoinColumn(name="memberId"))
 	@OneToMany
 	private List<Member>members=new ArrayList<>();
-	 
+	private String status;
+	
+	private String date;
 	
 	
 //	public void addBaithak(Baithak baithak1) {

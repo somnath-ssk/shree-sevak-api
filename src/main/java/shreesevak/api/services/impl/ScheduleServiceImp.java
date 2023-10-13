@@ -54,7 +54,8 @@ public class ScheduleServiceImp implements ScheduleService {
 
 		List<Member> members = this.memberRepo.findAllById(schedularFrontendDto.getMembersId());
 		schedule.setMembers(members);
-
+        schedule.setDate(schedularFrontendDto.getDate());
+        schedule.setStatus(schedularFrontendDto.getStatus());
 		Scheduler updatedMemeber = this.scheduleRepo.save(schedule);
 		return this.scheduleToDto(schedule);
 
