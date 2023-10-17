@@ -39,6 +39,7 @@ public class Baithak {
    private int bithakId;
 	private String baithakType;
 	private String dayOfWeek;
+	private String date;
 	private String fromTime;
 	private String status;
 	private String toTime;

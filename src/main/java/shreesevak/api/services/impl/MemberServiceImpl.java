@@ -42,9 +42,9 @@ public class MemberServiceImpl implements MemberService {
 //		  throw new ResourceAllReadyExist(member.getAddharNumber());
 //	  }
 
-        if (memberRepo.findByPhone(member.getPhone())!= null) {
-        	 throw new ResourceAllReadyExist(member.getPhone());
-        }
+//        if (memberRepo.findByPhone(member.getPhone())!= null) {
+//        	 throw new ResourceAllReadyExist(member.getPhone());
+//        }
 	   Member updatedMember= this.memberRepo.save(member);
 		return this.memberToDto(updatedMember);
 	}
@@ -67,13 +67,23 @@ public class MemberServiceImpl implements MemberService {
 		member.setDOB(memberDto.getDOB());
 		member.setEducation(memberDto.getEducation());
 		member.setEmail(memberDto.getEmail());
+		member.setRole(memberDto.getRole());
 		member.setGender(memberDto.getGender());
 		member.setGoogleMapLink(memberDto.getGoogleMapLink());
 		member.setHajeriNo(memberDto.getHajeriNo());
 		member.setInitial(memberDto.getInitial());
-		member.setLanguagesRead(memberDto.getLanguagesRead());
-		member.setLanguagesSpeak(memberDto.getLanguagesSpeak());
-		member.setLanguagesWrite(memberDto.getLanguagesWrite());
+		member.setEligibleForChild(memberDto.getEligibleForChild());
+		member.setEligibleForGents(memberDto.getEligibleForGents());
+		member.setEligibleForLadies(memberDto.getEligibleForLadies());
+		member.setMarathiRead(memberDto.getMarathiRead());
+		member.setMarathiSpeak(memberDto.getMarathiSpeak());
+		member.setMarathiWrite(memberDto.getMarathiWrite());
+		member.setHindiRead(memberDto.getHindiRead());
+		member.setHindiSpeak(memberDto.getHindiSpeak());
+		member.setHindiWrite(memberDto.getHindiWrite());
+		member.setEnglishRead(memberDto.getEnglishRead());
+		member.setEnglishSpeak(memberDto.getEnglishSpeak());
+		member.setEnglishWrite(memberDto.getEnglishWrite());
 		member.setLastName(memberDto.getLastName());
 		member.setMiddleName(memberDto.getMiddleName());
 		member.setMobile(memberDto.getMobile());
