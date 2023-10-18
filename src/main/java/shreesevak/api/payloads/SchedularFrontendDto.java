@@ -14,8 +14,9 @@ public class SchedularFrontendDto {
 
 	private int locationId;
 	private int baithakId;
+	private int vachanGhenara;
+	private int hajeriGhenara;
 
-	private List<Integer> membersId = new ArrayList<>();
 	private String status;
 
 	private String date;

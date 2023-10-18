@@ -15,8 +15,8 @@ public interface ScheduleService {
 
 
 	List<SchedularDto> getAllSchedule();
-
-	SchedularDto updateSchedule(SchedularFrontendDto schedularFrontendDto, Integer schedularId);
+//
+//	SchedularDto updateSchedule(SchedularFrontendDto schedularFrontendDto);
 
 
 

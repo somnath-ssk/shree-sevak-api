@@ -1,7 +1,9 @@
 package shreesevak.api.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +30,16 @@ public class SechedularController {
 	private ScheduleService scheduleService;
 	
    @PostMapping("/create-schedule")
-   public ResponseEntity<SchedularDto>createSchedules(@RequestBody SchedularFrontendDto schedularFrontendDto){
-	   SchedularDto schedularDto = this.scheduleService.createSchedule(schedularFrontendDto);
-	   return new ResponseEntity<SchedularDto>(schedularDto,HttpStatus.CREATED);
+   public ResponseEntity<List<SchedularDto>>createSchedules(@RequestBody List<SchedularFrontendDto> schedularFrontendDto ){
+	   System.out.println(schedularFrontendDto.toString());
+	   List<SchedularDto> schedularDtos = new ArrayList<>();
+	    for (SchedularFrontendDto frontendDto : schedularFrontendDto) {
+	        SchedularDto schedularDto = this.scheduleService.createSchedule(frontendDto);
+	        schedularDtos.add(schedularDto);
+	    }
+
+	    return new ResponseEntity<>(schedularDtos, HttpStatus.CREATED);
+	
    }
 
    @GetMapping("/{scheduleId}")
@@ -46,12 +55,19 @@ public class SechedularController {
 	   return new ResponseEntity<List<SchedularDto>>(schedularDtos,HttpStatus.OK);
    }
    
-   @PutMapping("/{scheduleId}")
-   public ResponseEntity<SchedularDto> updateSchedule(@RequestBody SchedularFrontendDto schedularFrontendDto,@PathVariable Integer scheduleId) {
-	   
-	   SchedularDto schedularDto   = this.scheduleService.updateSchedule(schedularFrontendDto,scheduleId);
-	  return new ResponseEntity<SchedularDto>(schedularDto,HttpStatus.OK);
-   }
+//   @PutMapping("/update-schedule")
+//   public ResponseEntity<List<SchedularDto>> updateSchedule(@RequestBody List<SchedularFrontendDto> schedularFrontendDto) {
+//	   
+//	   System.out.println(schedularFrontendDto.toString());
+//	   List<SchedularDto> schedularDtos = new ArrayList<>();
+//	    for (SchedularFrontendDto frontendDto : schedularFrontendDto) {
+//	        SchedularDto schedularDto = this.scheduleService.updateSchedule(frontendDto);
+//	        schedularDtos.add(schedularDto);
+//	    }
+//
+//	    return new ResponseEntity<>(schedularDtos, HttpStatus.CREATED);
+//	
+//   }
    
    
    } 

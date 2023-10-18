@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -41,7 +42,7 @@ public class Scheduler {
 	
 	
 	@JoinTable(name="schedule_members",joinColumns = @JoinColumn(name="schedule_id"),inverseJoinColumns =@JoinColumn(name="memberId"))
-	@OneToMany
+	@ManyToMany
 	private List<Member>members=new ArrayList<>();
 	private String status;
 	
