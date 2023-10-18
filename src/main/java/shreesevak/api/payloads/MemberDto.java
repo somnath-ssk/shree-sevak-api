@@ -58,29 +58,18 @@ public class MemberDto {
 		private String googleMapLink;
 		private String initial;
 		@NotEmpty
-		private String eligibleForChild;
-		@NotEmpty
-	private String eligibleForGents;
-		@NotEmpty
-	private String eligibleForLadies;
-		@NotEmpty
-	private String marathiRead;
-		@NotEmpty
-	private String marathiSpeak;
-		@NotEmpty
-	private String marathiWrite;
-		@NotEmpty
-	private String hindiRead;
-		@NotEmpty
-	private String hindiSpeak;
-		@NotEmpty
-	private String hindiWrite;
-		@NotEmpty
-	private String englishRead;
-		@NotEmpty
-	private String englishSpeak;
-		@NotEmpty
-	private String englishWrite;
+		private boolean eligibleForChild;
+		private boolean eligibleForGents;
+		private boolean eligibleForLadies;
+	private boolean marathiSpeak;
+	private boolean marathiWrite;
+	private boolean marathiRead;
+	private boolean hindiSpeak;
+	private boolean hindiWrite;
+	private boolean hindiRead;
+	private boolean englishSpeak;
+	private boolean englishWrite;
+	private boolean englishRead;
 		
 	private String longitude;
 	private String latitude;
