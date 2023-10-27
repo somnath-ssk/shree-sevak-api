@@ -9,12 +9,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import shreesevak.api.model.User;
 import shreesevak.api.payloads.RoleDto;
 import shreesevak.api.payloads.UserDto;
+import shreesevak.api.payloads.UserFrontEndData;
 
 public interface UserService  {
 
-	UserDto createUser(UserDto user);
+	UserDto createUser(UserFrontEndData user);
 UserDto updateUser(UserDto user,Integer userId);
 	UserDto getUserById(Integer userId);
+	UserDto getUserByUserName(String userName);
 	List<UserDto> getAllUsers();
 	void deleteUser(Integer userId);
 	List<UserDto> getAllActiveUsers(String status);

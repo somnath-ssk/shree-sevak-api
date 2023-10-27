@@ -62,12 +62,10 @@ public class ScheduleServiceImp implements ScheduleService {
 		schedule.setMembers(members);
 		schedule.setDate(schedularFrontendDto.getDate());
 		schedule.setStatus(schedularFrontendDto.getStatus());
-		if (!this.scheduleRepo.existsByDateAndLocation(schedule.getDate(), schedule.getLocation())) {
+		if (!this.scheduleRepo.existsByLocationAndDateAndBaithak(schedule.getLocation(), schedule.getDate(), schedule.getBaithak())) {
 			this.scheduleRepo.save(schedule);
 			return this.scheduleToDto(schedule);
 		} 
-		
-		this.scheduleRepo.save(schedule);
 		return this.scheduleToDto(schedule);
 		
 
@@ -90,29 +88,58 @@ public class ScheduleServiceImp implements ScheduleService {
 		return schedularList;
 	}
 
-//	@Override
-//	public SchedularDto updateSchedule(SchedularFrontendDto schedularFrontendDto) {
-//		Scheduler schedular = this.scheduleRepo.findById(scheduleId)
-//				.orElseThrow(() -> new ResourceNotFoundException("Schedule", "Id", scheduleId));
-//
-//		Location location = this.locationRepo.findById(schedularFrontendDto.getLocationId()).orElseThrow(
-//				() -> new ResourceNotFoundException("location", "Id", schedularFrontendDto.getLocationId()));
-//		Baithak baithak = this.baithakRepo.findById(schedularFrontendDto.getBaithakId()).orElseThrow(
-//				() -> new ResourceNotFoundException("location", "Id", schedularFrontendDto.getLocationId()));
-//		Member members1 = this.memberRepo.findByMemberId(schedularFrontendDto.getVachanGhenara());
-//		Member members2 = this.memberRepo.findByMemberId(schedularFrontendDto.getHajeriGhenara());
-//
-//		List<Member> members = new ArrayList<Member>();
-//		members.add(members1);
-//		members.add(members2);
-//		schedular.setMembers(members);
-//		schedular.setLocation(location);
-//		schedular.setBaithak(baithak);
-//		schedular.setMembers(members);
-//		schedular.setStatus(schedularFrontendDto.getStatus());
-//		schedular.setDate(schedularFrontendDto.getDate());
-//		return this.scheduleToDto(schedular);
-//	}
+	@Override
+	public SchedularDto updateSchedule(SchedularFrontendDto schedularFrontendDto) {
+		Scheduler schedular = this.scheduleRepo.findById(schedularFrontendDto.getScheduleId())
+				.orElseThrow(() -> new ResourceNotFoundException("Schedule", "Id", schedularFrontendDto.getScheduleId()));
+
+	Location location = this.locationRepo.findById(schedularFrontendDto.getLocationId()).orElseThrow(
+			() -> new ResourceNotFoundException("location", "Id", schedularFrontendDto.getLocationId()));
+		Baithak baithak = this.baithakRepo.findById(schedularFrontendDto.getBaithakId()).orElseThrow(
+				() -> new ResourceNotFoundException("baithak", "Id", schedularFrontendDto.getBaithakId()));
+		Member members1 = this.memberRepo.findByMemberId(schedularFrontendDto.getVachanGhenara());
+	Member members2 = this.memberRepo.findByMemberId(schedularFrontendDto.getHajeriGhenara());
+
+		List<Member> members = new ArrayList<Member>();
+		members.add(members1);
+		members.add(members2);
+		schedular.setMembers(members);
+		schedular.setLocation(location);
+		schedular.setBaithak(baithak);
+		schedular.setMembers(members);
+		schedular.setStatus(schedularFrontendDto.getStatus());
+		schedular.setDate(schedularFrontendDto.getDate());
+		this.scheduleRepo.save(schedular);
+	return this.scheduleToDto(schedular);
+}
+	
+	@Override
+	public Scheduler getScheduleByDateLocationBaithak(String date, Integer locId, Integer baithakId) {
+		
+
+		Scheduler schedular=this.scheduleRepo.findByDateAndLocationIdBaithak(date, locId,baithakId);
+		if(schedular==null) {
+			throw new RuntimeException("Schedule not found with"+date+"location Id"+locId);
+		}else {
+//			System.out.println(schedular);
+			System.out.println("inside getScheduleByDateLocBaithak" );
+			return schedular;
+		}
+	
+	}
+	
+	@Override
+	public List<Scheduler> getScheduleByMonthAndYear(String month, String year) {
+		List<Scheduler> schedules =this.scheduleRepo.findByMonthAndYear(month, year);
+		if(schedules==null) {
+			throw new RuntimeException("Schedule not found with month "+month+"And year "+year);
+		}else {
+//			System.out.println(schedules);
+			System.out.println("inside getScheduleByDateLocBaithak" );
+			return schedules;
+		}
+	
+	}
 
 	// converting dto to user
 	public Scheduler dtoToUser(SchedularDto schedularDto) {
@@ -127,5 +154,9 @@ public class ScheduleServiceImp implements ScheduleService {
 
 		return schedularDto;
 	}
+
+
+
+	
 
 }

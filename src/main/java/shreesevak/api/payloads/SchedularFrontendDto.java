@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SchedularFrontendDto {
-
+  private int scheduleId;
 	private int locationId;
 	private int baithakId;
 	private int vachanGhenara;

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import shreesevak.api.model.JwtRequest;
 import shreesevak.api.model.JwtResponse;
+import shreesevak.api.model.User;
+import shreesevak.api.repository.UserRepo;
 import shreesevak.api.security.JwtHelper;
 
 @RestController
@@ -33,7 +35,9 @@ public class AuthController {
 	    @Autowired
 	    private AuthenticationManager manager;
 
-
+        @Autowired
+        private UserRepo userRepo;
+        
 	    @Autowired
 	    private JwtHelper helper;
 
@@ -45,14 +49,18 @@ public class AuthController {
 
 	        this.doAuthenticate(request.getEmail(), request.getPassword());
 
-      System.out.println(request.toString());
+
 	        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
 	        String token = this.helper.generateToken(userDetails);
-
+         
+	      
 	        JwtResponse response = JwtResponse.builder()
 	                .jwtToken(token)
-	                .username(userDetails.getUsername()).build();
-	        return new ResponseEntity<>(response, HttpStatus.OK);
+	                .username(userDetails.getUsername())
+	               
+	                .build();
+	   
+	        return new ResponseEntity<>(response,HttpStatus.OK);
 	    }
 
 	    private void doAuthenticate(String email, String password) {

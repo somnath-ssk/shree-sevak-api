@@ -34,7 +34,7 @@ public class UserDto {
 	@Pattern(regexp="^\\\\d{10}$")
 	private String phoneNumber;
 	
-	private String providerId;
+	
 	
 	private String photoUrl;
 	

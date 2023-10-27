@@ -37,7 +37,7 @@ public class Scheduler {
 	@JoinColumn(name="location")
 	private Location location;
 	@OneToOne
-	@JoinColumn(name="baithakId")
+	@JoinColumn(name="baithak")
 	private Baithak baithak;
 	
 	

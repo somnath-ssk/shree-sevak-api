@@ -46,7 +46,7 @@ public class User implements UserDetails{
 	private String password;
 	private String emailId;
 	private String phoneNumber;
-	private String providerId;
+	
 	private String photoUrl;
 	private String status;
 	

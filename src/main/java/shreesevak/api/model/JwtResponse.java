@@ -1,5 +1,7 @@
 package shreesevak.api.model;
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,4 +19,6 @@ public class JwtResponse {
     
 	private String jwtToken;
 	private String username;
+	
+	
 }
