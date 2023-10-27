@@ -61,8 +61,8 @@ public class AuthController {
 	                .build();
 	   
 	        return new ResponseEntity<>(response,HttpStatus.OK);
-	    }
-
+	    }		
+                                                                  	
 	    private void doAuthenticate(String email, String password) {
 
 	        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);

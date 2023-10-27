@@ -23,7 +23,7 @@ public interface ScheduleService {
 
 	Scheduler getScheduleByDateLocationBaithak(String date, Integer locId,Integer baithakId);
 
-	List<Scheduler> getScheduleByMonthAndYear(String month, String year);
+	List<Scheduler> getScheduleByMonthAndYearAndBaithak(String month, String year,Integer baithakId);
 
 //	void createSchedule(SchedularFrontendDto schedularFrontendDto);
 }

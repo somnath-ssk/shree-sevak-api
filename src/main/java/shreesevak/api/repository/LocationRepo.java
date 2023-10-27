@@ -20,11 +20,19 @@ public interface LocationRepo extends JpaRepository<Location,Integer> {
 	   List<Location> findByLocationName(String locationName);
 	   Location  findByLocationId(Location location);
 	   Location  findByLocationId(Integer locationId);
+	    
+	   @Query("SELECT e FROM Location e ORDER BY e.locationId DESC")
+	   List<Location>  findAllByOrderDesc();
       
 	  @Query("SELECT e FROM Location e WHERE CONCAT(e.locationId,' ',e.locationName,' ',e.division ,' ',e.state,' ',e.division ,' ',e.state ,' ',e.country ,' ',e. city ,' ',e.status) LIKE %:keyword%")
      List<Location> searchLocation( String keyword);
+	  
+//	  @Query("SELECT E FROM Location e WHERE e.status ORDER BY e.locationId DESC ")
+	
 	List<Location> findAllByStatus(String status);
 	Location findByState(String state);
+	 @Query("SELECT l.status FROM Location l WHERE l.status = :status ORDER BY l.locationId DESC")
+	List<Location> findStatusByOrderByLocationIdDesc(String status);
 	
         
 

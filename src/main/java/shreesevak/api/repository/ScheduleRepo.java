@@ -15,6 +15,7 @@ import shreesevak.api.model.Location;
 public interface ScheduleRepo extends JpaRepository<Scheduler, Integer> {
 
 	Scheduler findByScheduleId(Integer scheduleId);
+	
 
 	boolean existsByDateAndLocation(String date, Location location);
 
@@ -26,8 +27,9 @@ public interface ScheduleRepo extends JpaRepository<Scheduler, Integer> {
 	Scheduler findByDateAndLocationIdBaithak(@Param("dateParam") String date, @Param("locationIdParam") Integer locationId,
 			@Param("baithakIdParam") Integer bithakId);
 	
-	@Query("SELECT s FROM Scheduler s WHERE s.date LIKE CONCAT('%', :dynamicMonth, '% ', :dynamicYear)" )
-	List<Scheduler> findByMonthAndYear(@Param("dynamicMonth") String dynamicMonth,@Param("dynamicYear") String dynamicYear);
-
-
+	@Query("SELECT s FROM Scheduler s WHERE s.date LIKE CONCAT('%', :dynamicMonth, '% ', :dynamicYear) AND s.baithak.bithakId= :baithakIdParam" )
+	List<Scheduler> findByMonthAndYearAndBaithak(@Param("dynamicMonth") String dynamicMonth,@Param("dynamicYear") String dynamicYear,@Param("baithakIdParam") Integer bithakId );
+//  
+//    @Query("SELECT s FROM Scheduler s ORDER BY s.sched")
+//	List<Scheduler> findAllorderByDesc();
 }

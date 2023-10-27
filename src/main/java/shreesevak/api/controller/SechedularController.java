@@ -71,6 +71,8 @@ public class SechedularController {
 				SchedularDto schedularDto = this.scheduleService.updateSchedule(frontendDto);
 				schedularDtos.add(schedularDto);
 
+			}else {
+				SchedularDto schedularDto = this.scheduleService.createSchedule(frontendDto);
 			}
 		}
 
@@ -86,11 +88,11 @@ public class SechedularController {
 		return new ResponseEntity<Scheduler>(schedular, HttpStatus.OK);
 	}
 	
-	@GetMapping("/getByMonthAndYear/{month}/{year}")
-	public ResponseEntity<List<Scheduler>> getByDateLocBai(@PathVariable String month, @PathVariable String year) {
+	@GetMapping("/getByMonthAndYearAndBaithak/{month}/{year}/{baithakId}")
+	public ResponseEntity<List<Scheduler>> getByDateLocBai(@PathVariable String month, @PathVariable String year ,@PathVariable Integer baithakId) {
 		
 		System.out.println("inside getByDateLoc");
-		List<Scheduler> scheduls = this.scheduleService.getScheduleByMonthAndYear(month,year);
+		List<Scheduler> scheduls = this.scheduleService.getScheduleByMonthAndYearAndBaithak(month, year, baithakId);
 		return new ResponseEntity<List<Scheduler>>(scheduls, HttpStatus.OK);
 	}
 

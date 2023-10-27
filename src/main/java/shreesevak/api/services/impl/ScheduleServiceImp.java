@@ -118,19 +118,22 @@ public class ScheduleServiceImp implements ScheduleService {
 		
 
 		Scheduler schedular=this.scheduleRepo.findByDateAndLocationIdBaithak(date, locId,baithakId);
-		if(schedular==null) {
-			throw new RuntimeException("Schedule not found with"+date+"location Id"+locId);
-		}else {
-//			System.out.println(schedular);
-			System.out.println("inside getScheduleByDateLocBaithak" );
-			return schedular;
-		}
+		return schedular;
+//		if(schedular==null) {
+////			throw new RuntimeException("Schedule not found with"+date+"location Id"+locId);
+//				return schedular;
+//			
+//		}else {
+////			System.out.println(schedular);
+//			System.out.println("inside getScheduleByDateLocBaithak" );
+//			return null;
+//		}
 	
 	}
 	
 	@Override
-	public List<Scheduler> getScheduleByMonthAndYear(String month, String year) {
-		List<Scheduler> schedules =this.scheduleRepo.findByMonthAndYear(month, year);
+	public List<Scheduler> getScheduleByMonthAndYearAndBaithak(String month, String year,Integer baithakId) {
+		List<Scheduler> schedules =this.scheduleRepo.findByMonthAndYearAndBaithak(month, year, baithakId);
 		if(schedules==null) {
 			throw new RuntimeException("Schedule not found with month "+month+"And year "+year);
 		}else {

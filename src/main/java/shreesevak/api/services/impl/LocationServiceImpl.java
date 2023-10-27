@@ -100,7 +100,7 @@ public class LocationServiceImpl implements LocationService {
 	//get all location
 	@Override
 	public List<LocationDto> getAllLocations() {
-	List<Location> locList=	this.locationRepo.findAll();
+	List<Location> locList=	this.locationRepo.findAllByOrderDesc();
 	List<LocationDto>locDtos =  locList.stream().map(loc->this.locationToDto(loc)).collect(Collectors.toList());
 		return locDtos;
 	}
