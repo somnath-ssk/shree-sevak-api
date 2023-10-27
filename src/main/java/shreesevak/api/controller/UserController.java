@@ -23,6 +23,7 @@ import shreesevak.api.model.User;
 import shreesevak.api.payloads.ApiResponse;
 import shreesevak.api.payloads.RoleDto;
 import shreesevak.api.payloads.UserDto;
+import shreesevak.api.payloads.UserFrontEndData;
 import shreesevak.api.repository.RoleRepo;
 import shreesevak.api.services.RoleService;
 import shreesevak.api.services.UserService;
@@ -43,9 +44,9 @@ public class UserController {
 	private RoleRepo roleRepo;
 	
 	@PostMapping("/signup") 
-	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto ){
+	public ResponseEntity<UserDto> createUser(@RequestBody UserFrontEndData frontEndData ){
 		
-		UserDto createUserDto=this.userService.createUser(userDto);
+		UserDto createUserDto=this.userService.createUser(frontEndData);
 		
 		return  new ResponseEntity<>(createUserDto,HttpStatus.CREATED);
 		
