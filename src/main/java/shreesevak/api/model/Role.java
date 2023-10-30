@@ -3,6 +3,8 @@ package shreesevak.api.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,6 +34,7 @@ private String roleCode;
 private	String roleName;
 private	String status;
 //
+@JsonBackReference
 @ManyToMany(mappedBy = "roles",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 private List<User>users=new ArrayList<>();
 

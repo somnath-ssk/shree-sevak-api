@@ -8,9 +8,12 @@ import java.util.Set;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,6 +27,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +37,7 @@ import shreesevak.api.payloads.RoleDto;
 @Entity
 @Table(name="user")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class User implements UserDetails{
@@ -51,6 +56,8 @@ public class User implements UserDetails{
 	private String status;
 	
 	
+	
+	 @JsonManagedReference
 	@ManyToMany()
 	@JoinTable(name="users_roles",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="role_id"))
 	private List<Role>roles=new ArrayList<>();
@@ -65,6 +72,15 @@ public class User implements UserDetails{
 		// TODO Auto-generated method stub
 		return null;
 	}
+//	 @Override
+//	    public Collection<? extends GrantedAuthority> getAuthorities() {
+//	        // Convert user roles to GrantedAuthority
+//	        List<GrantedAuthority> authorities = new ArrayList<>();
+//	        for (Role role : roles) {
+//	            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+//	        }
+//	        return authorities;
+//	    }
 
 
 	@Override

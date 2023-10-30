@@ -28,56 +28,52 @@ import shreesevak.api.security.JwtHelper;
 @CrossOrigin(origins = "*")
 public class AuthController {
 
-	
-	  @Autowired
-	    private UserDetailsService userDetailsService;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
-	    @Autowired
-	    private AuthenticationManager manager;
+	@Autowired
+	private AuthenticationManager manager;
 
-        @Autowired
-        private UserRepo userRepo;
-        
-	    @Autowired
-	    private JwtHelper helper;
+	@Autowired
+	private UserRepo userRepo;
 
-	    private Logger logger = LoggerFactory.getLogger(AuthController.class);
+	@Autowired
+	private JwtHelper helper;
 
-        
-	    @PostMapping("/login")
-	    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
+	private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-	        this.doAuthenticate(request.getEmail(), request.getPassword());
+	@PostMapping("/login")
+	public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
 
+		this.doAuthenticate(request.getEmail(), request.getPassword());
 
-	        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-	        String token = this.helper.generateToken(userDetails);
-         
-	      
-	        JwtResponse response = JwtResponse.builder()
-	                .jwtToken(token)
-	                .username(userDetails.getUsername())
-	               
-	                .build();
-	   
-	        return new ResponseEntity<>(response,HttpStatus.OK);
-	    }		
-                                                                  	
-	    private void doAuthenticate(String email, String password) {
+		UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
+		String token = this.helper.generateToken(userDetails);
 
-	        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
-	        try {
-	            manager.authenticate(authentication);
+		User user1 = this.userRepo.findByEmailId(request.getEmail());
+		JwtResponse response = JwtResponse.builder()
+				.username(userDetails.getUsername())
+				.jwtToken(token)
 
+				.user(user1).build();
 
-	        } catch (BadCredentialsException e) {
-	            throw new BadCredentialsException(" Invalid Username or Password  !!");
-	        }
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 
-	    }
+	private void doAuthenticate(String email, String password) {
 
-	    @ExceptionHandler(BadCredentialsException.class)
-	    public String exceptionHandler() {
-	        return "Credentials Invalid !!";
-	    }
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
+		try {
+			manager.authenticate(authentication);
+
+		} catch (BadCredentialsException e) {
+			throw new BadCredentialsException(" Invalid Username or Password  !!");
+		}
+
+	}
+
+	@ExceptionHandler(BadCredentialsException.class)
+	public String exceptionHandler() {
+		return "Credentials Invalid !!";
+	}
 }

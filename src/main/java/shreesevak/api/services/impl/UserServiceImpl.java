@@ -45,31 +45,31 @@ public class UserServiceImpl implements UserService {
 	// sign up user
 	@Override
 	public UserDto createUser(UserFrontEndData frontEndData) {
+		if (userRepo.findByName(frontEndData.getName()) != null) {
+			throw new ResourceAllReadyExist(frontEndData.getName());
+
+		}
+		if (userRepo.findByEmailId(frontEndData.getEmailId()) != null) {
+			throw new ResourceAllReadyExist(frontEndData.getEmailId());
+		}
+
+		if (userRepo.findByPhoneNumber(frontEndData.getPhoneNumber()) != null) {
+			throw new ResourceAllReadyExist(frontEndData.getPhoneNumber());
+		}
 
 		User user = new User();
+
 		user.setPassword(passwordEncoder.encode(frontEndData.getPassword()));
 		user.setName(frontEndData.getName());
-		user.setPassword(frontEndData.getPassword());
+
 		user.setEmailId(frontEndData.getEmailId());
 		user.setPhoneNumber(frontEndData.getPhoneNumber());
 		user.setPhotoUrl(frontEndData.getPhotoUrl());
 		user.setStatus(frontEndData.getStatus());
 
-		List<Role> role = (List<Role>) this.roleRepo.findByRoleName(frontEndData.getRole());
+		List<Role> role = this.roleRepo.findByRoleName(frontEndData.getRole());
 		user.setRoles(role);
 		User saveUser = this.userRepo.save(user);
-
-		if (userRepo.findByName(user.getName()) != null) {
-			throw new ResourceAllReadyExist(user.getName());
-
-		}
-		if (userRepo.findByEmailId(user.getEmailId()) != null) {
-			throw new ResourceAllReadyExist(user.getEmailId());
-		}
-
-		if (userRepo.findByPhoneNumber(user.getPhoneNumber()) != null) {
-			throw new ResourceAllReadyExist(user.getPhoneNumber());
-		}
 
 		System.out.println(saveUser.toString());
 		return this.userToDto(saveUser);
