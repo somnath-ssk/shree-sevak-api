@@ -30,6 +30,6 @@ public interface ScheduleRepo extends JpaRepository<Scheduler, Integer> {
 	@Query("SELECT s FROM Scheduler s WHERE s.date LIKE CONCAT('%', :dynamicMonth, '% ', :dynamicYear) AND s.baithak.bithakId= :baithakIdParam" )
 	List<Scheduler> findByMonthAndYearAndBaithak(@Param("dynamicMonth") String dynamicMonth,@Param("dynamicYear") String dynamicYear,@Param("baithakIdParam") Integer bithakId );
 //  
-//    @Query("SELECT s FROM Scheduler s ORDER BY s.sched")
-//	List<Scheduler> findAllorderByDesc();
+    @Query("SELECT s FROM Scheduler s ORDER BY s.scheduleId DESC")
+	List<Scheduler> findAllorderByDesc();
 }

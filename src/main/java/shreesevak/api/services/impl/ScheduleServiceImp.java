@@ -81,7 +81,7 @@ public class ScheduleServiceImp implements ScheduleService {
 
 	@Override
 	public List<SchedularDto> getAllSchedule() {
-		List<Scheduler> schedules = this.scheduleRepo.findAll();
+		List<Scheduler> schedules = this.scheduleRepo.findAllorderByDesc();
 		List<SchedularDto> schedularList = schedules.stream().map((schedule) -> this.scheduleToDto(schedule))
 				.collect(Collectors.toList());
 
