@@ -44,6 +44,7 @@ public class LocationDto {
 	private String add2 ;
 	private String division ;
 	private String city ;
+	private String area ;
 	private String  state ;
 	private String country; 
    private String  pincode ;

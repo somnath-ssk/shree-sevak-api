@@ -59,6 +59,7 @@ public class Location {
 	private String city ;
 	private String  state ;
 	private String country; 
+	private String  area ;
    private String  pincode ;
 
 	private String  latitude ;

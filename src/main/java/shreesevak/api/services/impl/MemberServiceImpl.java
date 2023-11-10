@@ -62,6 +62,7 @@ public class MemberServiceImpl implements MemberService {
 		member.setAddharNumber(memberDto.getAddharNumber());
 		member.setAdditionalInfo(memberDto.getAdditionalInfo());
 		member.setCity(memberDto.getCity());
+		member.setArea(memberDto.getArea());
 		member.setCountry(memberDto.getCountry());
 		member.setDivision(memberDto.getDivision());
 		member.setDOB(memberDto.getDOB());

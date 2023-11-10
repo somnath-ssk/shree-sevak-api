@@ -46,6 +46,7 @@ public class MemberDto {
 		private String city;
 		@NotEmpty
 		private String role;
+		private String area ;
 		@NotEmpty
 		private String country;
 		@Size(min=4,message = "information shuld not empty")

@@ -53,6 +53,7 @@ public class LocationServiceImpl implements LocationService {
 	    loc.setAdd1(locDto.getAdd1());
 	    loc.setAdd2(locDto.getAdd2());
 	    loc.setPincode(locDto.getPincode());
+	    loc.setArea(locDto.getArea());
 	    loc.setDivision(locDto.getDivision());
 	  
 	    loc.setLongitude(locDto.getLongitude());

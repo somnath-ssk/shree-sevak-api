@@ -44,6 +44,7 @@ public class Member {
     private String middleName;
 	private String lastName;
 	private String email;
+	private String area;
 	private String hajeriNo;
 	private String hajeriNoDetails;
 	private String addharNumber;
