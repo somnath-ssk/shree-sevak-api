@@ -2,6 +2,7 @@ package shreesevak.api.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -118,6 +119,7 @@ public class ScheduleServiceImp implements ScheduleService {
 		
 
 		Scheduler schedular=this.scheduleRepo.findByDateAndLocationIdBaithak(date, locId,baithakId);
+		System.out.println(schedular);
 		return schedular;
 //		if(schedular==null) {
 ////			throw new RuntimeException("Schedule not found with"+date+"location Id"+locId);

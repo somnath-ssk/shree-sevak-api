@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import shreesevak.api.model.Scheduler;
 import shreesevak.api.payloads.DateLocationDto;
@@ -85,7 +86,12 @@ public class SechedularController {
 		
 		System.out.println("inside getByDateLoc");
 		Scheduler schedular = this.scheduleService.getScheduleByDateLocationBaithak(date, locationId,baithakId);
-		return new ResponseEntity<Scheduler>(schedular, HttpStatus.OK);
+		if(schedular==null) {
+			 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "schedule not found ");
+		}
+		else {
+			return new ResponseEntity<Scheduler>(schedular, HttpStatus.OK);
+		}
 	}
 	
 	@GetMapping("/getByMonthAndYearAndBaithak/{month}/{year}/{baithakId}")
@@ -93,7 +99,13 @@ public class SechedularController {
 		
 		System.out.println("inside getByDateLoc");
 		List<Scheduler> scheduls = this.scheduleService.getScheduleByMonthAndYearAndBaithak(month, year, baithakId);
-		return new ResponseEntity<List<Scheduler>>(scheduls, HttpStatus.OK);
+		
+		if(scheduls.size()==0) {
+			 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "schedule not found ");
+		}else {
+			
+			return new ResponseEntity<List<Scheduler>>(scheduls, HttpStatus.OK);
+		}
 	}
 
 }
