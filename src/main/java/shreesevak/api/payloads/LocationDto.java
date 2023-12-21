@@ -64,7 +64,7 @@ public class LocationDto {
 	private String  contact2Email;
 	private String  contact2Initial;
 	private String  contact2Name;
-	
+	private String  contact2Occupation;
 	private String  contact2Phone1;
 	private String  contact2Phone2;
 	private boolean mixedGenderAllow;

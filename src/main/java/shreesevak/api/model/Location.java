@@ -80,6 +80,7 @@ public class Location {
 	
 	private String  contact2Phone1;
 	private String  contact2Phone2;
+	private String  contact2Occupation;
 	private boolean mixedGenderAllow;
 
 	
