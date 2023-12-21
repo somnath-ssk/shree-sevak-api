@@ -14,7 +14,7 @@ import lombok.Setter;
 public class AreaDto {
 	
 	 private int areaId;
-	  private String area;
+	  private String areaName;
 	  private String  contactInitial;
 	  private String  contactName;
 	  private String  contactOccupation;
