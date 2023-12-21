@@ -24,6 +24,9 @@ public interface MemberRepo extends JpaRepository<Member,Integer> {
 	 List<Member> findAllByStatus(String status);
 	   @Query("SELECT m FROM Member m ORDER BY m.memberId DESC")
 		List<Member> findAllorderByDesc();
+	   
+	   
+  List<Member> findByArea(String area);
 	
 	  
 

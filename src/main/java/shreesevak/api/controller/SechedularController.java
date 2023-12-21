@@ -74,6 +74,7 @@ public class SechedularController {
 
 			}else {
 				SchedularDto schedularDto = this.scheduleService.createSchedule(frontendDto);
+				schedularDtos.add(schedularDto);
 			}
 		}
 

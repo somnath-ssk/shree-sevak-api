@@ -54,7 +54,7 @@ public class LocationServiceImpl implements LocationService {
 	    loc.setAdd2(locDto.getAdd2());
 	    loc.setPincode(locDto.getPincode());
 	    loc.setDivision(locDto.getDivision());
-	  
+	  loc.setArea(locDto.getArea());
 	    loc.setLongitude(locDto.getLongitude());
 	    loc.setLatitude(locDto.getLatitude());
         loc.setStatus(locDto.getStatus());
@@ -73,6 +73,7 @@ public class LocationServiceImpl implements LocationService {
         loc.setContact2Name(locDto.getContact2Name());
         loc.setContact2Phone1(locDto.getContact2Phone1());
         loc.setContact2Phone2(locDto.getContact2Phone2());
+     loc.setMixedGenderAllow(locDto.isMixedGenderAllow());
         
       Location saveLoc=  this.locationRepo.save(loc);
        return locationToDto(saveLoc);

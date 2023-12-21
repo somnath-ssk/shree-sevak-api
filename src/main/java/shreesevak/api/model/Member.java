@@ -87,6 +87,7 @@ private String status;
 private String vehicleDetails;
 private String vehicleType;
 private String weeklyOffs;
+private String area;
 
 //private String roles;
 //private string bithakId;

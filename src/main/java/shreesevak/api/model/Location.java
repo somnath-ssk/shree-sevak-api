@@ -60,7 +60,7 @@ public class Location {
 	private String  state ;
 	private String country; 
    private String  pincode ;
-
+   private String area;
 	private String  latitude ;
 	private String  longitude ;
     private String  status ;
@@ -80,6 +80,8 @@ public class Location {
 	
 	private String  contact2Phone1;
 	private String  contact2Phone2;
+	private boolean mixedGenderAllow;
+
 	
 //	@ManyToMany(mappedBy = "locations")
 //	private List<User>users=new ArrayList<>();

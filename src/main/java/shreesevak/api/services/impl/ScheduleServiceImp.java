@@ -63,7 +63,7 @@ public class ScheduleServiceImp implements ScheduleService {
 		schedule.setMembers(members);
 		schedule.setDate(schedularFrontendDto.getDate());
 		schedule.setStatus(schedularFrontendDto.getStatus());
-		if (!this.scheduleRepo.existsByLocationAndDateAndBaithak(schedule.getLocation(), schedule.getDate(), schedule.getBaithak())) {
+		if (!this.scheduleRepo.existsByLocationAndDateAndBaithak(schedule.getLocation(),schedule.getDate(), schedule.getBaithak())) {
 			this.scheduleRepo.save(schedule);
 			return this.scheduleToDto(schedule);
 		} 
@@ -141,7 +141,10 @@ public class ScheduleServiceImp implements ScheduleService {
 		}else {
 //			System.out.println(schedules);
 			System.out.println("inside getScheduleByDateLocBaithak" );
-			return schedules;
+			  List<Scheduler> filteredSchedules = schedules.stream()
+		                .filter(schedule -> "1".equals(schedule.getLocation().getStatus()))
+		                .collect(Collectors.toList());
+			return filteredSchedules;
 		}
 	
 	}

@@ -95,6 +95,7 @@ public class MemberServiceImpl implements MemberService {
 		member.setPincode(memberDto.getPincode());
 		member.setState(memberDto.getState());
 		member.setStatus(memberDto.getStatus());
+		member.setArea(memberDto.getArea());
 		member.setVehicleDetails(memberDto.getVehicleDetails());
 		member.setVehicleType(memberDto.getVehicleType());
 		int baithak=(memberDto.getMemberId());
@@ -125,6 +126,15 @@ public class MemberServiceImpl implements MemberService {
 	List<Member>allMembers	=this.memberRepo.findAll();
 	List<MemberDto>members=allMembers.stream().map(mem-> this.memberToDto(mem)).collect(Collectors.toList());
 		return members;
+	}
+	
+	//get all memebrs base on area
+	@Override
+	public List<MemberDto> getAllAreaMember(String area) {
+		List<Member>allMembers	=this.memberRepo.findByArea(area);
+		List<MemberDto>members=allMembers.stream().map(mem-> this.memberToDto(mem)).collect(Collectors.toList());
+		return members;
+	
 	}
 
 	@Override

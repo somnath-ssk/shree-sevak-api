@@ -47,7 +47,7 @@ public class LocationDto {
 	private String  state ;
 	private String country; 
    private String  pincode ;
-
+   private String area;
 	private String  latitude ;
 	private String  longitude ;
     private String  status ;
@@ -67,6 +67,7 @@ public class LocationDto {
 	
 	private String  contact2Phone1;
 	private String  contact2Phone2;
+	private boolean mixedGenderAllow;
 	
 	
 //	private List<UserDto>users=new ArrayList<>();

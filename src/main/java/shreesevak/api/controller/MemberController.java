@@ -57,6 +57,8 @@ public class MemberController {
 	MemberDto memberDto	=this.memberService.getSingleMember(memberId);
 		return ResponseEntity.ok(memberDto);
 	}
+
+	
 	
 	//get all user
 	@GetMapping("/all-members")
@@ -66,10 +68,19 @@ public class MemberController {
 		
 	}
 	
+	//get memebr base on area
+	@GetMapping("/areaMembers/{area}")
+	public ResponseEntity<List<MemberDto>> selectAllAreaMemebrs(@PathVariable String area) {
+		List<MemberDto>areaMembers=this.memberService.getAllAreaMember(area);
+		return new ResponseEntity<List<MemberDto>>(areaMembers, HttpStatus.OK) ;
+		
+	}
+	
+	
 	//get all active member
 	
 	@GetMapping("/status/{status}")
-public ResponseEntity<List<MemberDto>> selectAllSctiveMembers(@PathVariable String status) {
+      public ResponseEntity<List<MemberDto>> selectAllSctiveMembers(@PathVariable String status) {
 		List<MemberDto>activemembers=this.memberService.getAllActiveMemebers(status);
 		return new ResponseEntity<List<MemberDto>>(activemembers, HttpStatus.OK) ;
 		
