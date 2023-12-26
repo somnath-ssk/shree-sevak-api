@@ -33,7 +33,6 @@ public class FilterController {
 	@Autowired
 	LocationService locationService;
 
-	
 	@Autowired
 	UserService userService;
 	

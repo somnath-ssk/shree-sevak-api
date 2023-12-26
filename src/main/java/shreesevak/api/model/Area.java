@@ -33,7 +33,10 @@ private String  contactEmail ;
 	private String city;
 	private String division;
 	private String state;
+	private String status;
 	private String country;
+	private int maleCount;
+	private int femaleCount;
 	
 	
 
