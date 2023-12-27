@@ -61,6 +61,7 @@ public class MemberDto {
 		private boolean eligibleForChild;
 		private boolean eligibleForGents;
 		private boolean eligibleForLadies;
+		private boolean none;
 	private boolean marathiSpeak;
 	private boolean marathiWrite;
 	private boolean marathiRead;

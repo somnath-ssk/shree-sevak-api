@@ -102,9 +102,37 @@ public class AreaServiceImpl implements AreaService {
 
 	@Override
 	public List<AreaDto> getAllAreasByStatus(String status) {
-	List<Area>foundAreas=this.areaRepo.findByStatus(status);
-	  List<AreaDto>areasDto=foundAreas.stream().map((ar)->this.areaToDto(ar)).collect(Collectors.toList());
-		return areasDto;
+		  List<Area> listAreas = this.areaRepo.findByStatus(status);
+			List<Member>allMembers	=this.memberRepo.findAllByStatus(status);
+      System.out.println(allMembers);
+		    List<AreaDto> allAreas = listAreas.stream()
+		            .map(area -> {
+		                long maleCount = allMembers.stream()
+		                        .filter(member -> member.getArea().equalsIgnoreCase(area.getAreaName()))
+		                        .filter(member -> member.getGender().trim().equalsIgnoreCase("Male"))
+		                        .count();
+
+		                long femaleCount = allMembers.stream()
+		                        .filter(member -> member.getArea().equals(area.getAreaName()))
+		                        .filter(member -> member.getGender().trim().equalsIgnoreCase("Female"))
+		                        .count();
+
+		                AreaDto areaDto = areaToDto(area);
+		                areaDto.setMaleCount((int) maleCount);
+		                areaDto.setFemaleCount((int) femaleCount);
+
+		                // Set members based on the area
+//		                List<MemberDto> areaMembers = members.stream()
+//		                        .filter(member -> member.getArea().equals(area))
+//		                        .map(this::memberToDto)
+//		                        .collect(Collectors.toList());
+//		                areaDto.setMembers(areaMembers);
+
+		                return areaDto;
+		            })
+		            .collect(Collectors.toList());
+
+		    return allAreas;
 	}
 	
 	@Override

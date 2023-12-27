@@ -75,6 +75,7 @@ public class MemberServiceImpl implements MemberService {
 		member.setEligibleForChild(memberDto.isEligibleForChild());
 		member.setEligibleForGents(memberDto.isEligibleForGents());
 		member.setEligibleForLadies(memberDto.isEligibleForLadies());
+		member.setNone(memberDto.isNone());
 		member.setMarathiRead(memberDto.isMarathiRead());
 		member.setMarathiSpeak(memberDto.isMarathiSpeak());
 		member.setMarathiWrite(memberDto.isMarathiWrite());
