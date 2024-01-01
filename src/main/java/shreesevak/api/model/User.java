@@ -52,7 +52,7 @@ public class User implements UserDetails{
 	private String emailId;
 	private String phoneNumber;
 	
-	private String photoUrl;
+
 	private String status;
 	
 	

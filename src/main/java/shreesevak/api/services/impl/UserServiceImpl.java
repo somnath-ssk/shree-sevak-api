@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
 		user.setEmailId(frontEndData.getEmailId());
 		user.setPhoneNumber(frontEndData.getPhoneNumber());
-		user.setPhotoUrl(frontEndData.getPhotoUrl());
+	
 		user.setStatus(frontEndData.getStatus());
 
 		List<Role> role = this.roleRepo.findByRoleName(frontEndData.getRole());
@@ -78,18 +78,18 @@ public class UserServiceImpl implements UserService {
 	// update user Details
 
 	@Override
-	public UserDto updateUser(UserDto userDto, Integer userId) {
+	public UserDto updateUser(UserFrontEndData userDto, Integer userId) {
 		User user = this.userRepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("user", "id", userId));
 
-		user.setUserId(userDto.getUserId());
+//		user.setUserId(userDto.getUserId());
 		user.setName(userDto.getName());
-		user.setPassword(user.getPassword());
+		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		user.setEmailId(userDto.getEmailId());
 		user.setPhoneNumber(userDto.getPhoneNumber());
-		user.setPhotoUrl(userDto.getPhotoUrl());
+	List<Role> role=this.roleRepo.findByRoleName(userDto.getRole());
 
-//		user.setRoles(userDto.getRoles());
+		user.setRoles(role);
 		user.setStatus(userDto.getStatus());
 
 		User updatedUser = this.userRepo.save(user);
@@ -147,6 +147,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public UserDto userToDto(User user) {
+		
 		UserDto userDto = this.modelMapper.map(user, UserDto.class);
 //		userDto.setUserId(user.getUserId());
 //		userDto.setName(user.getName());

@@ -36,7 +36,7 @@ public class UserDto {
 	
 	
 	
-	private String photoUrl;
+
 	
 	@NotEmpty
 	private String status;

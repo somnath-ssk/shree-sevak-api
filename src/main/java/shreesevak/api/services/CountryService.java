@@ -3,6 +3,7 @@ package shreesevak.api.services;
 import java.util.List;
 
 import shreesevak.api.payloads.CountryDto;
+import shreesevak.api.payloads.StateDto;
 
 public interface CountryService {
 
@@ -11,7 +12,7 @@ public interface CountryService {
 	
 	CountryDto getCountryData(long id) ;
 		
-	
+
 	
 
 }

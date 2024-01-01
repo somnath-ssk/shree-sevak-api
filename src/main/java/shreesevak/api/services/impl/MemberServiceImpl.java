@@ -75,7 +75,7 @@ public class MemberServiceImpl implements MemberService {
 		member.setEligibleForChild(memberDto.isEligibleForChild());
 		member.setEligibleForGents(memberDto.isEligibleForGents());
 		member.setEligibleForLadies(memberDto.isEligibleForLadies());
-		member.setNone(memberDto.isNone());
+		member.setEligibleForNone(memberDto.isEligibleForNone());
 		member.setMarathiRead(memberDto.isMarathiRead());
 		member.setMarathiSpeak(memberDto.isMarathiSpeak());
 		member.setMarathiWrite(memberDto.isMarathiWrite());
@@ -124,7 +124,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<MemberDto> getAllMember() {
-	List<Member>allMembers	=this.memberRepo.findAll();
+	List<Member>allMembers	=this.memberRepo.findAllorderByDesc();
 	List<MemberDto>members=allMembers.stream().map(mem-> this.memberToDto(mem)).collect(Collectors.toList());
 		return members;
 	}

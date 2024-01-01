@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import shreesevak.api.model.Member;
 import shreesevak.api.model.Role;
@@ -20,10 +21,12 @@ public interface MemberRepo extends JpaRepository<Member,Integer> {
 	 Member findByEmail(String email);
 	 Member findByAddharNumber(String email);
 
-
-	 List<Member> findAllByStatus(String status);
+	 @Query("SELECT m FROM Member m WHERE m.status = :status ORDER BY m.memberId DESC")
+ List<Member> findAllByStatus(@Param("status") String status);
+	 
 	   @Query("SELECT m FROM Member m ORDER BY m.memberId DESC")
 		List<Member> findAllorderByDesc();
+	   
 	   
 	   
   List<Member> findByArea(String area);

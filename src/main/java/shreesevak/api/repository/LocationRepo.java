@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import shreesevak.api.model.Location;
 import shreesevak.api.model.User;
@@ -29,7 +30,8 @@ public interface LocationRepo extends JpaRepository<Location,Integer> {
 	  
 //	  @Query("SELECT E FROM Location e WHERE e.status ORDER BY e.locationId DESC ")
 	
-	List<Location> findAllByStatus(String status);
+	  @Query("SELECT l FROM Location l WHERE l.status= :status ORDER BY l.locationId DESC")
+	List<Location> findAllByStatus(@Param("status") String status);
 	Location findByState(String state);
 	 @Query("SELECT l.status FROM Location l WHERE l.status = :status ORDER BY l.locationId DESC")
 	List<Location> findStatusByOrderByLocationIdDesc(String status);

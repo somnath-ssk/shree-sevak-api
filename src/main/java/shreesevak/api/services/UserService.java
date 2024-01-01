@@ -14,7 +14,7 @@ import shreesevak.api.payloads.UserFrontEndData;
 public interface UserService  {
 
 	UserDto createUser(UserFrontEndData user);
-UserDto updateUser(UserDto user,Integer userId);
+UserDto updateUser(UserFrontEndData user,Integer userId);
 	UserDto getUserById(Integer userId);
 	UserDto getUserByUserName(String userName);
 	List<UserDto> getAllUsers();

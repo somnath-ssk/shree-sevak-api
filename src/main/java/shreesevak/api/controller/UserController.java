@@ -70,8 +70,8 @@ public class UserController {
 	}
 	//PUT -update user 
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto ,@PathVariable Integer userId){
-		UserDto updateduserDto =userService.updateUser(userDto, userId);
+	public ResponseEntity<UserDto> updateUser(@RequestBody UserFrontEndData userFrontEndData ,@PathVariable Integer userId){
+		UserDto updateduserDto =userService.updateUser(userFrontEndData, userId);
 		return ResponseEntity.ok(updateduserDto);
 	}
 	//DELETE  delete user
@@ -95,12 +95,12 @@ public class UserController {
 		return ResponseEntity.ok(respuserDto);
 
 	}
-	@GetMapping("/")
+	@GetMapping("/user_list")
 	public ResponseEntity<List<UserDto>> getAllUsers(){
 		return ResponseEntity.ok(this.userService.getAllUsers());
 	}
-	@GetMapping("/active/{status}")
-	public ResponseEntity<List<UserDto>> getAllActiveUser(@PathVariable String status){
+	@GetMapping("/status/{status}")
+	public ResponseEntity<List<UserDto>> getUserListByStatus(@PathVariable String status){
 		return ResponseEntity.ok(this.userService.getAllActiveUsers(status));
 	}
 

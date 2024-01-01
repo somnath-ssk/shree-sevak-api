@@ -48,6 +48,7 @@ public class AreaServiceImpl implements AreaService {
 		area.setContactName(areaDto.getContactName());
 		area.setContactOccupation(areaDto.getContactOccupation());
 		area.setContactPhone1(areaDto.getContactPhone1());
+		area.setContactEmail(areaDto.getContactEmail());
 		area.setContactPhone2(areaDto.getContactPhone2());
 		area.setCountry(areaDto.getCountry());
 		area.setDivision(areaDto.getDivision());
@@ -66,34 +67,31 @@ public class AreaServiceImpl implements AreaService {
 
 	@Override
 	public List<AreaDto> getallArea() {
-		   List<Area> listAreas = this.areaRepo.findAll();
+		   List<Area> listAreas = this.areaRepo.findAllAreas();
 			List<Member>allMembers	=this.memberRepo.findAll();
         System.out.println(allMembers);
 		    List<AreaDto> allAreas = listAreas.stream()
-		            .map(area -> {
-		                long maleCount = allMembers.stream()
-		                        .filter(member -> member.getArea().equalsIgnoreCase(area.getAreaName()))
-		                        .filter(member -> member.getGender().trim().equalsIgnoreCase("Male"))
-		                        .count();
+		    		 .map(area -> {
+			                List<Member> membersInArea = allMembers.stream()
+			                        .filter(member -> member.getArea().trim().equalsIgnoreCase(area.getAreaName().trim()))
+			                        .collect(Collectors.toList());
 
-		                long femaleCount = allMembers.stream()
-		                        .filter(member -> member.getArea().equals(area.getAreaName()))
-		                        .filter(member -> member.getGender().trim().equalsIgnoreCase("Female"))
-		                        .count();
+			                long maleCount = membersInArea.stream()
+			                        .filter(member -> member.getCity().trim().equalsIgnoreCase(area.getCity().trim()))
+			                        .filter(member -> member.getGender().trim().equalsIgnoreCase("Male"))
+			                        .count();
 
-		                AreaDto areaDto = areaToDto(area);
-		                areaDto.setMaleCount((int) maleCount);
-		                areaDto.setFemaleCount((int) femaleCount);
+			                long femaleCount = membersInArea.stream()
+			                        .filter(member -> member.getCity().trim().equalsIgnoreCase(area.getCity().trim()))
+			                        .filter(member -> member.getGender().trim().equalsIgnoreCase("Female"))
+			                        .count();
 
-		                // Set members based on the area
-//		                List<MemberDto> areaMembers = members.stream()
-//		                        .filter(member -> member.getArea().equals(area))
-//		                        .map(this::memberToDto)
-//		                        .collect(Collectors.toList());
-//		                areaDto.setMembers(areaMembers);
+			                AreaDto areaDto = areaToDto(area);
+			                areaDto.setMaleCount((int) maleCount);
+			                areaDto.setFemaleCount((int) femaleCount);
 
-		                return areaDto;
-		            })
+			                return areaDto;
+			            })
 		            .collect(Collectors.toList());
 
 		    return allAreas;
@@ -102,38 +100,37 @@ public class AreaServiceImpl implements AreaService {
 
 	@Override
 	public List<AreaDto> getAllAreasByStatus(String status) {
-		  List<Area> listAreas = this.areaRepo.findByStatus(status);
-			List<Member>allMembers	=this.memberRepo.findAllByStatus(status);
-      System.out.println(allMembers);
-		    List<AreaDto> allAreas = listAreas.stream()
-		            .map(area -> {
-		                long maleCount = allMembers.stream()
-		                        .filter(member -> member.getArea().equalsIgnoreCase(area.getAreaName()))
-		                        .filter(member -> member.getGender().trim().equalsIgnoreCase("Male"))
-		                        .count();
+	    List<Area> listAreas = this.areaRepo.findByStatus(status);
+	    List<Member> allMembers = this.memberRepo.findAllByStatus(status);
 
-		                long femaleCount = allMembers.stream()
-		                        .filter(member -> member.getArea().equals(area.getAreaName()))
-		                        .filter(member -> member.getGender().trim().equalsIgnoreCase("Female"))
-		                        .count();
+	    List<AreaDto> allAreas = listAreas.stream()
+	            .map(area -> {
+	                List<Member> membersInArea = allMembers.stream()
+	                        .filter(member -> member.getArea().trim().equalsIgnoreCase(area.getAreaName().trim()))
+	                        .collect(Collectors.toList());
 
-		                AreaDto areaDto = areaToDto(area);
-		                areaDto.setMaleCount((int) maleCount);
-		                areaDto.setFemaleCount((int) femaleCount);
+	                long maleCount = membersInArea.stream()
+	                        .filter(member -> member.getCity().trim().equalsIgnoreCase(area.getCity().trim()))
+	                        .filter(member -> member.getGender().trim().equalsIgnoreCase("Male"))
+	                        .count();
 
-		                // Set members based on the area
-//		                List<MemberDto> areaMembers = members.stream()
-//		                        .filter(member -> member.getArea().equals(area))
-//		                        .map(this::memberToDto)
-//		                        .collect(Collectors.toList());
-//		                areaDto.setMembers(areaMembers);
+	                long femaleCount = membersInArea.stream()
+	                        .filter(member -> member.getCity().trim().equalsIgnoreCase(area.getCity().trim()))
+	                        .filter(member -> member.getGender().trim().equalsIgnoreCase("Female"))
+	                        .count();
 
-		                return areaDto;
-		            })
-		            .collect(Collectors.toList());
+	                AreaDto areaDto = areaToDto(area);
+	                areaDto.setMaleCount((int) maleCount);
+	                areaDto.setFemaleCount((int) femaleCount);
 
-		    return allAreas;
+	                return areaDto;
+	            })
+	            .collect(Collectors.toList());
+
+	    return allAreas;
 	}
+
+
 	
 	@Override
 	public AreaDto getSingleAreaByNames(String areaName) {
