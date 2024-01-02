@@ -85,10 +85,14 @@ private String photoBase64;
 private String pincode;
 private String state ;
 private String status;
-private String vehicleDetails;
-private String vehicleType;
 private String weeklyOffs;
 private String area;
+private boolean noVehical;
+private boolean twoWheeler;
+private boolean fourWheeler;
+private String twoWheelerDetail;
+private String fourWheelerDetail;
+
 
 //private String roles;
 //private string bithakId;

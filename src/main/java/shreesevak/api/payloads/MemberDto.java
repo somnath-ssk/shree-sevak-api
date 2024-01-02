@@ -94,10 +94,14 @@ public class MemberDto {
 	@NotEmpty
 	private String status;
 	@NotEmpty
-	private String vehicleDetails;
-	private String vehicleType;
+	
 	private String weeklyOffs;
 	private String area;
+	private boolean noVehical;
+	private boolean twoWheeler;
+	private boolean fourWheeler;
+	private String twoWheelerDetail;
+	private String fourWheelerDetail;
 
 //	private Location location;
 //	private List<Baithak>baithaks=new ArrayList<>();

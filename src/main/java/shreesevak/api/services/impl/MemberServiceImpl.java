@@ -97,8 +97,12 @@ public class MemberServiceImpl implements MemberService {
 		member.setState(memberDto.getState());
 		member.setStatus(memberDto.getStatus());
 		member.setArea(memberDto.getArea());
-		member.setVehicleDetails(memberDto.getVehicleDetails());
-		member.setVehicleType(memberDto.getVehicleType());
+		member.setTwoWheelerDetail(memberDto.getTwoWheelerDetail());
+		member.setFourWheelerDetail(memberDto.getFourWheelerDetail());
+		member.setTwoWheeler(memberDto.isTwoWheeler());
+		member.setFourWheeler(memberDto.isFourWheeler());
+member.setNoVehical(memberDto.isNoVehical());
+
 		int baithak=(memberDto.getMemberId());
 		Baithak baithak2=this.baithakRepo.findByBithakId(baithak);
 		member.setBaithak(baithak2);
