@@ -43,21 +43,26 @@ public class AuthController {
 	private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
 	@PostMapping("/login")
-	public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
+	public ResponseEntity<?> login(@RequestBody JwtRequest request) {
+	    this.doAuthenticate(request.getEmail(), request.getPassword());
+	    User user = this.userRepo.findByEmailId(request.getEmail());
 
-		this.doAuthenticate(request.getEmail(), request.getPassword());
+	    if (user.getStatus().equals("1")) {
+	        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
+	        String token = this.helper.generateToken(userDetails);
 
-		UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-		String token = this.helper.generateToken(userDetails);
+	        User user1 = this.userRepo.findByEmailId(request.getEmail());
+	        JwtResponse response = JwtResponse.builder()
+	                .username(userDetails.getUsername())
+	                .jwtToken(token)
+	                .user(user1)
+	                .build();
 
-		User user1 = this.userRepo.findByEmailId(request.getEmail());
-		JwtResponse response = JwtResponse.builder()
-				.username(userDetails.getUsername())
-				.jwtToken(token)
-
-				.user(user1).build();
-
-		return new ResponseEntity<>(response, HttpStatus.OK);
+	        return new ResponseEntity<>(response, HttpStatus.OK);
+	    } else {
+	        // User is inactive and not authorized
+	        return new ResponseEntity<>("User is inactive", HttpStatus.UNAUTHORIZED);
+	    }
 	}
 
 	private void doAuthenticate(String email, String password) {
