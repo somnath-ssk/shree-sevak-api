@@ -71,6 +71,7 @@ public class UserController {
 	//PUT -update user 
 	@PutMapping("/{userId}")
 	public ResponseEntity<UserDto> updateUser(@RequestBody UserFrontEndData userFrontEndData ,@PathVariable Integer userId){
+	
 		UserDto updateduserDto =userService.updateUser(userFrontEndData, userId);
 		return ResponseEntity.ok(updateduserDto);
 	}

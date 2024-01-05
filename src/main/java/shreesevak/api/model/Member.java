@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
@@ -19,6 +20,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -85,13 +87,18 @@ private String photoBase64;
 private String pincode;
 private String state ;
 private String status;
-private String weeklyOffs;
+//private String[] weeklyOffs;
 private String area;
 private boolean noVehical;
 private boolean twoWheeler;
 private boolean fourWheeler;
 private String twoWheelerDetail;
 private String fourWheelerDetail;
+
+@JsonManagedReference
+@OneToMany(mappedBy= "member", cascade = CascadeType.ALL)
+private List<WeeklyOff> weeklyOffs =new ArrayList<>();
+
 
 
 //private String roles;

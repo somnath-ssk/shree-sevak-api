@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import shreesevak.api.model.Area;
 
 
 @NoArgsConstructor
@@ -21,5 +22,6 @@ public class UserFrontEndData {
 	private String phoneNumber;
 	private String status;
 	private String role;
+	private List<Area> selectedAreas;
 
 }

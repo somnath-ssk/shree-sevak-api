@@ -24,6 +24,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
@@ -61,6 +62,11 @@ public class User implements UserDetails{
 	@ManyToMany()
 	@JoinTable(name="users_roles",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="role_id"))
 	private List<Role>roles=new ArrayList<>();
+	 
+	 @JsonManagedReference
+	 @OneToMany()
+	 @JoinTable(name="user_areas",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="area_id"))
+	 private List<Area> selectedAreas= new ArrayList<>();
 //	
 //	@ManyToMany(fetch=FetchType.EAGER)
 //	@JoinTable(name="users_locations",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="location_id"))

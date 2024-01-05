@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import shreesevak.api.exceptions.ResourceAllReadyExist;
 import shreesevak.api.exceptions.ResourceNotFoundException;
+import shreesevak.api.model.Area;
 import shreesevak.api.model.Role;
 import shreesevak.api.model.User;
 import shreesevak.api.payloads.RoleDto;
@@ -69,6 +70,8 @@ public class UserServiceImpl implements UserService {
 
 		List<Role> role = this.roleRepo.findByRoleName(frontEndData.getRole());
 		user.setRoles(role);
+		
+		user.setSelectedAreas(frontEndData.getSelectedAreas());
 		User saveUser = this.userRepo.save(user);
 
 		System.out.println(saveUser.toString());
@@ -79,21 +82,24 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto updateUser(UserFrontEndData userDto, Integer userId) {
+		List<Area>areas=new ArrayList<>();
 		User user = this.userRepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("user", "id", userId));
-
+        user.setSelectedAreas(areas);
+     User  updatedUser= this.userRepo.save(user);
 //		user.setUserId(userDto.getUserId());
-		user.setName(userDto.getName());
-		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		user.setEmailId(userDto.getEmailId());
-		user.setPhoneNumber(userDto.getPhoneNumber());
+     updatedUser.setName(userDto.getName());
+     updatedUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+     updatedUser.setEmailId(userDto.getEmailId());
+     updatedUser.setPhoneNumber(userDto.getPhoneNumber());
+     updatedUser.setSelectedAreas(userDto.getSelectedAreas());
 	List<Role> role=this.roleRepo.findByRoleName(userDto.getRole());
 
-		user.setRoles(role);
-		user.setStatus(userDto.getStatus());
+	updatedUser.setRoles(role);
+	updatedUser.setStatus(userDto.getStatus());
 
-		User updatedUser = this.userRepo.save(user);
-		UserDto userDto1 = this.userToDto(updatedUser);
+		User updatedUser2 = this.userRepo.save(user);
+		UserDto userDto1 = this.userToDto(updatedUser2);
 		return userDto1;
 	}
 

@@ -42,6 +42,7 @@ public class UserDto {
 	private String status;
 
 	private List<RoleDto>roles=new ArrayList<>();
+	private List<AreaDto>selectedAreas=new ArrayList<>();
 
 //	private List<Location>locations=new ArrayList<>();
 }

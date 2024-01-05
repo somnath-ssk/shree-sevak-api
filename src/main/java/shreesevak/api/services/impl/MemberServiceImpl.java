@@ -102,7 +102,7 @@ public class MemberServiceImpl implements MemberService {
 		member.setTwoWheeler(memberDto.isTwoWheeler());
 		member.setFourWheeler(memberDto.isFourWheeler());
 member.setNoVehical(memberDto.isNoVehical());
-
+member.setWeeklyOffs(memberDto.getWeeklyOffs());
 		int baithak=(memberDto.getMemberId());
 		Baithak baithak2=this.baithakRepo.findByBithakId(baithak);
 		member.setBaithak(baithak2);
