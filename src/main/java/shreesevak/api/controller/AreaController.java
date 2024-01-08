@@ -59,6 +59,18 @@ public class AreaController {
 		return new ResponseEntity<List<AreaDto>>(areas,HttpStatus.OK);
 		
 	}
+	@GetMapping("/unselected-Areas")
+	private ResponseEntity<List<AreaDto>> getAllUnselectedAreas() {
+		List<AreaDto> areas=this.areaService. getAllUnselectedAreas();
+		return new ResponseEntity<List<AreaDto>>(areas,HttpStatus.OK);
+		
+	}
+	@GetMapping("/unselected-AreasforUser/{userId}")
+	private ResponseEntity<List<AreaDto>> getAllUnselectedAreaExceptUserAreas(@PathVariable Integer userId) {
+		List<AreaDto> areas=this.areaService. getUnselectedAndSingleUserAreas(userId);
+		return new ResponseEntity<List<AreaDto>>(areas,HttpStatus.OK);
+		
+	}
 	
 	@GetMapping("/statusType/{status}")
 	private ResponseEntity<List<AreaDto>> getAllAreasByStatus(@PathVariable String status) {

@@ -46,6 +46,10 @@ public class GlobalExceptionHandler {
 		return (ResponseEntity<Map<String, String>>) resp;
 	}
    
+	 @ExceptionHandler(DuplicateKeyException.class)
+	    public ResponseEntity<String> handleDuplicateKeyException(DuplicateKeyException ex) {
+	        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+	    }
 	
 		
 

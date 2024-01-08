@@ -9,9 +9,11 @@ import java.util.stream.Collectors;
 import org.hibernate.mapping.Array;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import shreesevak.api.exceptions.DuplicateKeyException;
 import shreesevak.api.exceptions.ResourceAllReadyExist;
 import shreesevak.api.exceptions.ResourceNotFoundException;
 import shreesevak.api.model.Area;
@@ -115,10 +117,15 @@ public class UserServiceImpl implements UserService {
 
 		updatedUser.setRoles(role);
 		updatedUser.setStatus(userDto.getStatus());
+  try {
 
 		User updatedUser2 = this.userRepo.save(user);
 		UserDto userDto1 = this.userToDto(updatedUser2);
 		return userDto1;
+  }catch(DataIntegrityViolationException ex) {
+	  throw new DuplicateKeyException("Duplicate area id key violation occurred.");
+  }
+		
 	}
 
 	// get user by Id

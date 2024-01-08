@@ -14,5 +14,7 @@ public interface AreaService {
 	List<AreaDto> getallArea();
 	List<AreaDto> getAllAreasByStatus(String status);
 	AreaDto getSingleAreaByNames(String areaName);
+	List<AreaDto> getAllUnselectedAreas();
+	List<AreaDto> getUnselectedAndSingleUserAreas(Integer userId);
     
 }

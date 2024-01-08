@@ -1,6 +1,9 @@
 package shreesevak.api.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -12,11 +15,13 @@ import org.springframework.stereotype.Service;
 import shreesevak.api.exceptions.ResourceNotFoundException;
 import shreesevak.api.model.Area;
 import shreesevak.api.model.Member;
+import shreesevak.api.model.User;
 import shreesevak.api.payloads.AreaDto;
 import shreesevak.api.payloads.BaithakDto;
 import shreesevak.api.payloads.MemberDto;
 import shreesevak.api.repository.AreaRepo;
 import shreesevak.api.repository.MemberRepo;
+import shreesevak.api.repository.UserRepo;
 import shreesevak.api.services.AreaService;
 
 @Service
@@ -31,6 +36,8 @@ public class AreaServiceImpl implements AreaService {
 	@Autowired
 	private MemberRepo memberRepo;
 	
+	@Autowired
+	private UserRepo useRepo;
 
 	@Override
 	public AreaDto createArea(Area area) {
@@ -130,8 +137,52 @@ public class AreaServiceImpl implements AreaService {
 	    return allAreas;
 	}
 
+@Override
+	public List<AreaDto> getAllUnselectedAreas(){
+		List<Area>areas=this.areaRepo.findAll();
+		List<User>users=this.useRepo.findAll();
+//		List<Long>userAreaIds=users.stream().flatMap(user->{
+//			user.getSelectedAreas().stream().map(area->area.getAreaId()).collect(Collectors.toList());
+//		)});
+		 List<Integer> userAreaIds = users.stream()
+	                .flatMap(user -> user.getSelectedAreas().stream())
+	                .map(area -> area.getAreaId())
+	                .collect(Collectors.toList());
+		    List<Area> unselectedAreas = areas.stream()
+	                .filter(area -> !userAreaIds.contains(area.getAreaId()))
+	                .collect(Collectors.toList());
+		    List<AreaDto> unselectedAreaDtos = unselectedAreas.stream()
+	                .map(this::areaToDto)
+	                .collect(Collectors.toList());
 
-	
+	    
+		    
+		    return unselectedAreaDtos;
+	}
+	@Override
+	public List<AreaDto> getUnselectedAndSingleUserAreas(Integer userId) {
+		 List<Area> areas = this.areaRepo.findAll();
+	        List<User> users = this.useRepo.findAll();
+
+	        // Extract area IDs associated with the specified user
+	        Set<Integer> userAreaIds = users.stream()
+	                .flatMap(user -> user.getSelectedAreas().stream())
+	                .map(area -> area.getAreaId())
+	                .collect(Collectors.toSet());
+
+	        // Filter areas that are not associated with the specified user
+	        List<Area> unselectedAreas = areas.stream()
+	                .filter(area -> !userAreaIds.contains(area.getAreaId()))
+	                .collect(Collectors.toList());
+              Optional<User> user=this.useRepo.findById(userId);
+              unselectedAreas.addAll(user.get().getSelectedAreas());
+	        // Map unselected areas to AreaDto
+	        List<AreaDto> unselectedAreaDtos = unselectedAreas.stream()
+	                .map(this::areaToDto)
+	                .collect(Collectors.toList());
+      
+	        return unselectedAreaDtos;
+	}
 	@Override
 	public AreaDto getSingleAreaByNames(String areaName) {
 		Area foundArea=this.areaRepo.findByAreaName(areaName);
@@ -162,5 +213,9 @@ public class AreaServiceImpl implements AreaService {
 			
 			return memberDto1;
 		}
+
+		
+
+
 
 }
