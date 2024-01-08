@@ -18,8 +18,10 @@ import shreesevak.api.model.Area;
 import shreesevak.api.model.Role;
 import shreesevak.api.model.User;
 import shreesevak.api.payloads.RoleDto;
+import shreesevak.api.payloads.UserAreaFrontEnd;
 import shreesevak.api.payloads.UserDto;
 import shreesevak.api.payloads.UserFrontEndData;
+import shreesevak.api.repository.AreaRepo;
 import shreesevak.api.repository.LocationRepo;
 import shreesevak.api.repository.RoleRepo;
 import shreesevak.api.repository.UserRepo;
@@ -31,7 +33,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepo userRepo;
-
+	@Autowired
+	private AreaRepo areaRepo;
 	@Autowired
 	private LocationRepo locationRepo;
 	@Autowired
@@ -65,13 +68,20 @@ public class UserServiceImpl implements UserService {
 
 		user.setEmailId(frontEndData.getEmailId());
 		user.setPhoneNumber(frontEndData.getPhoneNumber());
-	
+
 		user.setStatus(frontEndData.getStatus());
 
 		List<Role> role = this.roleRepo.findByRoleName(frontEndData.getRole());
 		user.setRoles(role);
-		
-		user.setSelectedAreas(frontEndData.getSelectedAreas());
+		List<UserAreaFrontEnd> areas = frontEndData.getSelectedAreas();
+		List<Optional<Area>> areaList = areas.stream().map(ar -> this.areaRepo.findById(ar.getId()))
+				.collect(Collectors.toList());
+		List<Area> newArea = new ArrayList<>();
+
+		for (Optional<Area> optional : areaList) {
+			newArea.add(optional.get());
+		}
+		user.setSelectedAreas(newArea);
 		User saveUser = this.userRepo.save(user);
 
 		System.out.println(saveUser.toString());
@@ -82,21 +92,29 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto updateUser(UserFrontEndData userDto, Integer userId) {
-		List<Area>areas=new ArrayList<>();
+		List<Area> areas = new ArrayList<>();
 		User user = this.userRepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("user", "id", userId));
-        user.setSelectedAreas(areas);
-     User  updatedUser= this.userRepo.save(user);
+		user.setSelectedAreas(areas);
+		User updatedUser = this.userRepo.save(user);
 //		user.setUserId(userDto.getUserId());
-     updatedUser.setName(userDto.getName());
-     updatedUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-     updatedUser.setEmailId(userDto.getEmailId());
-     updatedUser.setPhoneNumber(userDto.getPhoneNumber());
-     updatedUser.setSelectedAreas(userDto.getSelectedAreas());
-	List<Role> role=this.roleRepo.findByRoleName(userDto.getRole());
+		updatedUser.setName(userDto.getName());
+		updatedUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		updatedUser.setEmailId(userDto.getEmailId());
+		updatedUser.setPhoneNumber(userDto.getPhoneNumber());
+		List<UserAreaFrontEnd> areas1 = userDto.getSelectedAreas();
+		List<Optional<Area>> areaList = areas1.stream().map(ar -> this.areaRepo.findById(ar.getId()))
+				.collect(Collectors.toList());
+		List<Area> newArea = new ArrayList<>();
 
-	updatedUser.setRoles(role);
-	updatedUser.setStatus(userDto.getStatus());
+		for (Optional<Area> optional : areaList) {
+			newArea.add(optional.get());
+		}
+		updatedUser.setSelectedAreas(newArea);
+		List<Role> role = this.roleRepo.findByRoleName(userDto.getRole());
+
+		updatedUser.setRoles(role);
+		updatedUser.setStatus(userDto.getStatus());
 
 		User updatedUser2 = this.userRepo.save(user);
 		UserDto userDto1 = this.userToDto(updatedUser2);
@@ -153,7 +171,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public UserDto userToDto(User user) {
-		
+
 		UserDto userDto = this.modelMapper.map(user, UserDto.class);
 //		userDto.setUserId(user.getUserId());
 //		userDto.setName(user.getName());
