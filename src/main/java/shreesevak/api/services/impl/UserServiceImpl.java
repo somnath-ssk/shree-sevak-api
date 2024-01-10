@@ -75,8 +75,8 @@ public class UserServiceImpl implements UserService {
 
 		List<Role> role = this.roleRepo.findByRoleName(frontEndData.getRole());
 		user.setRoles(role);
-		List<UserAreaFrontEnd> areas = frontEndData.getSelectedAreas();
-		List<Optional<Area>> areaList = areas.stream().map(ar -> this.areaRepo.findById(ar.getId()))
+		List<Integer> areas = frontEndData.getSelectedAreas();
+		List<Optional<Area>> areaList = areas.stream().map(areaId -> this.areaRepo.findById(areaId))
 				.collect(Collectors.toList());
 		List<Area> newArea = new ArrayList<>();
 
@@ -104,8 +104,8 @@ public class UserServiceImpl implements UserService {
 		updatedUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		updatedUser.setEmailId(userDto.getEmailId());
 		updatedUser.setPhoneNumber(userDto.getPhoneNumber());
-		List<UserAreaFrontEnd> areas1 = userDto.getSelectedAreas();
-		List<Optional<Area>> areaList = areas1.stream().map(ar -> this.areaRepo.findById(ar.getId()))
+		List<Integer> areas1 = userDto.getSelectedAreas();
+		List<Optional<Area>> areaList = areas1.stream().map(areaId -> this.areaRepo.findById(areaId))
 				.collect(Collectors.toList());
 		List<Area> newArea = new ArrayList<>();
 

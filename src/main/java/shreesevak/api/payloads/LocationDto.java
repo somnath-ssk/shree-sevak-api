@@ -7,10 +7,12 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import shreesevak.api.model.Area;
 import shreesevak.api.model.Baithak;
 import shreesevak.api.model.Member;
 import shreesevak.api.model.User;
@@ -18,6 +20,7 @@ import shreesevak.api.model.User;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class LocationDto {
 	
 	private int locationId;
@@ -47,7 +50,6 @@ public class LocationDto {
 	private String  state ;
 	private String country; 
    private String  pincode ;
-   private String area;
 	private String  latitude ;
 	private String  longitude ;
     private String  status ;
@@ -68,7 +70,7 @@ public class LocationDto {
 	private String  contact2Phone1;
 	private String  contact2Phone2;
 	private boolean mixedGenderAllow;
-	
+	 private Area area;
 	
 //	private List<UserDto>users=new ArrayList<>();
 //	  private List<BaithakDto> baithak=new ArrayList<>();

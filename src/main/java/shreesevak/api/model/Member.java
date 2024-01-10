@@ -96,7 +96,8 @@ private String twoWheelerDetail;
 private String fourWheelerDetail;
 
 @JsonManagedReference
-@OneToMany(mappedBy= "member", cascade = CascadeType.ALL)
+@OneToMany( cascade = CascadeType.ALL)
+@JoinTable(name="member_weeklyOff",joinColumns=@JoinColumn(name="memberId"),inverseJoinColumns=@JoinColumn(name="weekId"))
 private List<WeeklyOff> weeklyOffs =new ArrayList<>();
 
 

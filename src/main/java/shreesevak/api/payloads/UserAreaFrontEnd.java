@@ -11,5 +11,5 @@ import lombok.Setter;
 @Setter
 public class UserAreaFrontEnd {
  private int id;
- private String value;
+
 }

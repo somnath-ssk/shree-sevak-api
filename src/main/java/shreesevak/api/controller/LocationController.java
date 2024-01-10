@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import shreesevak.api.helperclass.LocationFrontEnd;
 import shreesevak.api.payloads.LocationDto;
 import shreesevak.api.payloads.UserDto;
 import shreesevak.api.services.LocationService;
@@ -33,8 +34,8 @@ public class LocationController {
 	
 	// create Location Details
 	@PostMapping("/")
-	public  ResponseEntity<LocationDto> createLocations(@RequestBody LocationDto locDto) {
-	LocationDto locDto1= this.locationService.createLocation(locDto);
+	public  ResponseEntity<LocationDto> createLocations(@RequestBody LocationFrontEnd locfrontDto) {
+	LocationDto locDto1= this.locationService.createLocation(locfrontDto);
 	return new ResponseEntity<>(locDto1,HttpStatus.OK);
 		
 	}
@@ -56,7 +57,7 @@ public class LocationController {
 	}
 	 
 	@PutMapping("/{locId}")
-	public ResponseEntity<LocationDto> updateLocation(@RequestBody LocationDto locDto,@PathVariable  Integer locId){
+	public ResponseEntity<LocationDto> updateLocation(@RequestBody LocationFrontEnd locDto,@PathVariable  Integer locId){
 		  LocationDto newLocDto= locationService.updateLocation(locDto, locId);
 		return ResponseEntity.ok(newLocDto);
 	}

@@ -101,7 +101,7 @@ public class MemberDto {
 	private boolean fourWheeler;
 	private String twoWheelerDetail;
 	private String fourWheelerDetail;
-	private List<WeeklyOff> weeklyOffs =new ArrayList<>();
+	private List<WeeklyOffDto> weeklyOffs =new ArrayList<>();
 //	private Location location;
 //	private List<Baithak>baithaks=new ArrayList<>();
 }

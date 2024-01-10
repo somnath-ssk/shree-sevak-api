@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import shreesevak.api.payloads.ApiResponse;
+import shreesevak.api.payloads.MembeFrontendBody;
 import shreesevak.api.payloads.MemberDto;
 import shreesevak.api.services.MemberService;
 
@@ -38,9 +39,9 @@ public class MemberController {
 	
 	//update member
 	@PutMapping("/update-member/{memberId}")
-	public ResponseEntity<MemberDto> updateMember(@RequestBody MemberDto memberDto,@PathVariable Integer memberId ){
-		MemberDto saveMember	=this.memberService.updateMember(memberDto,memberId);
-		return new ResponseEntity<MemberDto>(saveMember,HttpStatus.CREATED);
+	public ResponseEntity<MemberDto> updateMember(@RequestBody MembeFrontendBody memberBody,@PathVariable Integer memberId ){
+		MemberDto saveMember	=this.memberService.updateMember(memberBody,memberId);
+		return new ResponseEntity<MemberDto>(saveMember,HttpStatus.OK);
 	}
 	
 	//delete member

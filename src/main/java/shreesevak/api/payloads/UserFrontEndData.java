@@ -22,6 +22,6 @@ public class UserFrontEndData {
 	private String phoneNumber;
 	private String status;
 	private String role;
-	private List<UserAreaFrontEnd> selectedAreas;
+	private List<Integer> selectedAreas;
 
 }

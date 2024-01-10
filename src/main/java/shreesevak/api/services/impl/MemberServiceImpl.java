@@ -1,7 +1,9 @@
 package shreesevak.api.services.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -14,9 +16,12 @@ import shreesevak.api.exceptions.ResourceNotFoundException;
 import shreesevak.api.model.Baithak;
 import shreesevak.api.model.Member;
 import shreesevak.api.model.Role;
+import shreesevak.api.model.WeeklyOff;
+import shreesevak.api.payloads.MembeFrontendBody;
 import shreesevak.api.payloads.MemberDto;
 import shreesevak.api.repository.BaithakRepo;
 import shreesevak.api.repository.MemberRepo;
+import shreesevak.api.repository.WeekRepo;
 import shreesevak.api.services.MemberService;
 
 @Service
@@ -27,6 +32,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberRepo memberRepo;
+	
+	@Autowired
+	private WeekRepo weekRepo;
 	
 	private BaithakRepo baithakRepo;
 	//crate memeber
@@ -51,61 +59,68 @@ public class MemberServiceImpl implements MemberService {
 
 	//Update Memeber
 	@Override
-	public MemberDto updateMember(MemberDto memberDto,Integer memberId) {
+	public MemberDto updateMember(MembeFrontendBody memberFrontEndBody,Integer memberId) {
 	Member member	=this.memberRepo.findById(memberId).orElseThrow(()-> new ResourceNotFoundException("Memeber", "id", memberId));
-		member.setFirstName(memberDto.getFirstName());
-		member.setAdd1(memberDto.getAdd1());
-		member.setAdd2(memberDto.getAdd2());
-		member.setAdd3(memberDto.getAdd3());
-		member.setAdd4(memberDto.getAdd4());
-		member.setFirstName(memberDto.getFirstName());
-		member.setAddharNumber(memberDto.getAddharNumber());
-		member.setAdditionalInfo(memberDto.getAdditionalInfo());
-		member.setCity(memberDto.getCity());
-		member.setCountry(memberDto.getCountry());
-		member.setDivision(memberDto.getDivision());
-		member.setDOB(memberDto.getDOB());
-		member.setEducation(memberDto.getEducation());
-		member.setEmail(memberDto.getEmail());
-		member.setRole(memberDto.getRole());
-		member.setGender(memberDto.getGender());
-		member.setGoogleMapLink(memberDto.getGoogleMapLink());
-		member.setHajeriNo(memberDto.getHajeriNo());
-		member.setInitial(memberDto.getInitial());
-		member.setEligibleForChild(memberDto.isEligibleForChild());
-		member.setEligibleForGents(memberDto.isEligibleForGents());
-		member.setEligibleForLadies(memberDto.isEligibleForLadies());
-		member.setEligibleForNone(memberDto.isEligibleForNone());
-		member.setMarathiRead(memberDto.isMarathiRead());
-		member.setMarathiSpeak(memberDto.isMarathiSpeak());
-		member.setMarathiWrite(memberDto.isMarathiWrite());
-		member.setHindiRead(memberDto.isHindiRead());
-		member.setHindiSpeak(memberDto.isHindiSpeak());
-		member.setHindiWrite(memberDto.isHindiWrite());
-		member.setEnglishRead(memberDto.isEnglishRead());
-		member.setEnglishSpeak(memberDto.isEnglishSpeak());
-		member.setEnglishWrite(memberDto.isEnglishWrite());
-		member.setLastName(memberDto.getLastName());
-		member.setMiddleName(memberDto.getMiddleName());
-		member.setMobile(memberDto.getMobile());
-		member.setOccupation(memberDto.getOccupation());
-		member.setOwnBaithakDay(memberDto.getOwnBaithakDay());
-		member.setPanNo(memberDto.getPanNo());
-		member.setPhone(memberDto.getPhone());
-		member.setPhotoBase64(memberDto.getPhotoBase64());
-		member.setPincode(memberDto.getPincode());
-		member.setState(memberDto.getState());
-		member.setStatus(memberDto.getStatus());
-		member.setArea(memberDto.getArea());
-		member.setTwoWheelerDetail(memberDto.getTwoWheelerDetail());
-		member.setFourWheelerDetail(memberDto.getFourWheelerDetail());
-		member.setTwoWheeler(memberDto.isTwoWheeler());
-		member.setFourWheeler(memberDto.isFourWheeler());
-member.setNoVehical(memberDto.isNoVehical());
-member.setWeeklyOffs(memberDto.getWeeklyOffs());
-		int baithak=(memberDto.getMemberId());
-		Baithak baithak2=this.baithakRepo.findByBithakId(baithak);
-		member.setBaithak(baithak2);
+		member.setFirstName(memberFrontEndBody.getFirstName());
+		member.setAdd1(memberFrontEndBody.getAdd1());
+		member.setAdd2(memberFrontEndBody.getAdd2());
+		member.setAdd3(memberFrontEndBody.getAdd3());
+		member.setAdd4(memberFrontEndBody.getAdd4());
+		member.setFirstName(memberFrontEndBody.getFirstName());
+		member.setAddharNumber(memberFrontEndBody.getAddharNumber());
+		member.setAdditionalInfo(memberFrontEndBody.getAdditionalInfo());
+		member.setCity(memberFrontEndBody.getCity());
+		member.setCountry(memberFrontEndBody.getCountry());
+		member.setDivision(memberFrontEndBody.getDivision());
+		member.setDOB(memberFrontEndBody.getDOB());
+		member.setEducation(memberFrontEndBody.getEducation());
+		member.setEmail(memberFrontEndBody.getEmail());
+		member.setRole(memberFrontEndBody.getRole());
+		member.setGender(memberFrontEndBody.getGender());
+		member.setGoogleMapLink(memberFrontEndBody.getGoogleMapLink());
+		member.setHajeriNo(memberFrontEndBody.getHajeriNo());
+		member.setInitial(memberFrontEndBody.getInitial());
+		member.setEligibleForChild(memberFrontEndBody.isEligibleForChild());
+		member.setEligibleForGents(memberFrontEndBody.isEligibleForGents());
+		member.setEligibleForLadies(memberFrontEndBody.isEligibleForLadies());
+		member.setEligibleForNone(memberFrontEndBody.isEligibleForNone());
+		member.setMarathiRead(memberFrontEndBody.isMarathiRead());
+		member.setMarathiSpeak(memberFrontEndBody.isMarathiSpeak());
+		member.setMarathiWrite(memberFrontEndBody.isMarathiWrite());
+		member.setHindiRead(memberFrontEndBody.isHindiRead());
+		member.setHindiSpeak(memberFrontEndBody.isHindiSpeak());
+		member.setHindiWrite(memberFrontEndBody.isHindiWrite());
+		member.setEnglishRead(memberFrontEndBody.isEnglishRead());
+		member.setEnglishSpeak(memberFrontEndBody.isEnglishSpeak());
+		member.setEnglishWrite(memberFrontEndBody.isEnglishWrite());
+		member.setLastName(memberFrontEndBody.getLastName());
+		member.setMiddleName(memberFrontEndBody.getMiddleName());
+		member.setMobile(memberFrontEndBody.getMobile());
+		member.setOccupation(memberFrontEndBody.getOccupation());
+		member.setOwnBaithakDay(memberFrontEndBody.getOwnBaithakDay());
+		member.setPanNo(memberFrontEndBody.getPanNo());
+		member.setPhone(memberFrontEndBody.getPhone());
+		member.setPhotoBase64(memberFrontEndBody.getPhotoBase64());
+		member.setPincode(memberFrontEndBody.getPincode());
+		member.setState(memberFrontEndBody.getState());
+		member.setStatus(memberFrontEndBody.getStatus());
+		member.setArea(memberFrontEndBody.getArea());
+		member.setTwoWheelerDetail(memberFrontEndBody.getTwoWheelerDetail());
+		member.setFourWheelerDetail(memberFrontEndBody.getFourWheelerDetail());
+		member.setTwoWheeler(memberFrontEndBody.isTwoWheeler());
+		member.setFourWheeler(memberFrontEndBody.isFourWheeler());
+member.setNoVehical(memberFrontEndBody.isNoVehical());
+  List<Integer>absentDays=memberFrontEndBody.getWeeklyOffs();
+  List<Optional<WeeklyOff>> offWeeks=absentDays.stream().map(day->this.weekRepo.findById(day)).collect(Collectors.toList());
+  List<WeeklyOff>newWeek=new ArrayList<>();
+  for (Optional<WeeklyOff> weeklyOff : offWeeks) {
+	  newWeek.add(weeklyOff.get());
+	
+}
+member.setWeeklyOffs(newWeek);
+//		int baithak=(memberDto.getMemberId());
+//		Baithak baithak2=this.baithakRepo.findByBithakId(baithak);
+//		member.setBaithak(baithak2);
 		Member memberUpdated=this.memberRepo.save(member);
 		
 	return this.memberToDto(memberUpdated) ;

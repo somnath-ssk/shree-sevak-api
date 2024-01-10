@@ -18,12 +18,14 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import shreesevak.api.payloads.AreaDto;
 
 
 
@@ -60,7 +62,7 @@ public class Location {
 	private String  state ;
 	private String country; 
    private String  pincode ;
-   private String area;
+
 	private String  latitude ;
 	private String  longitude ;
     private String  status ;
@@ -82,7 +84,11 @@ public class Location {
 	private String  contact2Phone2;
 	private String  contact2Occupation;
 	private boolean mixedGenderAllow;
-
+	
+	 @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "areaId")
+    private Area area;
 	
 //	@ManyToMany(mappedBy = "locations")
 //	private List<User>users=new ArrayList<>();
