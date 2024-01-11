@@ -47,12 +47,12 @@ public class AreaController {
 		
 	}
 	//get by nme
-	@GetMapping("/areaName")
-	private ResponseEntity<AreaDto> getSingleAreaByName(@RequestParam("areaName") String areaName) {
-		AreaDto area=this.areaService.getSingleAreaByNames(areaName);
-		return new ResponseEntity<AreaDto>(area,HttpStatus.OK);
-		
-	}
+//	@GetMapping("/areaName")
+//	private ResponseEntity<AreaDto> getSingleAreaByName(@RequestParam("areaName") String areaName) {
+//		AreaDto area=this.areaService.getSingleAreaByNames(areaName);
+//		return new ResponseEntity<AreaDto>(area,HttpStatus.OK);
+//		
+//	}
 	@GetMapping("/all-areas")
 	private ResponseEntity<List<AreaDto>> getAllAreas() {
 		List<AreaDto> areas=this.areaService.getallArea();

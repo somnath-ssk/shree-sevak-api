@@ -22,5 +22,5 @@ public interface AreaRepo extends JpaRepository<Area,Integer> {
 	 @Query("SELECT a FROM Area a ORDER BY a.areaId DESC")
 	 List<Area> findAllAreas();
 	 
-  Area findByAreaName(String areaName);
+   Area findByAreaName(String areaName);
 }

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import shreesevak.api.helperclass.MembeFrontendBody;
 import shreesevak.api.payloads.ApiResponse;
-import shreesevak.api.payloads.MembeFrontendBody;
 import shreesevak.api.payloads.MemberDto;
 import shreesevak.api.services.MemberService;
 
@@ -31,8 +31,8 @@ public class MemberController {
 	
 	//create member
 	@PostMapping("/createmember")
-	public ResponseEntity<MemberDto> createMember(@RequestBody MemberDto memberDto ){
-	  MemberDto saveMember	=this.memberService.createMember(memberDto);
+	public ResponseEntity<MemberDto> createMember(@RequestBody MembeFrontendBody membeFrontendBody ){
+	  MemberDto saveMember	=this.memberService.createMember(membeFrontendBody);
 		return new ResponseEntity<MemberDto>(saveMember,HttpStatus.CREATED);
 	}
 	
@@ -70,12 +70,12 @@ public class MemberController {
 	}
 	
 	//get memebr base on area
-	@GetMapping("/areaMembers/{area}")
-	public ResponseEntity<List<MemberDto>> selectAllAreaMemebrs(@PathVariable String area) {
-		List<MemberDto>areaMembers=this.memberService.getAllAreaMember(area);
-		return new ResponseEntity<List<MemberDto>>(areaMembers, HttpStatus.OK) ;
-		
-	}
+//	@GetMapping("/areaMembers/{area}")
+//	public ResponseEntity<List<MemberDto>> selectAllAreaMemebrs(@PathVariable String area) {
+//		List<MemberDto>areaMembers=this.memberService.getAllAreaMember(area);
+//		return new ResponseEntity<List<MemberDto>>(areaMembers, HttpStatus.OK) ;
+//		
+//	}
 	
 	
 	//get all active member

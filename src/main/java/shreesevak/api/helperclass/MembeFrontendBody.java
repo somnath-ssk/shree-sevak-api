@@ -1,4 +1,4 @@
-package shreesevak.api.payloads;
+package shreesevak.api.helperclass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,11 +90,12 @@ private String state ;
 @NotEmpty
 private String status;
 @NotEmpty
-private String area;
+
 private boolean noVehical;
 private boolean twoWheeler;
 private boolean fourWheeler;
 private String twoWheelerDetail;
 private String fourWheelerDetail;
+private int area;
 private List<Integer> weeklyOffs =new ArrayList<>();
 }

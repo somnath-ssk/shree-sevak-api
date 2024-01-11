@@ -80,8 +80,11 @@ public class AreaServiceImpl implements AreaService {
 		    List<AreaDto> allAreas = listAreas.stream()
 		    		 .map(area -> {
 			                List<Member> membersInArea = allMembers.stream()
-			                        .filter(member -> member.getArea().trim().equalsIgnoreCase(area.getAreaName().trim()))
-			                        .collect(Collectors.toList());
+			                		 .filter(member -> {
+			                             Area memberArea = member.getArea();
+			                             return memberArea != null && memberArea.getAreaName().trim().equalsIgnoreCase(area.getAreaName().trim());
+			                         })
+			                         .collect(Collectors.toList());
 
 			                long maleCount = membersInArea.stream()
 			                        .filter(member -> member.getCity().trim().equalsIgnoreCase(area.getCity().trim()))
@@ -113,8 +116,11 @@ public class AreaServiceImpl implements AreaService {
 	    List<AreaDto> allAreas = listAreas.stream()
 	            .map(area -> {
 	                List<Member> membersInArea = allMembers.stream()
-	                        .filter(member -> member.getArea().trim().equalsIgnoreCase(area.getAreaName().trim()))
-	                        .collect(Collectors.toList());
+	                		 .filter(member -> {
+	                             Area memberArea = member.getArea();
+	                             return memberArea != null && memberArea.getAreaName().trim().equalsIgnoreCase(area.getAreaName().trim());
+	                         })
+	                         .collect(Collectors.toList());
 
 	                long maleCount = membersInArea.stream()
 	                        .filter(member -> member.getCity().trim().equalsIgnoreCase(area.getCity().trim()))

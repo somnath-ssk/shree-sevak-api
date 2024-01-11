@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import shreesevak.api.model.Area;
 import shreesevak.api.model.Baithak;
 import shreesevak.api.model.Location;
 import shreesevak.api.model.WeeklyOff;
@@ -95,12 +96,13 @@ public class MemberDto {
 	@NotEmpty
 	private String status;
 	@NotEmpty
-	private String area;
+
 	private boolean noVehical;
 	private boolean twoWheeler;
 	private boolean fourWheeler;
 	private String twoWheelerDetail;
 	private String fourWheelerDetail;
+	private AreaDto area;
 	private List<WeeklyOffDto> weeklyOffs =new ArrayList<>();
 //	private Location location;
 //	private List<Baithak>baithaks=new ArrayList<>();

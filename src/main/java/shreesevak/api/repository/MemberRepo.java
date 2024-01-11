@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
 
 import shreesevak.api.model.Member;
@@ -12,7 +13,7 @@ import shreesevak.api.model.Role;
 import shreesevak.api.model.Scheduler;
 
 
-
+@EnableJpaRepositories
 public interface MemberRepo extends JpaRepository<Member,Integer> {
 
 	 Member findByPhone(String phone);
@@ -28,9 +29,8 @@ public interface MemberRepo extends JpaRepository<Member,Integer> {
 		List<Member> findAllorderByDesc();
 	   
 	   
-	   
-  List<Member> findByArea(String area);
-	
+//	   
+//  List<Member> findByAreaId();
 	  
 
 }

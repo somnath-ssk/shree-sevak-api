@@ -21,6 +21,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +37,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @Table(name="member")
-
 public class Member {
 	
 	@Id
@@ -88,12 +88,18 @@ private String pincode;
 private String state ;
 private String status;
 //private String[] weeklyOffs;
-private String area;
+
 private boolean noVehical;
 private boolean twoWheeler;
 private boolean fourWheeler;
 private String twoWheelerDetail;
 private String fourWheelerDetail;
+
+@JsonManagedReference
+@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+@JoinColumn(name="areaId")
+private Area area;
+
 
 @JsonManagedReference
 @OneToMany( cascade = CascadeType.ALL)
