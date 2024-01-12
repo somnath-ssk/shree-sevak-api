@@ -158,6 +158,7 @@ public class ScheduleServiceImp implements ScheduleService {
 	}
 
 	public SchedularDto scheduleToDto(Scheduler schedular) {
+		
 		SchedularDto schedularDto = this.modelMapper.map(schedular, SchedularDto.class);
 
 		return schedularDto;

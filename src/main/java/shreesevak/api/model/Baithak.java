@@ -44,10 +44,12 @@ public class Baithak {
 	private String status;
 	private String toTime;
 	
+
 	@OneToOne
 	@JoinColumn(name="location_id")
 	private Location location;
 	
+
 	@OneToMany(mappedBy ="baithak",cascade=CascadeType.ALL)
 	List<Member>members=new ArrayList<>();
 	

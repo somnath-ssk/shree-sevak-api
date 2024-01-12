@@ -70,7 +70,7 @@ public class LocationDto {
 	private String  contact2Phone1;
 	private String  contact2Phone2;
 	private boolean mixedGenderAllow;
-	 private Area area;
+	 private AreaDto area;
 	
 //	private List<UserDto>users=new ArrayList<>();
 //	  private List<BaithakDto> baithak=new ArrayList<>();

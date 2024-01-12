@@ -27,6 +27,7 @@ public class BaithakController {
 	@Autowired
 	private BaithakService baithakService;
 //	
+	
 	@PostMapping("/createbaithak")
 	public ResponseEntity<Baithak> createBaithaks(@RequestBody Baithak baithak){
 		

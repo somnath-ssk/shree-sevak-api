@@ -47,7 +47,7 @@ public class Member {
 	private String lastName;
 	private String email;
 	private String hajeriNo;
-	private String hajeriNoDetails;
+	private int baithakLocation;
 	private String addharNumber;
 	private String Education;
 	private String role;

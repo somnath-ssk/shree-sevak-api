@@ -17,6 +17,7 @@ public interface LocationService {
 	List<Location> searchLocations(String keyword);
 	
 	List<LocationDto> getAllActiveLocation(String status);
+	List<LocationDto> getAllLocationByAreaId(Integer areaId);
 	
 	
 	

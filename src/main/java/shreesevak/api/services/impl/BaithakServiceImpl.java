@@ -59,7 +59,6 @@ public class BaithakServiceImpl implements BaithakService{
 			Baithak baithak  = this.baithakRepo.findByBithakId(baithakId);
 			baithak.setBaithakType(baithakDto.getBaithakType());
 			baithak.setDayOfWeek(baithakDto.getDayOfWeek());
-			baithak.setDayOfWeek(baithakDto.getDate());
 			baithak.setFromTime(baithakDto.getFromTime());
 			baithak.setToTime(baithakDto.getToTime());
 			baithak.setStatus(baithakDto.getStatus());
@@ -68,16 +67,16 @@ public class BaithakServiceImpl implements BaithakService{
     baithak.setLocation(location);
      
    
-    //updating memebers
-  List<Member>members=baithakDto.getMemberIds().stream().map(memId->this.memberRepo.findByMemberId(memId)).collect(Collectors.toList());
-  for (Member member : members) {
-	  if(members.isEmpty()) {
-			member.setBaithak(null);
-	  }
-		member.setBaithak(baithak);
-	}
+//    //updating memebers
+//  List<Member>members=baithakDto.getMemberIds().stream().map(memId->this.memberRepo.findByMemberId(memId)).collect(Collectors.toList());
+//  for (Member member : members) {
+//	  if(members.isEmpty()) {
+//			member.setBaithak(null);
+//	  }
+//		member.setBaithak(baithak);
+//	}
  
-  baithak.setMembers(members);
+//  baithak.setMembers(members);
 		Baithak updatedBaithak	=this.baithakRepo.save(baithak);
 			return updatedBaithak;
 		}catch (Exception e) {

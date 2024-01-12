@@ -143,7 +143,18 @@ public class LocationServiceImpl implements LocationService {
 	List<LocationDto>locDtos =  locList.stream().map(loc->this.locationToDto(loc)).collect(Collectors.toList());
 		return locDtos;
 	}
-	
+	@Override
+	public List<LocationDto> getAllLocationByAreaId(Integer areaId) {
+		try {
+			List<Location> locationList=this.locationRepo.findByLocationAreaId(areaId);
+			List<LocationDto>locDtos =  locationList.stream().map(loc->this.locationToDto(loc)).collect(Collectors.toList());
+			return locDtos;
+		}catch(RuntimeException ex) {
+			throw new ResourceNotFoundException("No area present with this area in location", "=", areaId);
+			
+		}
+		
+	}
 	//search location
 	@Override
 	public List<Location> searchLocations(String keyword) {
@@ -170,6 +181,8 @@ public class LocationServiceImpl implements LocationService {
 		LocationDto locDto=this.modelMapper.map(loc,LocationDto.class);
 		return locDto;
 	}
+
+
 	
 
 

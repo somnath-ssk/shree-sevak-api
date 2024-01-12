@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import shreesevak.api.model.Baithak;
 import shreesevak.api.model.Location;
 import shreesevak.api.model.Member;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter

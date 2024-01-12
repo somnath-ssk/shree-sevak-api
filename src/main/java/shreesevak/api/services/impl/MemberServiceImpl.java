@@ -51,6 +51,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDto createMember(MembeFrontendBody memberFrontEndBody) {
 		Member member1=new Member();
+		member1.setBaithakLocation(memberFrontEndBody.getBaithakLocation());
 		member1.setFirstName(memberFrontEndBody.getFirstName());
 		member1.setAdd1(memberFrontEndBody.getAdd1());
 		member1.setAdd2(memberFrontEndBody.getAdd2());
@@ -149,6 +150,7 @@ Optional<Area> area =this.areaRepo.findById(memberFrontEndBody.getArea());
 		member.setCountry(memberFrontEndBody.getCountry());
 		member.setDivision(memberFrontEndBody.getDivision());
 		member.setDOB(memberFrontEndBody.getDOB());
+		member.setBaithakLocation(memberFrontEndBody.getBaithakLocation());
 		member.setEducation(memberFrontEndBody.getEducation());
 		member.setEmail(memberFrontEndBody.getEmail());
 		member.setRole(memberFrontEndBody.getRole());

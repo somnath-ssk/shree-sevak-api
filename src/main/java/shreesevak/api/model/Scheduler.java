@@ -3,6 +3,8 @@ package shreesevak.api.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,13 +16,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import shreesevak.api.payloads.LocationDto;
 
 
-
+@AllArgsConstructor
 @Entity
 @Table(name="scheduler")
 @NoArgsConstructor
@@ -32,7 +35,7 @@ public class Scheduler {
 	  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int scheduleId;
 	
-	
+//	 @JsonBackReference
 	@OneToOne
 	@JoinColumn(name="location")
 	private Location location;
@@ -40,7 +43,7 @@ public class Scheduler {
 	@JoinColumn(name="baithak")
 	private Baithak baithak;
 	
-	
+//	 @JsonBackReference
 	@JoinTable(name="schedule_members",joinColumns = @JoinColumn(name="schedule_id"),inverseJoinColumns =@JoinColumn(name="memberId"))
 	@ManyToMany
 	private List<Member>members=new ArrayList<>();

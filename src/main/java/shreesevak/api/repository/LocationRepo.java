@@ -36,6 +36,8 @@ public interface LocationRepo extends JpaRepository<Location,Integer> {
 	 @Query("SELECT l.status FROM Location l WHERE l.status = :status ORDER BY l.locationId DESC")
 	List<Location> findStatusByOrderByLocationIdDesc(String status);
 	
+	 @Query("SELECT l FROM Location l WHERE l.area.areaId= :areaId")
+	List<Location> findByLocationAreaId(@Param("areaId") Integer areaId);
         
 
 

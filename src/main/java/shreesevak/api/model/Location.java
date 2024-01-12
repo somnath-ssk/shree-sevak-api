@@ -85,7 +85,7 @@ public class Location {
 	private String  contact2Occupation;
 	private boolean mixedGenderAllow;
 	
-	 @JsonManagedReference
+
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "areaId")
     private Area area;

@@ -29,7 +29,7 @@ public class MembeFrontendBody {
 	
 	@NotEmpty
 	private String hajeriNo;
-	private String hajeriNoDetails;
+	private int baithakLocation;
 	@NotEmpty
 	private String addharNumber;
 	@NotEmpty

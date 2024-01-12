@@ -118,7 +118,8 @@ public class AreaServiceImpl implements AreaService {
 	                List<Member> membersInArea = allMembers.stream()
 	                		 .filter(member -> {
 	                             Area memberArea = member.getArea();
-	                             return memberArea != null && memberArea.getAreaName().trim().equalsIgnoreCase(area.getAreaName().trim());
+	                             
+	                             return memberArea != null && memberArea.getAreaName().trim().equalsIgnoreCase(area.getAreaName().trim()) && memberArea.getCity().trim().equalsIgnoreCase(area.getCity().trim());
 	                         })
 	                         .collect(Collectors.toList());
 

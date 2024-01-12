@@ -49,6 +49,14 @@ public class LocationController {
 		return ResponseEntity.ok(locDto); 
 	}
 	
+	@GetMapping("/allLocations/areaId/{areaId}")
+	public ResponseEntity<List<LocationDto>> getAllLocationByAreaId(@PathVariable Integer  areaId){
+		List<LocationDto> locDto= this.locationService.getAllLocationByAreaId(areaId);
+		
+		
+		return new ResponseEntity<>(locDto,HttpStatus.OK);
+	}
+	
 	//get all location
 	
 	@GetMapping("/")
