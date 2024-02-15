@@ -4,6 +4,7 @@ import java.util.List;
 
 import shreesevak.api.helperclass.MembeFrontendBody;
 import shreesevak.api.payloads.MemberDto;
+import shreesevak.api.payloads.PaginationResponse;
 
 public interface MemberService {
 
@@ -15,7 +16,10 @@ public interface MemberService {
 //	List<MemberDto> getAllAreaMember(String area);
 	
 	List<MemberDto> getAllActiveMemebers(String status);
-
+	PaginationResponse getAllActiveMemebers(Integer pageNumber, Integer pageSize,String status);
+	PaginationResponse getAllMember(Integer pageNumber, Integer pageSize);
+	PaginationResponse SearchMemebrs(String keyword, String status, int pageNumber, int pageSize);
+    
 	
 	
 }

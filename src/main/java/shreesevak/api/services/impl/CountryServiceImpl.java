@@ -81,7 +81,7 @@ public class CountryServiceImpl implements CountryService {
 	        cityDto.setDivisions(divisionDtos);
 	        return cityDto;
 	    }
-
+	    
 	    private DivisionDto convertToDto(Division division) {
 	        DivisionDto divisionDto = new DivisionDto();
 	        divisionDto.setDivisionName(division.getName());

@@ -46,11 +46,11 @@ public class FilterController {
     }
 	
 	// To search user using keyword from Location Entity properties
-	@GetMapping("/search/locations")
-	public ResponseEntity<List<Location>> searchLocationByKeyword(@RequestParam("keyword") String keyword) {
-		List<Location> foundLocation	=locationService.searchLocations(keyword);
-		return ResponseEntity.ok(foundLocation);
-	}
+//	@GetMapping("/search/locations")
+//	public ResponseEntity<List<Location>> searchLocationByKeyword(@RequestParam("keyword") String keyword) {
+//		List<Location> foundLocation	=locationService.searchLocations(keyword);
+//		return ResponseEntity.ok(foundLocation);
+//	}
 	
 	// To search role using keyword from Role Entity properties
 	@GetMapping("/search/role")

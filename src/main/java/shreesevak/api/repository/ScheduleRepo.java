@@ -1,5 +1,7 @@
 package shreesevak.api.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import shreesevak.api.model.Baithak;
 import shreesevak.api.model.Location;
+import shreesevak.api.model.Member;
 
 public interface ScheduleRepo extends JpaRepository<Scheduler, Integer> {
 
@@ -32,4 +35,12 @@ public interface ScheduleRepo extends JpaRepository<Scheduler, Integer> {
 //  
     @Query("SELECT s FROM Scheduler s ORDER BY s.scheduleId DESC")
 	List<Scheduler> findAllorderByDesc();
+    
+    @Query("SELECT s FROM Scheduler s WHERE CONCAT(s.baithak.baithakType,' ',s.baithak.date,' ',s.baithak.fromTime ,' ',s.baithak.toTime,' ',s.baithak.dayOfWeek,' ',s.location.locationName) LIKE %:keyword%")
+	   Page<Scheduler>searchSchedule(String keyword,Pageable pageable);
+    
+
+	   
 }
+
+

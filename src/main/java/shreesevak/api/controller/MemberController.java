@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import shreesevak.api.helperclass.MembeFrontendBody;
 import shreesevak.api.payloads.ApiResponse;
 import shreesevak.api.payloads.MemberDto;
+import shreesevak.api.payloads.PaginationResponse;
 import shreesevak.api.services.MemberService;
 
 @CrossOrigin("*")
@@ -68,6 +70,13 @@ public class MemberController {
 		return new ResponseEntity<List<MemberDto>>(members, HttpStatus.OK) ;
 		
 	}
+	@GetMapping("/all-members/pagination")
+	public ResponseEntity<PaginationResponse> selectAllMemberspagination(@RequestParam(value ="pageNumber",defaultValue = "0",required = false) Integer pageNumber,@RequestParam(value = "pageSize",defaultValue = "10", required = false)Integer pageSize) {
+		PaginationResponse pagination=this.memberService.getAllMember(pageNumber,pageSize);
+		return new ResponseEntity<PaginationResponse>(pagination, HttpStatus.OK) ;
+		
+	}
+	
 	
 	//get memebr base on area
 //	@GetMapping("/areaMembers/{area}")
@@ -81,11 +90,26 @@ public class MemberController {
 	//get all active member
 	
 	@GetMapping("/status/{status}")
-      public ResponseEntity<List<MemberDto>> selectAllSctiveMembers(@PathVariable String status) {
+      public ResponseEntity<List<MemberDto>> selectAllactiveMembers(@PathVariable String status) {
 		List<MemberDto>activemembers=this.memberService.getAllActiveMemebers(status);
 		return new ResponseEntity<List<MemberDto>>(activemembers, HttpStatus.OK) ;
 		
 	}
-	
+	@GetMapping("/status/pagination/{status}")
+	public ResponseEntity<PaginationResponse> selectAllactiveMembers(@RequestParam(value ="pageNumber",defaultValue = "0",required = false) Integer pageNumber,@RequestParam(value = "pageSize",defaultValue = "10", required = false)Integer pageSize,@PathVariable String status ) {
+		PaginationResponse response =this.memberService.getAllActiveMemebers(pageNumber, pageSize, status);
+		return new ResponseEntity<PaginationResponse>(response, HttpStatus.OK) ;
+		 
+	}
+	@GetMapping("/search")
+    public ResponseEntity<PaginationResponse> searchMemebersBaseOnSearchField(
+            @RequestParam("keyword") String keyword,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam("pageNumber") int pageNumber,
+            @RequestParam("pageSize") int pageSize) {
+        
+    
+        return ResponseEntity.ok(this.memberService.SearchMemebrs(keyword,status, pageNumber, pageSize));
+    }
 
 }

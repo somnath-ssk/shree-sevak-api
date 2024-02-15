@@ -57,10 +57,7 @@ public class Location {
 	private String locationName;
 	private String  add1 ;
 	private String add2 ;
-	private String division ;
-	private String city ;
-	private String  state ;
-	private String country; 
+	
    private String  pincode ;
 
 	private String  latitude ;
@@ -85,7 +82,15 @@ public class Location {
 	private String  contact2Occupation;
 	private boolean mixedGenderAllow;
 	
-
+	@OneToOne(fetch = FetchType.EAGER)
+	private Division division ;
+	@OneToOne(fetch = FetchType.EAGER)
+	private City city ;
+	@OneToOne(fetch = FetchType.EAGER)
+	private State state ;
+	@OneToOne(fetch = FetchType.EAGER)
+	private Country country; 
+	
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "areaId")
     private Area area;

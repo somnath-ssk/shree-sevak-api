@@ -30,7 +30,7 @@ public class Country {
 	    private Long id;
 	    private String name;
 
-	    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	    @JsonManagedReference
 	    private List<State> states = new ArrayList<>();
 

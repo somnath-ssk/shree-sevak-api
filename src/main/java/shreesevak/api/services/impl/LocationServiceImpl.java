@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -13,12 +16,21 @@ import shreesevak.api.exceptions.ResourceAllReadyExist;
 import shreesevak.api.exceptions.ResourceNotFoundException;
 import shreesevak.api.helperclass.LocationFrontEnd;
 import shreesevak.api.model.Area;
+import shreesevak.api.model.City;
+import shreesevak.api.model.Country;
+import shreesevak.api.model.Division;
 import shreesevak.api.model.Location;
+import shreesevak.api.model.State;
 import shreesevak.api.model.User;
 import shreesevak.api.payloads.LocationDto;
+import shreesevak.api.payloads.PaginationResponse;
 import shreesevak.api.payloads.UserDto;
 import shreesevak.api.repository.AreaRepo;
+import shreesevak.api.repository.CityRepo;
+import shreesevak.api.repository.CountryRepo;
+import shreesevak.api.repository.DivisionRepo;
 import shreesevak.api.repository.LocationRepo;
+import shreesevak.api.repository.StateRepo;
 import shreesevak.api.repository.UserRepo;
 import shreesevak.api.services.LocationService;
 
@@ -35,20 +47,34 @@ public class LocationServiceImpl implements LocationService {
 	
 	@Autowired
    private AreaRepo areaRepo;
+	@Autowired
+	private CityRepo cityRepo;
 	
+	@Autowired
+	private StateRepo stateRepo;
+	@Autowired
+	private CountryRepo countryRepo;
+	@Autowired
+	private DivisionRepo divisionRepo;
+
 	//Create Location Details
 
 	@Override
 	public LocationDto createLocation(LocationFrontEnd locDto) {
+		
+		Optional<City> city	=this.cityRepo.findById(locDto.getCity());
+		Optional<State> state	=this.stateRepo.findById(locDto.getState());
+		Optional<Division> div	=this.divisionRepo.findById(locDto.getDivision());
+		Optional<Country> country	=this.countryRepo.findById(locDto.getCountry());
 		Location location=new Location();
-		location.setState(locDto.getState());
-		    location.setCity(locDto.getCity());
-		    location.setCountry(locDto.getCountry());
+		location.setState(state.get());
+		    location.setCity(city.get());
+		    location.setCountry(country.get());
 		    location.setLocationName(locDto.getLocationName());
 		    location.setAdd1(locDto.getAdd1());
 		    location.setAdd2(locDto.getAdd2());
 		    location.setPincode(locDto.getPincode());
-		    location.setDivision(locDto.getDivision());
+		    location.setDivision(div.get());
 		    location.setLongitude(locDto.getLongitude());
 		    location.setLatitude(locDto.getLatitude());
 	        location.setStatus(locDto.getStatus());
@@ -81,16 +107,21 @@ public class LocationServiceImpl implements LocationService {
 	//Update Location 
 	@Override
 	public LocationDto updateLocation(LocationFrontEnd locDto, Integer locId) {
+		
+		Optional<City> city	=this.cityRepo.findById(locDto.getCity());
+		Optional<State> state	=this.stateRepo.findById(locDto.getState());
+		Optional<Division> div	=this.divisionRepo.findById(locDto.getDivision());
+		Optional<Country> country	=this.countryRepo.findById(locDto.getCountry());
 	   Location loc= this.locationRepo.findById(locId).orElseThrow(()-> new ResourceNotFoundException("Location","id",locId));
-	    loc.setState(locDto.getState());
-	    loc.setCity(locDto.getCity());
-	    loc.setCountry(locDto.getCountry());
+	
 	    loc.setLocationName(locDto.getLocationName());
 	    loc.setAdd1(locDto.getAdd1());
 	    loc.setAdd2(locDto.getAdd2());
 	    loc.setPincode(locDto.getPincode());
-	    loc.setDivision(locDto.getDivision());
-	
+	    loc.setDivision(div.get());
+	    loc.setState(state.get());
+	    loc.setCity(city.get());
+	    loc.setCountry(country.get());
 	    loc.setLongitude(locDto.getLongitude());
 	    loc.setLatitude(locDto.getLatitude());
         loc.setStatus(locDto.getStatus());
@@ -157,11 +188,11 @@ public class LocationServiceImpl implements LocationService {
 	}
 	//search location
 	@Override
-	public List<Location> searchLocations(String keyword) {
-	List<Location>locatinoKeyword	=locationRepo.searchLocation(keyword);
-	
-            return locatinoKeyword ;
-	}
+//	public List<Location> searchLocations(String keyword) {
+////	List<Location>locatinoKeyword	=locationRepo.searchLocation(keyword);
+//	
+//            return locatinoKeyword ;
+//	}
 	//get all active locations
 	
 	public List<LocationDto> getAllActiveLocation(String status) {
@@ -170,6 +201,69 @@ public class LocationServiceImpl implements LocationService {
 		return allActiveLoc;
 	}
 	
+	@Override
+	public PaginationResponse getAllLocations(Integer pageNumber, Integer pageSize) {
+		Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "locationId"));
+		Page<Location> page=this.locationRepo.findAll(p);
+		List<Location>locationList=page.getContent();
+		List<LocationDto>locationDtoList=locationList.stream().map(loc->this.locationToDto(loc)).collect(Collectors.toList());
+	PaginationResponse paginationResponse=new PaginationResponse();
+	paginationResponse.setContent(locationDtoList);
+	paginationResponse.setLastPage(page.isLast());
+	paginationResponse.setPageNumber(page.getNumber());
+	paginationResponse.setPageSize(page.getSize());
+	paginationResponse.setTotalPages(page.getTotalPages());
+	paginationResponse.setTotoalElement(page.getTotalElements());
+		return paginationResponse;
+	}
+
+	@Override
+	public PaginationResponse getAllActiveLocation(Integer pageNumber, Integer pageSize, String status) {
+		Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "locationId"));
+		Page<Location> page=this.locationRepo.findAllByStatus(status, p);
+		List<Location>locationList=page.getContent();
+		List<LocationDto>locationDtoList=locationList.stream().map(loc->this.locationToDto(loc)).collect(Collectors.toList());
+	PaginationResponse paginationResponse=new PaginationResponse();
+	paginationResponse.setContent(locationDtoList);
+	paginationResponse.setLastPage(page.isLast());
+	paginationResponse.setPageNumber(page.getNumber());
+	paginationResponse.setPageSize(page.getSize());
+	paginationResponse.setTotalPages(page.getTotalPages());
+	paginationResponse.setTotoalElement(page.getTotalElements());
+		return paginationResponse;
+		
+	}
+	@Override
+	public PaginationResponse searchLocations(String keyword,String status, Integer pageNumber, Integer pageSize) {
+		if(status.equals("null")) {
+			Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "locationId"));
+			Page<Location> page=this.locationRepo.searchLocation(keyword, p);
+			List<Location>locationList=page.getContent();
+			List<LocationDto>locationDtoList=locationList.stream().map(loc->this.locationToDto(loc)).collect(Collectors.toList());
+		PaginationResponse paginationResponse=new PaginationResponse();
+		paginationResponse.setContent(locationDtoList);
+		paginationResponse.setLastPage(page.isLast());
+		paginationResponse.setPageNumber(page.getNumber());
+		paginationResponse.setPageSize(page.getSize());
+		paginationResponse.setTotalPages(page.getTotalPages());
+		paginationResponse.setTotoalElement(page.getTotalElements());
+			return paginationResponse;
+		}else {
+			Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "locationId"));
+			Page<Location> page=this.locationRepo.searchLocation(keyword,status, p);
+			List<Location>locationList=page.getContent();
+			List<LocationDto>locationDtoList=locationList.stream().map(loc->this.locationToDto(loc)).collect(Collectors.toList());
+		PaginationResponse paginationResponse=new PaginationResponse();
+		paginationResponse.setContent(locationDtoList);
+		paginationResponse.setLastPage(page.isLast());
+		paginationResponse.setPageNumber(page.getNumber());
+		paginationResponse.setPageSize(page.getSize());
+		paginationResponse.setTotalPages(page.getTotalPages());
+		paginationResponse.setTotoalElement(page.getTotalElements());
+			return paginationResponse;
+		}
+	
+	}
 	
 	public Location dtoToLocation(LocationDto locDto)
 	{
@@ -181,6 +275,10 @@ public class LocationServiceImpl implements LocationService {
 		LocationDto locDto=this.modelMapper.map(loc,LocationDto.class);
 		return locDto;
 	}
+
+
+
+	
 
 
 	

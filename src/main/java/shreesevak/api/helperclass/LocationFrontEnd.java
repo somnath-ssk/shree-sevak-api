@@ -33,10 +33,7 @@ public class LocationFrontEnd {
 	private String locationName;
 	private String  add1 ;
 	private String add2 ;
-	private String division ;
-	private String city ;
-	private String  state ;
-	private String country; 
+	
    private String  pincode ;
 	private String  latitude ;
 	private String  longitude ;
@@ -58,6 +55,10 @@ public class LocationFrontEnd {
 	private String  contact2Phone1;
 	private String  contact2Phone2;
 	private boolean mixedGenderAllow;
+	private long  division ;
+	private long city ;
+	private long  state ;
+	private long country; 
     private int area;
 	
 }

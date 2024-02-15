@@ -7,6 +7,10 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import shreesevak.api.exceptions.ResourceNotFoundException;
@@ -17,6 +21,7 @@ import shreesevak.api.model.Member;
 import shreesevak.api.model.Scheduler;
 import shreesevak.api.model.User;
 import shreesevak.api.payloads.MemberDto;
+import shreesevak.api.payloads.PaginationResponse;
 import shreesevak.api.payloads.SchedularDto;
 import shreesevak.api.payloads.SchedularFrontendDto;
 import shreesevak.api.payloads.UserDto;
@@ -63,12 +68,12 @@ public class ScheduleServiceImp implements ScheduleService {
 		schedule.setMembers(members);
 		schedule.setDate(schedularFrontendDto.getDate());
 		schedule.setStatus(schedularFrontendDto.getStatus());
-		if (!this.scheduleRepo.existsByLocationAndDateAndBaithak(schedule.getLocation(),schedule.getDate(), schedule.getBaithak())) {
+		if (!this.scheduleRepo.existsByLocationAndDateAndBaithak(schedule.getLocation(), schedule.getDate(),
+				schedule.getBaithak())) {
 			this.scheduleRepo.save(schedule);
 			return this.scheduleToDto(schedule);
-		} 
+		}
 		return this.scheduleToDto(schedule);
-		
 
 	}
 
@@ -90,16 +95,34 @@ public class ScheduleServiceImp implements ScheduleService {
 	}
 
 	@Override
-	public SchedularDto updateSchedule(SchedularFrontendDto schedularFrontendDto) {
-		Scheduler schedular = this.scheduleRepo.findById(schedularFrontendDto.getScheduleId())
-				.orElseThrow(() -> new ResourceNotFoundException("Schedule", "Id", schedularFrontendDto.getScheduleId()));
+	public PaginationResponse getAllSchedule(Integer pageNumber, Integer pageSize) {
+		Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "scheduleId"));
+		Page<Scheduler> page = this.scheduleRepo.findAll(p);
+		List<Scheduler> scheduleList = page.getContent();
+		List<SchedularDto> scheduleDtoList = scheduleList.stream().map((schedule) -> this.scheduleToDto(schedule))
+				.collect(Collectors.toList());
+		
+		PaginationResponse paginationResponse=new PaginationResponse();
+		paginationResponse.setContent(scheduleDtoList);
+		paginationResponse.setLastPage(page.isLast());
+		paginationResponse.setPageNumber(page.getNumber());
+		paginationResponse.setPageSize(page.getSize());
+		paginationResponse.setTotalPages(page.getTotalPages());
+		paginationResponse.setTotoalElement(page.getTotalElements());
+		return paginationResponse;
+	}
 
-	Location location = this.locationRepo.findById(schedularFrontendDto.getLocationId()).orElseThrow(
-			() -> new ResourceNotFoundException("location", "Id", schedularFrontendDto.getLocationId()));
-		Baithak baithak = this.baithakRepo.findById(schedularFrontendDto.getBaithakId()).orElseThrow(
-				() -> new ResourceNotFoundException("baithak", "Id", schedularFrontendDto.getBaithakId()));
+	@Override
+	public SchedularDto updateSchedule(SchedularFrontendDto schedularFrontendDto) {
+		Scheduler schedular = this.scheduleRepo.findById(schedularFrontendDto.getScheduleId()).orElseThrow(
+				() -> new ResourceNotFoundException("Schedule", "Id", schedularFrontendDto.getScheduleId()));
+
+		Location location = this.locationRepo.findById(schedularFrontendDto.getLocationId()).orElseThrow(
+				() -> new ResourceNotFoundException("location", "Id", schedularFrontendDto.getLocationId()));
+		Baithak baithak = this.baithakRepo.findById(schedularFrontendDto.getBaithakId())
+				.orElseThrow(() -> new ResourceNotFoundException("baithak", "Id", schedularFrontendDto.getBaithakId()));
 		Member members1 = this.memberRepo.findByMemberId(schedularFrontendDto.getVachanGhenara());
-	Member members2 = this.memberRepo.findByMemberId(schedularFrontendDto.getHajeriGhenara());
+		Member members2 = this.memberRepo.findByMemberId(schedularFrontendDto.getHajeriGhenara());
 
 		List<Member> members = new ArrayList<Member>();
 		members.add(members1);
@@ -111,14 +134,13 @@ public class ScheduleServiceImp implements ScheduleService {
 		schedular.setStatus(schedularFrontendDto.getStatus());
 		schedular.setDate(schedularFrontendDto.getDate());
 		this.scheduleRepo.save(schedular);
-	return this.scheduleToDto(schedular);
-}
-	
+		return this.scheduleToDto(schedular);
+	}
+
 	@Override
 	public Scheduler getScheduleByDateLocationBaithak(String date, Integer locId, Integer baithakId) {
-		
 
-		Scheduler schedular=this.scheduleRepo.findByDateAndLocationIdBaithak(date, locId,baithakId);
+		Scheduler schedular = this.scheduleRepo.findByDateAndLocationIdBaithak(date, locId, baithakId);
 		System.out.println(schedular);
 		return schedular;
 //		if(schedular==null) {
@@ -130,23 +152,22 @@ public class ScheduleServiceImp implements ScheduleService {
 //			System.out.println("inside getScheduleByDateLocBaithak" );
 //			return null;
 //		}
-	
+
 	}
-	
+
 	@Override
-	public List<Scheduler> getScheduleByMonthAndYearAndBaithak(String month, String year,Integer baithakId) {
-		List<Scheduler> schedules =this.scheduleRepo.findByMonthAndYearAndBaithak(month, year, baithakId);
-		if(schedules==null) {
-			throw new RuntimeException("Schedule not found with month "+month+"And year "+year);
-		}else {
+	public List<Scheduler> getScheduleByMonthAndYearAndBaithak(String month, String year, Integer baithakId) {
+		List<Scheduler> schedules = this.scheduleRepo.findByMonthAndYearAndBaithak(month, year, baithakId);
+		if (schedules == null) {
+			throw new RuntimeException("Schedule not found with month " + month + "And year " + year);
+		} else {
 //			System.out.println(schedules);
-			System.out.println("inside getScheduleByDateLocBaithak" );
-			  List<Scheduler> filteredSchedules = schedules.stream()
-		                .filter(schedule -> "1".equals(schedule.getLocation().getStatus()))
-		                .collect(Collectors.toList());
+			System.out.println("inside getScheduleByDateLocBaithak");
+			List<Scheduler> filteredSchedules = schedules.stream()
+					.filter(schedule -> "1".equals(schedule.getLocation().getStatus())).collect(Collectors.toList());
 			return filteredSchedules;
 		}
-	
+
 	}
 
 	// converting dto to user
@@ -158,14 +179,30 @@ public class ScheduleServiceImp implements ScheduleService {
 	}
 
 	public SchedularDto scheduleToDto(Scheduler schedular) {
-		
+
 		SchedularDto schedularDto = this.modelMapper.map(schedular, SchedularDto.class);
 
 		return schedularDto;
 	}
 
-
-
+	@Override
+	public PaginationResponse searchSchedule(String keyword,  int pageNumber, int pageSize) {
 	
+			Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "scheduleId"));
+			Page<Scheduler> page = this.scheduleRepo.searchSchedule(keyword, p);
+			List<Scheduler> scheduleList = page.getContent();
+			List<SchedularDto> scheduleDtoList = scheduleList.stream().map((schedule) -> this.scheduleToDto(schedule))
+					.collect(Collectors.toList());
+			
+			PaginationResponse paginationResponse=new PaginationResponse();
+			paginationResponse.setContent(scheduleDtoList);
+			paginationResponse.setLastPage(page.isLast());
+			paginationResponse.setPageNumber(page.getNumber());
+			paginationResponse.setPageSize(page.getSize());
+			paginationResponse.setTotalPages(page.getTotalPages());
+			paginationResponse.setTotoalElement(page.getTotalElements());
+			return paginationResponse;
+		
+	}
 
 }

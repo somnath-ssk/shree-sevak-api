@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import shreesevak.api.helperclass.LocationFrontEnd;
 import shreesevak.api.payloads.LocationDto;
+import shreesevak.api.payloads.PaginationResponse;
 import shreesevak.api.payloads.UserDto;
 import shreesevak.api.services.LocationService;
 
@@ -63,19 +65,39 @@ public class LocationController {
 	public ResponseEntity<List<LocationDto>> getAllLocations(){
 		return ResponseEntity.ok(this.locationService.getAllLocations());
 	}
+	
+	
+	@GetMapping("/pagination/all")
+	public ResponseEntity<PaginationResponse> getAllActiveLocations(@RequestParam Integer pageNumber, @RequestParam Integer pageSize){
+		return ResponseEntity.ok(this.locationService.getAllLocations(pageNumber, pageSize));
+	}
 	 
 	@PutMapping("/{locId}")
 	public ResponseEntity<LocationDto> updateLocation(@RequestBody LocationFrontEnd locDto,@PathVariable  Integer locId){
 		  LocationDto newLocDto= locationService.updateLocation(locDto, locId);
 		return ResponseEntity.ok(newLocDto);
-	}
+	}	
 	
 	// All active locations
 	@GetMapping("/status/{statustype}")
 	public ResponseEntity<List<LocationDto>> getAllActiveLocations(@PathVariable String statustype){
 		return ResponseEntity.ok(this.locationService. getAllActiveLocation(statustype));
 	}
+	@GetMapping("/status/pagination/{statustype}")
+	public ResponseEntity<PaginationResponse> getAllActiveLocations(@PathVariable String statustype,Integer pageNumber, Integer pageSize){
+		return new ResponseEntity<PaginationResponse>(this.locationService.getAllActiveLocation(pageNumber, pageSize, statustype),HttpStatus.OK);
+	}
    
+	  @GetMapping("/search")
+	    public ResponseEntity<PaginationResponse> searchProducts(
+	            @RequestParam("keyword") String keyword,
+	            @RequestParam(value = "status", required = false) String status,
+	            @RequestParam("pageNumber") int pageNumber,
+	            @RequestParam("pageSize") int pageSize) {
+	        
+	    
+	        return ResponseEntity.ok(this.locationService.searchLocations(keyword,status, pageNumber, pageSize));
+	    }
 	// assigning the bithak and member to the location
 	
 }

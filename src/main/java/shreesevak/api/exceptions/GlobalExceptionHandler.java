@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import shreesevak.api.payloads.ApiResponse;
@@ -50,7 +51,23 @@ public class GlobalExceptionHandler {
 	    public ResponseEntity<String> handleDuplicateKeyException(DuplicateKeyException ex) {
 	        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
 	    }
-	
+	  @ExceptionHandler(IllegalArgumentException.class)
+	    @ResponseStatus(HttpStatus.BAD_REQUEST)
+	    public ResponseEntity<ApiResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
+	        if (isIncompatibleComparisonException(ex)) {
+	        	ApiResponse errorResponse = new ApiResponse( "Invalid comparison: Unable to compare status (expected numeric) with a non-numeric value. "+ex.getMessage(),false);
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+	        } else {
+	            // Handle other IllegalArgumentExceptions or provide a generic error message
+	        	ApiResponse errorResponse = new ApiResponse("Invalid argument: "+ex.getMessage(),false);
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+	        }
+	    }
+
+	    private boolean isIncompatibleComparisonException(IllegalArgumentException ex) {
+	        // Check if the exception message or stack trace contains specific information
+	        return ex.getMessage() != null && ex.getMessage().contains("Can't compare test expression");
+	    }
 		
 
 }

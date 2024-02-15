@@ -55,10 +55,8 @@ public class Member {
 	private String add2;
 	private String add3;
 	private String add4;
-	private String city;
-	private String country;
+
 	private String additionalInfo;
-	private String division;
 	private String DOB;
 	private String gender;
 	private String googleMapLink;
@@ -85,7 +83,6 @@ private String panNo;
 private String phone;
 private String photoBase64;
 private String pincode;
-private String state ;
 private String status;
 //private String[] weeklyOffs;
 
@@ -95,6 +92,15 @@ private boolean fourWheeler;
 private String twoWheelerDetail;
 private String fourWheelerDetail;
 
+
+@OneToOne(fetch = FetchType.EAGER)
+private State  state ;
+@OneToOne(fetch = FetchType.EAGER)
+private Division division;
+@OneToOne(fetch = FetchType.EAGER)
+private City city;
+@OneToOne(fetch = FetchType.EAGER)
+private Country country;
 @JsonManagedReference
 @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 @JoinColumn(name="areaId")

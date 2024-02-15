@@ -1,18 +1,13 @@
-package shreesevak.api.payloads;
-
-import java.util.List;
+package shreesevak.api.helperclass;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class AreaDto {
-	
+public class AreaFrontEnd {
 	 private int areaId;
 	  private String areaName;
 	  private String  contactInitial;
@@ -21,13 +16,12 @@ public class AreaDto {
 	private String  contactPhone1;
 	private String  contactPhone2;
 	private String  contactEmail ;
-	private CityDto city;
-	private DivisionDto division;
-	private StateDto state;
-	private CountryDto country;
+	private long city;
+	private long division;
+	private long state;
 	private int status;
+	private long country;
 		private int maleCount;
 		private int femaleCount;
-		
 
 }

@@ -63,8 +63,8 @@ public class BaithakServiceImpl implements BaithakService{
 			baithak.setToTime(baithakDto.getToTime());
 			baithak.setStatus(baithakDto.getStatus());
 			//updating location
-    Location location=locationRepo.findByLocationId(baithakDto.getLocationId());
-    baithak.setLocation(location);
+//    Location location=locationRepo.findByLocationId(baithakDto.getLocationId());
+//    baithak.setLocation(location);
      
    
 //    //updating memebers
@@ -119,18 +119,18 @@ public class BaithakServiceImpl implements BaithakService{
 	@Override
 	public Baithak createBaithak2(BaithakDto baithakDto) {
 		 Baithak baithak =this.dtoToBaithak(baithakDto);
-		    Location location=locationRepo.findByLocationId(baithakDto.getLocationId());
+//		    Location location=locationRepo.findByLocationId(baithakDto.getLocationId());
 		    
-		    baithak.setLocation(location);
+//		    baithak.setLocation(location);
 		  
 		    System.out.println("member detail");
-		    List<Member>members=baithakDto.getMemberIds().stream().map(memId->this.memberRepo.findByMemberId(memId)).collect(Collectors.toList());
+//		    List<Member>members=baithakDto.getMemberIds().stream().map(memId->this.memberRepo.findByMemberId(memId)).collect(Collectors.toList());
 		  
-		    for (Member member : members) {
-					member.setBaithak(baithak);
-				}
+//		    for (Member member : members) {
+//					member.setBaithak(baithak);
+//				}
 		    
-		    baithak.setMembers(members);
+//		    baithak.setMembers(members);
 		    Baithak saveBaithak =this.baithakRepo.save(baithak);
 		    System.out.println(saveBaithak.toString());
 		    System.out.println("baithakserviceImpl");

@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import shreesevak.api.model.Scheduler;
 import shreesevak.api.payloads.DateLocationDto;
+import shreesevak.api.payloads.PaginationResponse;
 import shreesevak.api.payloads.RoleDto;
 import shreesevak.api.payloads.SchedularDto;
 import shreesevak.api.payloads.SchedularFrontendDto;
@@ -58,6 +60,13 @@ public class SechedularController {
 
 		List<SchedularDto> schedularDtos = this.scheduleService.getAllSchedule();
 		return new ResponseEntity<List<SchedularDto>>(schedularDtos, HttpStatus.OK);
+	}
+	
+	@GetMapping("/pagination/all-schedules")
+	public ResponseEntity<PaginationResponse> scheduleList(@RequestParam(value ="pageNumber",defaultValue = "0",required = false) Integer pageNumber,@RequestParam(value = "pageSize",defaultValue = "10", required = false)Integer pageSize) {
+		
+		PaginationResponse paginationResponse = this.scheduleService.getAllSchedule(pageNumber, pageSize);
+		return new ResponseEntity<PaginationResponse>(paginationResponse, HttpStatus.OK);
 	}
 
 	@PutMapping("/update-schedule")
@@ -109,4 +118,13 @@ public class SechedularController {
 		}
 	}
 
+	@GetMapping("/filter/search")
+    public ResponseEntity<PaginationResponse> searchScheduleBaseOnSearchField(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam("pageNumber") int pageNumber,
+            @RequestParam("pageSize") int pageSize) {
+        
+    
+        return ResponseEntity.ok(this.scheduleService.searchSchedule(keyword,pageNumber, pageSize));
+    }
 }

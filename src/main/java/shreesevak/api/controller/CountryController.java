@@ -62,7 +62,7 @@ public class CountryController {
 		  return new ResponseEntity<List<CityDto>>(states,HttpStatus.OK);
 		  
 	  }
-	  @GetMapping("/{countryId}/state/{stateId}/citie/{cityId}/all-divisions")
+	  @GetMapping("/{countryId}/state/{stateId}/city/{cityId}/all-divisions")
 	  public ResponseEntity<List<DivisionDto>> getAllDivisionData(@PathVariable Long countryId,@PathVariable Long stateId,@PathVariable Long cityId){
 		  List<DivisionDto> divisions=this.divisionService.getAllDivision(countryId,stateId,cityId);
 		  return new ResponseEntity<List<DivisionDto>>(divisions,HttpStatus.OK);

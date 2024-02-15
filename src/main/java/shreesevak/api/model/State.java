@@ -36,7 +36,7 @@ public class State {
 	    @JsonBackReference
 	    private Country country;
 
-	    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	    @JsonManagedReference
 	    private List<City> cities = new ArrayList<>();
 }

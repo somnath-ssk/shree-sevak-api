@@ -45,14 +45,14 @@ public class MemberDto {
 		private String add3;
 		private String add4;
 		@NotEmpty
-		private String city;
+		private CityDto city;
 		@NotEmpty
 		private String role;
 		@NotEmpty
-		private String country;
+		private CountryDto country;
 		@Size(min=4,message = "information shuld not empty")
 		private String additionalInfo;
-		private String division;
+		private DivisionDto division;
 		@NotEmpty
 		private String DOB;
 		@NotEmpty
@@ -92,7 +92,7 @@ public class MemberDto {
 	@NotEmpty
 	private String pincode;
 	@NotEmpty
-	private String state ;
+	private StateDto state ;
 	@NotEmpty
 	private String status;
 	@NotEmpty

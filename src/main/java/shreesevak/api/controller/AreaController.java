@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.persistence.PostUpdate;
+import shreesevak.api.helperclass.AreaFrontEnd;
 import shreesevak.api.model.Area;
 import shreesevak.api.payloads.AreaDto;
+import shreesevak.api.payloads.PaginationResponse;
 import shreesevak.api.services.AreaService;
 
 @CrossOrigin("*")
@@ -30,12 +32,12 @@ public class AreaController {
 	
 	
 	@PostMapping("/create")
-	private ResponseEntity<AreaDto> createArea(@RequestBody Area area){
+	private ResponseEntity<AreaDto> createArea(@RequestBody AreaFrontEnd area){
 		AreaDto createdAreaDto=this.areaService.createArea(area);
 		return new ResponseEntity<AreaDto>(createdAreaDto,HttpStatus.CREATED);
 	}
 	@PutMapping("/update-area/{areaId}")
-	private ResponseEntity<AreaDto> updateArea(@RequestBody AreaDto area,@PathVariable Integer areaId){
+	private ResponseEntity<AreaDto> updateArea(@RequestBody AreaFrontEnd area,@PathVariable Integer areaId){
 		AreaDto createdAreaDto=this.areaService.updateArea(area,areaId);
 		return new ResponseEntity<AreaDto>(createdAreaDto,HttpStatus.ACCEPTED);
 	}
@@ -53,12 +55,7 @@ public class AreaController {
 //		return new ResponseEntity<AreaDto>(area,HttpStatus.OK);
 //		
 //	}
-	@GetMapping("/all-areas")
-	private ResponseEntity<List<AreaDto>> getAllAreas() {
-		List<AreaDto> areas=this.areaService.getallArea();
-		return new ResponseEntity<List<AreaDto>>(areas,HttpStatus.OK);
-		
-	}
+	
 	@GetMapping("/unselected-Areas")
 	private ResponseEntity<List<AreaDto>> getAllUnselectedAreas() {
 		List<AreaDto> areas=this.areaService. getAllUnselectedAreas();
@@ -78,5 +75,34 @@ public class AreaController {
 		return new ResponseEntity<List<AreaDto>>(areas,HttpStatus.OK);
 		
 	}
+	@GetMapping("/all-areas")
+	private ResponseEntity<List<AreaDto>> getAllAreas() {
+		List<AreaDto> areas=this.areaService.getallArea();
+		return new ResponseEntity<List<AreaDto>>(areas,HttpStatus.OK);
+		
+	}
+	@GetMapping("/statusType/pagination/{status}")
+	private ResponseEntity<PaginationResponse> getAllAreasByStatus(@RequestParam(value ="pageNumber",defaultValue = "0",required = false) Integer pageNumber,@RequestParam(value = "pageSize",defaultValue = "10", required = false)Integer pageSize,@PathVariable Integer status) {
+		PaginationResponse areas=this.areaService.getAllAreasByStatus( pageNumber, pageSize,status);
+		return new ResponseEntity<PaginationResponse>(areas,HttpStatus.OK);
+		
+	}
+	@GetMapping("/pagination/all-areas")
+	private ResponseEntity<PaginationResponse> getAllAreas(@RequestParam(value ="pageNumber",defaultValue = "0",required = false) Integer pageNumber,@RequestParam(value = "pageSize",defaultValue = "10", required = false)Integer pageSize) {
+		PaginationResponse areas=this.areaService.getallArea(pageNumber, pageSize);
+		return new ResponseEntity<PaginationResponse>(areas,HttpStatus.OK);
+		
+	}
+	@GetMapping("/filter/search")
+    public ResponseEntity<PaginationResponse> searchAreaBaseOnSearchField(
+            @RequestParam("keyword") String keyword,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam("pageNumber") int pageNumber,
+            @RequestParam("pageSize") int pageSize) {
+        
+    
+        return ResponseEntity.ok(this.areaService.searchArea(keyword,status, pageNumber, pageSize));
+    }
+
 	
 }

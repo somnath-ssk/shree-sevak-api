@@ -1,11 +1,14 @@
 package shreesevak.api.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,11 +33,20 @@ public class Area {
 private String  contactPhone1;
 private String  contactPhone2;
 private String  contactEmail ;
-	private String city;
-	private String division;
-	private String state;
-	private String status;
-	private String country;
+
+@OneToOne(fetch = FetchType.EAGER)
+
+	private City city;
+@OneToOne(fetch = FetchType.EAGER)
+
+	private Division division;
+@OneToOne(fetch = FetchType.EAGER)
+
+	private State state;
+@OneToOne(fetch = FetchType.EAGER)
+
+private Country country;
+	private int status;
 	private int maleCount;
 	private int femaleCount;
 	
