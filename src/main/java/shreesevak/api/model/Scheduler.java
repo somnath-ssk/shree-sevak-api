@@ -32,7 +32,7 @@ import shreesevak.api.payloads.LocationDto;
 public class Scheduler {
 	
 	@Id
-	  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int scheduleId;
 	
 //	 @JsonBackReference
@@ -43,7 +43,7 @@ public class Scheduler {
 	@JoinColumn(name="baithak")
 	private Baithak baithak;
 	
-//	 @JsonBackReference
+//	@JsonBackReference
 	@JoinTable(name="schedule_members",joinColumns = @JoinColumn(name="schedule_id"),inverseJoinColumns =@JoinColumn(name="memberId"))
 	@ManyToMany
 	private List<Member>members=new ArrayList<>();
