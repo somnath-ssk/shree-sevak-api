@@ -235,32 +235,28 @@ public class LocationServiceImpl implements LocationService {
 	}
 	@Override
 	public PaginationResponse searchLocations(String keyword,String status, Integer pageNumber, Integer pageSize) {
-		if(status.equals("null")) {
+		if((keyword.equals("null")|| keyword.equals("undefined")) && (status.equals("null")|| status.equals("undefined"))) {
+			Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "locationId"));
+			Page<Location> page=this.locationRepo.findAll(p);
+			List<Location>locationList=page.getContent();
+			return this.getPaginatedResponse(locationList, page);
+		}
+	else if((status.equals("null")|| status.equals("undefined")) && (!(keyword.equals("null")|| keyword.equals("undefined")))) {
 			Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "locationId"));
 			Page<Location> page=this.locationRepo.searchLocation(keyword, p);
 			List<Location>locationList=page.getContent();
-			List<LocationDto>locationDtoList=locationList.stream().map(loc->this.locationToDto(loc)).collect(Collectors.toList());
-		PaginationResponse paginationResponse=new PaginationResponse();
-		paginationResponse.setContent(locationDtoList);
-		paginationResponse.setLastPage(page.isLast());
-		paginationResponse.setPageNumber(page.getNumber());
-		paginationResponse.setPageSize(page.getSize());
-		paginationResponse.setTotalPages(page.getTotalPages());
-		paginationResponse.setTotoalElement(page.getTotalElements());
-			return paginationResponse;
+			return this.getPaginatedResponse(locationList, page);
+		}else if((keyword.equals("null")|| keyword.equals("undefined")) && (!(status.equals("null")|| status.equals("undefined")))){
+			Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "locationId"));
+			Page<Location> page=this.locationRepo.findAllByStatus(status, p);
+			List<Location>locationList=page.getContent();
+			return this.getPaginatedResponse(locationList, page);
 		}else {
 			Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "locationId"));
 			Page<Location> page=this.locationRepo.searchLocation(keyword,status, p);
 			List<Location>locationList=page.getContent();
-			List<LocationDto>locationDtoList=locationList.stream().map(loc->this.locationToDto(loc)).collect(Collectors.toList());
-		PaginationResponse paginationResponse=new PaginationResponse();
-		paginationResponse.setContent(locationDtoList);
-		paginationResponse.setLastPage(page.isLast());
-		paginationResponse.setPageNumber(page.getNumber());
-		paginationResponse.setPageSize(page.getSize());
-		paginationResponse.setTotalPages(page.getTotalPages());
-		paginationResponse.setTotoalElement(page.getTotalElements());
-			return paginationResponse;
+		
+			return this.getPaginatedResponse(locationList, page);
 		}
 	
 	}
@@ -275,7 +271,17 @@ public class LocationServiceImpl implements LocationService {
 		LocationDto locDto=this.modelMapper.map(loc,LocationDto.class);
 		return locDto;
 	}
-
+   public PaginationResponse getPaginatedResponse(List<Location> locationList,Page page) {
+	   List<LocationDto>locationDtoList=locationList.stream().map(loc->this.locationToDto(loc)).collect(Collectors.toList());
+		PaginationResponse paginationResponse=new PaginationResponse();
+		paginationResponse.setContent(locationDtoList);
+		paginationResponse.setLastPage(page.isLast());
+		paginationResponse.setPageNumber(page.getNumber());
+		paginationResponse.setPageSize(page.getSize());
+		paginationResponse.setTotalPages(page.getTotalPages());
+		paginationResponse.setTotoalElement(page.getTotalElements());
+		return paginationResponse;
+   }
 
 
 	

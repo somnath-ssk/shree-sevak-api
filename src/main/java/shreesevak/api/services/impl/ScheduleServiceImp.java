@@ -186,22 +186,42 @@ public class ScheduleServiceImp implements ScheduleService {
 	}
 
 	@Override
-	public PaginationResponse searchSchedule(String keyword,  int pageNumber, int pageSize) {
-	
-			Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "scheduleId"));
-			Page<Scheduler> page = this.scheduleRepo.searchSchedule(keyword, p);
-			List<Scheduler> scheduleList = page.getContent();
-			List<SchedularDto> scheduleDtoList = scheduleList.stream().map((schedule) -> this.scheduleToDto(schedule))
-					.collect(Collectors.toList());
-			
-			PaginationResponse paginationResponse=new PaginationResponse();
-			paginationResponse.setContent(scheduleDtoList);
-			paginationResponse.setLastPage(page.isLast());
-			paginationResponse.setPageNumber(page.getNumber());
-			paginationResponse.setPageSize(page.getSize());
-			paginationResponse.setTotalPages(page.getTotalPages());
-			paginationResponse.setTotoalElement(page.getTotalElements());
-			return paginationResponse;
+	public PaginationResponse searchSchedule(String keyword,int pageNumber, int pageSize) {
+		  
+		
+		   if(keyword.equals("null")) {
+				Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "scheduleId"));
+				Page<Scheduler> page = this.scheduleRepo.findAll(p);
+				List<Scheduler> scheduleList = page.getContent();
+				List<SchedularDto> scheduleDtoList = scheduleList.stream().map((schedule) -> this.scheduleToDto(schedule))
+						.collect(Collectors.toList());
+				
+				PaginationResponse paginationResponse=new PaginationResponse();
+				paginationResponse.setContent(scheduleDtoList);
+				paginationResponse.setLastPage(page.isLast());
+				paginationResponse.setPageNumber(page.getNumber());
+				paginationResponse.setPageSize(page.getSize());
+				paginationResponse.setTotalPages(page.getTotalPages());
+				paginationResponse.setTotoalElement(page.getTotalElements());
+				return paginationResponse;
+		   }else {
+			   Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "scheduleId"));
+				Page<Scheduler> page = this.scheduleRepo.searchSchedule(keyword, p);
+				List<Scheduler> scheduleList = page.getContent();
+				List<SchedularDto> scheduleDtoList = scheduleList.stream().map((schedule) -> this.scheduleToDto(schedule))
+						.collect(Collectors.toList());
+				
+				PaginationResponse paginationResponse=new PaginationResponse();
+				paginationResponse.setContent(scheduleDtoList);
+				paginationResponse.setLastPage(page.isLast());
+				paginationResponse.setPageNumber(page.getNumber());
+				paginationResponse.setPageSize(page.getSize());
+				paginationResponse.setTotalPages(page.getTotalPages());
+				paginationResponse.setTotoalElement(page.getTotalElements());
+				return paginationResponse;
+		   }
+		   
+	      
 		
 	}
 

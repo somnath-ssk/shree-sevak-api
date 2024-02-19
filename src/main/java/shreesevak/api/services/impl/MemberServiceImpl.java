@@ -384,33 +384,26 @@ meberDto.setArea(this.areaToDto(member.getArea()));
 
 	@Override
 	public PaginationResponse SearchMemebrs(String keyword, String status, int pageNumber, int pageSize) {
-        if(status.equals("null")) {
+	
+		if(status.equals("null") && keyword.equals("null")) {
+			Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "memberId"));
+    		Page<Member> page=this.memberRepo.findAll(p);
+    		List<Member> memberList=page.getContent();
+    		return this.getPaginatedResponse(memberList,page);
+		}
+		else if(status.equalsIgnoreCase("null")) {
         	Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "memberId"));
     		Page<Member> page=this.memberRepo.searchMember(keyword, p);
     		List<Member> memberList=page.getContent();
-    		List<MemberDto>memberDtoList=memberList.stream().map(member->this.memberToDto2(member)).collect(Collectors.toList());
-    		PaginationResponse paginationResponse=new PaginationResponse();
-    		paginationResponse.setContent(memberDtoList);
-    		paginationResponse.setLastPage(page.isLast());
-    		paginationResponse.setPageNumber(page.getNumber());
-    		paginationResponse.setPageSize(page.getSize());
-    		paginationResponse.setTotalPages(page.getTotalPages());
-    		paginationResponse.setTotoalElement(page.getTotalElements());
-    		return paginationResponse;
+    		return this.getPaginatedResponse(memberList,page);
         }
         else {
         	Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "memberId"));
     		Page<Member> page=this.memberRepo.searchMember(keyword,status, p);
     		List<Member> memberList=page.getContent();
     		List<MemberDto>memberDtoList=memberList.stream().map(member->this.memberToDto2(member)).collect(Collectors.toList());
-    		PaginationResponse paginationResponse=new PaginationResponse();
-    		paginationResponse.setContent(memberDtoList);
-    		paginationResponse.setLastPage(page.isLast());
-    		paginationResponse.setPageNumber(page.getNumber());
-    		paginationResponse.setPageSize(page.getSize());
-    		paginationResponse.setTotalPages(page.getTotalPages());
-    		paginationResponse.setTotoalElement(page.getTotalElements());
-    		return paginationResponse;
+    		
+    		return this.getPaginatedResponse(memberList,page);
 
         }
 	}
@@ -421,6 +414,18 @@ meberDto.setArea(this.areaToDto(member.getArea()));
 		AreaDto areaDto = this.modelMapper.map(area, AreaDto.class);
 		return areaDto;
 
+	}
+	public PaginationResponse getPaginatedResponse(List<Member> memberList,Page page) {
+		List<MemberDto>memberDtoList=memberList.stream().map(member->this.memberToDto2(member)).collect(Collectors.toList());
+		PaginationResponse paginationResponse=new PaginationResponse();
+		paginationResponse.setContent(memberDtoList);
+		paginationResponse.setLastPage(page.isLast());
+		paginationResponse.setPageNumber(page.getNumber());
+		paginationResponse.setPageSize(page.getSize());
+		paginationResponse.setTotalPages(page.getTotalPages());
+		paginationResponse.setTotoalElement(page.getTotalElements());
+		return paginationResponse;
+		
 	}
 
 

@@ -90,7 +90,7 @@ public class LocationController {
    
 	  @GetMapping("/search")
 	    public ResponseEntity<PaginationResponse> searchProducts(
-	            @RequestParam("keyword") String keyword,
+	            @RequestParam(value = "keyword", required = false) String keyword,
 	            @RequestParam(value = "status", required = false) String status,
 	            @RequestParam("pageNumber") int pageNumber,
 	            @RequestParam("pageSize") int pageSize) {

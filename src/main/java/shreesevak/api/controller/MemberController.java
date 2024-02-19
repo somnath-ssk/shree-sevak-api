@@ -101,9 +101,9 @@ public class MemberController {
 		return new ResponseEntity<PaginationResponse>(response, HttpStatus.OK) ;
 		 
 	}
-	@GetMapping("/search")
+	@GetMapping("/pagination/search")
     public ResponseEntity<PaginationResponse> searchMemebersBaseOnSearchField(
-            @RequestParam("keyword") String keyword,
+            @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "status", required = false) String status,
             @RequestParam("pageNumber") int pageNumber,
             @RequestParam("pageSize") int pageSize) {
