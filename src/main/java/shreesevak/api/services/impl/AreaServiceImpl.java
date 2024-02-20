@@ -147,6 +147,7 @@ public class AreaServiceImpl implements AreaService {
 			return areaDto;
 		}).collect(Collectors.toList());
 
+
 		return allAreas;
 	}
 
@@ -340,7 +341,47 @@ public class AreaServiceImpl implements AreaService {
 		return memberDto1;
 	}
  public PaginationResponse getAllPaginatedRecordBaseOnStatus(String keyword,String status,int pageNumber,int pageSize) {
-	 if(status.equals("null")) {
+	 if((keyword.equals("null")|| keyword.equals("undefined")) && (status.equals("null")|| status.equals("undefined"))){
+			Pageable p = PageRequest.of(pageNumber, pageSize);
+			Page<Area> page = this.areaRepo.findAll(p);
+			List<Area> listAreas = page.getContent();
+			List<Member> allMembers = this.memberRepo.findAll();
+			System.out.println(allMembers);
+			List<AreaDto> allAreas = listAreas.stream().map(area -> {
+				List<Member> membersInArea = allMembers.stream().filter(member -> {
+					Area memberArea = member.getArea();
+					return memberArea != null
+							&& memberArea.getAreaName().trim().equalsIgnoreCase(area.getAreaName().trim());
+				}).collect(Collectors.toList());
+
+				long maleCount = membersInArea.stream().filter(member -> {
+					City city = area.getCity();
+					return city != null && member.getCity().getId() == city.getId();
+				}).filter(member -> member.getGender().trim().equalsIgnoreCase("Male")).count();
+
+				long femaleCount = membersInArea.stream().filter(member -> {
+					City city = area.getCity();
+					return city != null && member.getCity().getId() == city.getId();
+				}).filter(member -> member.getGender().trim().equalsIgnoreCase("Female")).count();
+
+				AreaDto areaDto = areaToDto(area);
+				areaDto.setMaleCount((int) maleCount);
+				areaDto.setFemaleCount((int) femaleCount);
+
+				return areaDto;
+			}).collect(Collectors.toList());
+
+			PaginationResponse paginationResponse = new PaginationResponse();
+			paginationResponse.setContent(allAreas);
+			paginationResponse.setLastPage(page.isLast());
+			paginationResponse.setPageNumber(page.getNumber());
+			paginationResponse.setPageSize(page.getSize());
+			paginationResponse.setTotalPages(page.getTotalPages());
+			paginationResponse.setTotoalElement(page.getTotalElements());
+
+			return paginationResponse;
+			
+		}else if((status.equals("null")|| status.equals("undefined")) && (!(keyword.equals("null")|| keyword.equals("undefined")))) {
 			Pageable p = PageRequest.of(pageNumber, pageSize);
 			Page<Area> page = this.areaRepo.searchLocation(keyword, p);
 			List<Area> listAreas = page.getContent();
@@ -379,8 +420,48 @@ public class AreaServiceImpl implements AreaService {
 			paginationResponse.setTotoalElement(page.getTotalElements());
 
 			return paginationResponse;
-			
-		}else {
+		}else if((keyword.equals("null")|| keyword.equals("undefined")) && (!(status.equals("null")|| status.equals("undefined")))){
+			Pageable p = PageRequest.of(pageNumber, pageSize);
+			Page<Area> page = this.areaRepo.findAllByStatus(Integer.parseInt(status), p);
+			List<Area> listAreas = page.getContent();
+			List<Member> allMembers = this.memberRepo.findAll();
+			System.out.println(allMembers);
+			List<AreaDto> allAreas = listAreas.stream().map(area -> {
+				List<Member> membersInArea = allMembers.stream().filter(member -> {
+					Area memberArea = member.getArea();
+					return memberArea != null
+							&& memberArea.getAreaName().trim().equalsIgnoreCase(area.getAreaName().trim());
+				}).collect(Collectors.toList());
+
+				long maleCount = membersInArea.stream().filter(member -> {
+					City city = area.getCity();
+					return city != null && member.getCity().getId() == city.getId();
+				}).filter(member -> member.getGender().trim().equalsIgnoreCase("Male")).count();
+
+				long femaleCount = membersInArea.stream().filter(member -> {
+					City city = area.getCity();
+					return city != null && member.getCity().getId() == city.getId();
+				}).filter(member -> member.getGender().trim().equalsIgnoreCase("Female")).count();
+
+				AreaDto areaDto = areaToDto(area);
+				areaDto.setMaleCount((int) maleCount);
+				areaDto.setFemaleCount((int) femaleCount);
+
+				return areaDto;
+			}).collect(Collectors.toList());
+
+			PaginationResponse paginationResponse = new PaginationResponse();
+			paginationResponse.setContent(allAreas);
+			paginationResponse.setLastPage(page.isLast());
+			paginationResponse.setPageNumber(page.getNumber());
+			paginationResponse.setPageSize(page.getSize());
+			paginationResponse.setTotalPages(page.getTotalPages());
+			paginationResponse.setTotoalElement(page.getTotalElements());
+
+			return paginationResponse;
+		}
+	 
+	 else {
 			Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "areaId"));
 			Page<Area> page = this.areaRepo.searchLocation(keyword, status, p);
 			List<Area> listAreas = page.getContent();

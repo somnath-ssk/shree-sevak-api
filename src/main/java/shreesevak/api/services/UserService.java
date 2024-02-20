@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import shreesevak.api.model.User;
+import shreesevak.api.payloads.PaginationResponse;
 import shreesevak.api.payloads.RoleDto;
 import shreesevak.api.payloads.UserDto;
 import shreesevak.api.payloads.UserFrontEndData;
@@ -22,7 +23,9 @@ UserDto updateUser(UserFrontEndData user,Integer userId);
 	List<UserDto> getAllActiveUsers(String status);
 
 	UserDto assignUserRole(Integer userId, List<Integer> roleId);
-	List<User> searchUsers(String keyword);
+	PaginationResponse searchUsers(String keyword, String status, int pageNumber, int pageSize);
+	
+	
 	
 //    @Query("select u from User u join fetch u.userRoles where u.userId=?1")
 //    Optional<User> findByUserIdRole(Integer id);

@@ -10,6 +10,9 @@ import org.hibernate.mapping.Array;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
  
@@ -17,8 +20,11 @@ import shreesevak.api.exceptions.DuplicateKeyException;
 import shreesevak.api.exceptions.ResourceAllReadyExist;
 import shreesevak.api.exceptions.ResourceNotFoundException;
 import shreesevak.api.model.Area;
+import shreesevak.api.model.Location;
 import shreesevak.api.model.Role;
 import shreesevak.api.model.User;
+import shreesevak.api.payloads.LocationDto;
+import shreesevak.api.payloads.PaginationResponse;
 import shreesevak.api.payloads.RoleDto;
 import shreesevak.api.payloads.UserAreaFrontEnd;
 import shreesevak.api.payloads.UserDto;
@@ -211,13 +217,13 @@ public class UserServiceImpl implements UserService {
 	}
  
 	// searching user
-	@Override
-	public List<User> searchUsers(String keyword) {
-		List<User> users1 = userRepo.searchUser(keyword);
- 
-		return users1;
- 
-	}
+//	@Override
+//	public List<User> searchUsers(String keyword) {
+//		List<User> users1 = userRepo.searchUser(keyword);
+// 
+//		return users1;
+// 
+//	}
  
 	/// assigning user role base on all ready created user
 	@Override
@@ -230,5 +236,43 @@ public class UserServiceImpl implements UserService {
 		User updatedUser = this.userRepo.save(user);
 		return this.userToDto(updatedUser);
 	}
- 
+
+	@Override
+	public PaginationResponse searchUsers(String keyword, String status, int pageNumber, int pageSize) {
+	   
+		if((keyword.equals("null")|| keyword.equals("undefined")) && (status.equals("null")|| status.equals("undefined"))) {
+			Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "userId"));
+			Page<User> page=this.userRepo.findAll(p);
+			List<User>userList=page.getContent();
+			return this.getPaginatedResponse(userList, page);
+		}else if((status.equals("null")|| status.equals("undefined")) && (!(keyword.equals("null")|| keyword.equals("undefined")))) {
+			Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "userId"));
+			Page<User> page=this.userRepo.searchUser(keyword, p);
+			List<User>userList=page.getContent();
+			return this.getPaginatedResponse(userList, page);
+		}else if((keyword.equals("null")|| keyword.equals("undefined")) && (!(status.equals("null")|| status.equals("undefined")))){
+			Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "userId"));
+			Page<User> page=this.userRepo.findAllByStatus(status, p);
+			List<User>userList=page.getContent();
+			return this.getPaginatedResponse(userList, page);
+		}else {
+			Pageable p = PageRequest.of(pageNumber, pageSize, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "userId"));
+			Page<User> page=this.userRepo.searchUser(keyword, status, p);
+			List<User>userList=page.getContent();
+			return this.getPaginatedResponse(userList, page);
+		}
+	}
+
+	
+	  public PaginationResponse getPaginatedResponse(List<User> userList,Page page) {
+		   List<UserDto>userListDto=userList.stream().map(loc->this.userToDto(loc)).collect(Collectors.toList());
+			PaginationResponse paginationResponse=new PaginationResponse();
+			paginationResponse.setContent(userListDto);
+			paginationResponse.setLastPage(page.isLast());
+			paginationResponse.setPageNumber(page.getNumber());
+			paginationResponse.setPageSize(page.getSize());
+			paginationResponse.setTotalPages(page.getTotalPages());
+			paginationResponse.setTotoalElement(page.getTotalElements());
+			return paginationResponse;
+	   }
 }

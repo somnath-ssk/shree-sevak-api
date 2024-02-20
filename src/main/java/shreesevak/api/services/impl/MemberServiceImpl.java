@@ -385,18 +385,25 @@ meberDto.setArea(this.areaToDto(member.getArea()));
 	@Override
 	public PaginationResponse SearchMemebrs(String keyword, String status, int pageNumber, int pageSize) {
 	
-		if(status.equals("null") && keyword.equals("null")) {
+		if((keyword.equals("null")|| keyword.equals("undefined")) && (status.equals("null")|| status.equals("undefined"))){
 			Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "memberId"));
     		Page<Member> page=this.memberRepo.findAll(p);
     		List<Member> memberList=page.getContent();
     		return this.getPaginatedResponse(memberList,page);
 		}
-		else if(status.equalsIgnoreCase("null")) {
+		else if((status.equals("null")|| status.equals("undefined")) && (!(keyword.equals("null")|| keyword.equals("undefined")))) {
         	Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "memberId"));
     		Page<Member> page=this.memberRepo.searchMember(keyword, p);
     		List<Member> memberList=page.getContent();
     		return this.getPaginatedResponse(memberList,page);
         }
+		else if((keyword.equals("null")|| keyword.equals("undefined")) && (!(status.equals("null")|| status.equals("undefined")))){
+        	Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "memberId"));
+    		Page<Member> page=this.memberRepo.findAllByStatus(status, p);
+    		List<Member> memberList=page.getContent();
+    		return this.getPaginatedResponse(memberList,page);
+		}
+		
         else {
         	Pageable p = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "memberId"));
     		Page<Member> page=this.memberRepo.searchMember(keyword,status, p);
