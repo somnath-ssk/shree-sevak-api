@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import shreesevak.api.model.Baithak;
+import shreesevak.api.model.Baithak2;
+
 import java.util.List;
 
 
@@ -14,5 +16,7 @@ public interface BaithakRepo extends JpaRepository<Baithak,Integer>{
 	
 	   @Query("SELECT b FROM Baithak b ORDER BY b.bithakId DESC")
 		List<Baithak> findAllorderByDesc();
+	   
+	Baithak2 findFirstByBithakIdStartingWithOrderByBithakIdDesc(String string);
 
 }

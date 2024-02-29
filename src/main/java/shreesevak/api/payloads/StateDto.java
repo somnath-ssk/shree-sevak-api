@@ -14,6 +14,7 @@ import lombok.Setter;
 public class StateDto {
     private Long id;
 	private String stateName;
+	  private String abbrivation;
     private List<CityDto> cities;
 
 }

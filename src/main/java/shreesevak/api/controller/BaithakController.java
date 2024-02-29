@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.persistence.PostUpdate;
+import shreesevak.api.helperclass.BaithakFrontEnd;
 import shreesevak.api.model.Baithak;
+import shreesevak.api.model.Baithak2;
 import shreesevak.api.payloads.BaithakDto;
+import shreesevak.api.services.Baithak2service;
 import shreesevak.api.services.BaithakService;
+import shreesevak.api.services.impl.BaithakServiceImpl;
 
 @CrossOrigin("*")
 @RestController
@@ -26,6 +30,10 @@ public class BaithakController {
 	
 	@Autowired
 	private BaithakService baithakService;
+	
+	@Autowired
+	private Baithak2service baithak2service;
+
 //	
 	
 	@PostMapping("/createbaithak")
@@ -33,6 +41,12 @@ public class BaithakController {
 		
 	 Baithak saveBaithak =this.baithakService.createBaithak(baithak);
 	 return new ResponseEntity<Baithak>(saveBaithak,HttpStatus.CREATED);
+	}
+	@PostMapping("/createbaithak/gents_ladies")
+	public ResponseEntity<Baithak2> createBaithaksforGentsAndLadies(@RequestBody BaithakFrontEnd baithak){
+		
+		Baithak2 saveBaithak =this.baithak2service.createBaithakForGentsAndLadies(baithak);
+		return new ResponseEntity<Baithak2>(saveBaithak,HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/update-baithak/{baithakId}")

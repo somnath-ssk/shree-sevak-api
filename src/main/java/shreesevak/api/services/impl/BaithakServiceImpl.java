@@ -12,13 +12,19 @@ import org.springframework.stereotype.Service;
 
 import shreesevak.api.exceptions.ResourceAllReadyExist;
 import shreesevak.api.exceptions.ResourceNotFoundException;
+import shreesevak.api.helperclass.BaithakFrontEnd;
+import shreesevak.api.model.Area;
 import shreesevak.api.model.Baithak;
+import shreesevak.api.model.Baithak2;
 import shreesevak.api.model.Location;
 import shreesevak.api.model.Member;
+import shreesevak.api.model.WeeklyOff;
 import shreesevak.api.payloads.BaithakDto;
+import shreesevak.api.repository.AreaRepo;
 import shreesevak.api.repository.BaithakRepo;
 import shreesevak.api.repository.LocationRepo;
 import shreesevak.api.repository.MemberRepo;
+import shreesevak.api.repository.WeekRepo;
 import shreesevak.api.services.BaithakService;
 
 @Service
@@ -29,8 +35,12 @@ public class BaithakServiceImpl implements BaithakService{
 	private ModelMapper modelMapper;
 	
 	@Autowired
+	private WeekRepo weekRepo; 
+	@Autowired
 	private BaithakRepo baithakRepo;
 	
+	@Autowired
+	private AreaRepo areaRepo;
 	@Autowired
 	private MemberRepo memberRepo;
 	@Autowired
@@ -46,11 +56,44 @@ public class BaithakServiceImpl implements BaithakService{
 //    System.out.println(members);
     System.out.println("member detail");
     
+    
     Baithak saveBaithak =this.baithakRepo.save(baithak);
     System.out.println(saveBaithak);
     System.out.println("baithakserviceImpl");
 		return saveBaithak;
 	}
+	
+//	@Override
+//	public Baithak createBaithakForGentsAndLadies(BaithakFrontEnd baithak) {
+//		Baithak2 baithak2=new Baithak2();
+//	    List<WeeklyOff> days=this.weekRepo.findAll();
+//	    
+//	      WeeklyOff day;
+//	      for (WeeklyOff day1 : days) {
+//			if(baithak.getDayOfWeek().equals(day1)) {
+//				day=day1;
+//				break;
+//			}
+//		}
+//	    		 		 Location location=  this.locationRepo.findByLocationId(baithak.getLocationId());
+//		int areaId =location.getArea().getAreaId();
+//		Area area=this.areaRepo.findById(areaId).get();
+//		String createId =area.getCountry().getCode()+""+area.getState().getAbbrivation()+""+area.getDivision().getName()+""+day.getId();	
+//		        // Generate the baithakId
+//		        String generatedId = generateBaithakId(createId);
+//		        // Set the generated ID to the baithak object
+//		        baithak2.setBithakId(generatedId);
+//		        baithak2.getBaithakType();
+//		        baithak2.getDayOfWeek();
+//		        baithak2.getFromTime();
+//		        baithak2.getStatus();
+//		        baithak2.getLocation();
+//		        baithak2.getToTime();
+//	
+//		        // Save the baithak object
+//		        return this.baithakRepo.save(baithak2);
+//		    }
+//	}
 
 	@Override
 	public Baithak updateBaithak(BaithakDto baithakDto, Integer baithakId) {
@@ -147,4 +190,6 @@ public class BaithakServiceImpl implements BaithakService{
 	Baithak baithak	=this.modelMapper.map(baithakDto,Baithak.class);
 		return baithak;
 	}
+
+  
 }

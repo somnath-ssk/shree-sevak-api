@@ -13,6 +13,7 @@ import lombok.Setter;
 @Setter
 public class CityDto {
     private Long id;
+    private String number;
     private String cityName;
     private List<DivisionDto> divisions;
 

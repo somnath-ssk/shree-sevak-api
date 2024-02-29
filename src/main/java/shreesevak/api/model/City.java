@@ -31,7 +31,7 @@ public class City {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 	    private String name;
-
+	    private String number;
 	    @ManyToOne
 	    @JoinColumn(name = "state_id")
 	    @JsonBackReference

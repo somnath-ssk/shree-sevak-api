@@ -39,15 +39,15 @@ public class Baithak {
    private int bithakId;
 	private String baithakType;
 	private String dayOfWeek;
-	private String date;
+//	private String date;
 	private String fromTime;
 	private String status;
 	private String toTime;
 	
 
-//	@OneToOne
-//	@JoinColumn(name="location_id")
-//	private Location location;
+	@OneToOne
+	@JoinColumn(name="location")
+	private Location location;
 	
 //
 //	@OneToMany(mappedBy ="baithak",cascade=CascadeType.ALL)

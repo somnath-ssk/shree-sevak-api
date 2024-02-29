@@ -29,6 +29,7 @@ public class Country {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 	    private String name;
+	    private String code;
 
 	    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	    @JsonManagedReference
