@@ -35,7 +35,7 @@ import shreesevak.api.services.impl.EmailSender;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/register")
+@RequestMapping("/api/user")
 public class UserController {
 	public String globalEmail;
 	public int globalOtp;

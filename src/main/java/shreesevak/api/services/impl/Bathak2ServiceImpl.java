@@ -51,7 +51,7 @@ public class Bathak2ServiceImpl implements Baithak2service {
 		    }
 		}
 
-	    		 		 Location location=  this.locationRepo.findByLocationId(baithak.getLocationId());
+	    Location location=  this.locationRepo.findByLocationId(baithak.getLocationId());
 		int areaId =location.getArea().getAreaId();
 		Area area=this.areaRepo.findById(areaId).get();
 		String createId =area.getCountry().getCode()+""+area.getCity().getNumber()+""+area.getDivision().getName()+""+day.getId();	
