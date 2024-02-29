@@ -37,7 +37,7 @@ public class BaithakController {
 //	
 	
 	@PostMapping("/createbaithak")
-	public ResponseEntity<Baithak> createBaithaks(@RequestBody Baithak baithak){
+	public ResponseEntity<Baithak> createBaithaks(@RequestBody BaithakFrontEnd baithak){
 		
 	 Baithak saveBaithak =this.baithakService.createBaithak(baithak);
 	 return new ResponseEntity<Baithak>(saveBaithak,HttpStatus.CREATED);
@@ -50,9 +50,9 @@ public class BaithakController {
 	}
 	
 	@PutMapping("/update-baithak/{baithakId}")
-	public ResponseEntity<Baithak>updateBaithak(@RequestBody BaithakDto baithakDto,@PathVariable Integer baithakId ){
+	public ResponseEntity<Baithak>updateBaithak(@RequestBody BaithakFrontEnd baithak,@PathVariable Integer baithakId ){
 		
-	Baithak updatedBaithak=	this.baithakService.updateBaithak(baithakDto, baithakId);
+	Baithak updatedBaithak=	this.baithakService.updateBaithak(baithak, baithakId);
 	   return new ResponseEntity<Baithak>(updatedBaithak,HttpStatus.OK);
 		
 	}
