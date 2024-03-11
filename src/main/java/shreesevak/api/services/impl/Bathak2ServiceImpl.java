@@ -1,6 +1,7 @@
 package shreesevak.api.services.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.internal.bytebuddy.implementation.bytecode.Division;
@@ -18,6 +19,7 @@ import shreesevak.api.model.Location;
 import shreesevak.api.model.State;
 import shreesevak.api.model.WeeklyOff;
 import shreesevak.api.payloads.Baithak2Dto;
+import shreesevak.api.payloads.LocationDto;
 import shreesevak.api.repository.AreaRepo;
 import shreesevak.api.repository.Baithak2Repo;
 import shreesevak.api.repository.BaithakRepo;
@@ -31,7 +33,10 @@ public class Bathak2ServiceImpl implements Baithak2service {
 
 	@Autowired
 	private ModelMapper modelMapper;
-
+      
+	@Autowired
+	private LocationServiceImpl locationServiceImpl;
+	
 	@Autowired
 	private WeekRepo weekRepo;
 
@@ -178,15 +183,32 @@ public class Bathak2ServiceImpl implements Baithak2service {
 		return this.baithak2ToDto(foundBaithak);
 	}
 
+	
+
+	@Override
+	public List<Baithak2Dto> getBaithak2BaseOnLocation(Integer locationId) {
+	List<Baithak2> baithakList=this.baithak2Repo.findByLocationId(locationId);
+	    List<Baithak2Dto> baithakDtosList=baithakList.stream().map(baithak->this.baithak2ToDto(baithak)).collect(Collectors.toList());
+		return baithakDtosList;
+	}
 	@Override
 	public Baithak2Dto getSingleBiathakDetails(Integer baithakId) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
-	private Baithak2Dto baithak2ToDto(Baithak2 saveBaithak) {
-
-		return this.modelMapper.map(saveBaithak, Baithak2Dto.class);
+	public Baithak2Dto baithak2ToDto(Baithak2 saveBaithak) {
+        Baithak2Dto baithak2Dto=new Baithak2Dto();
+        baithak2Dto.setBaithakId(saveBaithak.getBaithakId());
+        baithak2Dto.setBaithakType(saveBaithak.getBaithakType());
+        baithak2Dto.setDayOfWeek(saveBaithak.getDayOfWeek());
+        baithak2Dto.setFromTime(saveBaithak.getFromTime());
+     
+        baithak2Dto.setLocation(locationServiceImpl.locationToDto(this.modifyLocation(saveBaithak.getLocation())));
+        baithak2Dto.setStatus(saveBaithak.getStatus());
+        
+        baithak2Dto.setToTime(saveBaithak.getToTime());
+		return baithak2Dto;
 	}
 
 	private Baithak2 DtoToBaithak2(Baithak2Dto baithakDto) {
@@ -217,5 +239,6 @@ public class Bathak2ServiceImpl implements Baithak2service {
 
 		return location;
 	}
+
 
 }

@@ -52,6 +52,14 @@ public class Baithak2Controller {
 
 		return new ResponseEntity<Baithak2Dto>(baithak2Dtos, HttpStatus.OK);
 	}
+	
+	//return list created baithak of perticular location
+	@GetMapping("baseOnLocation/{locationId}")
+	public ResponseEntity<List<Baithak2Dto>> getBaithak2BaseOnLocation(@PathVariable Integer locationId) {
+		List<Baithak2Dto> baithak2Dtos = this.baithak2service.getBaithak2BaseOnLocation(locationId);
+
+		return new ResponseEntity<List<Baithak2Dto>>(baithak2Dtos, HttpStatus.OK);
+	}
 
 //	@GetMapping("/{baithakId}")
 //	public ResponseEntity<Baithak2>getBaithakDetail(@PathVariable Integer baithakId){

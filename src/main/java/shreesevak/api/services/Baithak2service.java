@@ -15,4 +15,5 @@ public interface Baithak2service {
 List<Baithak2Dto> getAllbaithak2Details();
 //	Baithak2Dto getSingleBiathakDetails(Integer baithakId);
 Baithak2Dto getbaithakByLocTypeDayTime(Integer locationId, Integer baithakType, String day, String fromTime);
+List<Baithak2Dto> getBaithak2BaseOnLocation(Integer locationId);
 }

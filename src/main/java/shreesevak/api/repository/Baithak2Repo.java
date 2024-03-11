@@ -17,5 +17,9 @@ Baithak2 findByBaithakId(int baithakId);
 Baithak2 findByBaithak2ByLocTypeDayTime(@Param("locationId") Integer locationId,@Param("baithakType") String baithakType,@Param("day") Integer day, @Param("fromTime") String fromTime );
 
 //   Baithak2 findByDayOfWeekAndFromTimeAndBaithakType(String day,String time,String baithakType);
+
+
+@Query("SELECT b FROM Baithak2 b WHERE b.location.locationId= :locationId")
+    List<Baithak2> findByLocationId(@Param("locationId") Integer locationId);
 }
 
