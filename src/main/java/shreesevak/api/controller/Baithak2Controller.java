@@ -47,7 +47,7 @@ public class Baithak2Controller {
 
 	@GetMapping("/getbaithakByLocTypeDayTime/{locationId}/{baithakType}/{day}/{fromTime}")
 	public ResponseEntity<Baithak2Dto> getBaithak2ByLocTypeDayTime(@PathVariable Integer locationId,
-			@PathVariable String baithakType, @PathVariable String day, @PathVariable String fromTime) {
+			@PathVariable Integer baithakType, @PathVariable String day, @PathVariable String fromTime) {
 		Baithak2Dto baithak2Dtos = this.baithak2service.getbaithakByLocTypeDayTime(locationId, baithakType, day, fromTime);
 
 		return new ResponseEntity<Baithak2Dto>(baithak2Dtos, HttpStatus.OK);

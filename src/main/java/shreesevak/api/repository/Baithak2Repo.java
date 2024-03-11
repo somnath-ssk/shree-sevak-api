@@ -13,9 +13,9 @@ import java.util.List;
 public interface Baithak2Repo extends JpaRepository<Baithak2, Integer>{
 Baithak2 findByBaithakId(int baithakId);
 
-@Query("SELECT b FROM Baithak2 b WHERE b.location.locationId= :locationId  AND b.baithakType= :baithakType AND b.dayOfWeek= :day AND fromTime= :fromTime")
-Baithak2 findByBaithak2ByLocTypeDayTime(@Param("locationId") Integer locationId,@Param("baithakType") String baithakType,@Param("day") String day, @Param("fromTime") String fromTime );
+@Query("SELECT b FROM Baithak2 b WHERE b.location.locationId= :locationId  AND b.baithakType= :baithakType AND b.dayOfWeek.id= :day AND fromTime= :fromTime")
+Baithak2 findByBaithak2ByLocTypeDayTime(@Param("locationId") Integer locationId,@Param("baithakType") String baithakType,@Param("day") Integer day, @Param("fromTime") String fromTime );
 
-   Baithak2 findByDayOfWeekAndFromTimeAndBaithakType(String day,String time,String baithakType);
+//   Baithak2 findByDayOfWeekAndFromTimeAndBaithakType(String day,String time,String baithakType);
 }
 

@@ -104,11 +104,11 @@ public class BaithakServiceImpl implements BaithakService {
 
 	@Override
 	public Baithak updateBaithak(BaithakFrontEnd baithakFE, Integer baithakId) {
-		Location location = this.locationRepo.findByLocationId(baithakFE.getLocationId());
+		Location location = this.locationRepo.findByLocationId(baithakFE.getLocation());
 		try {
 			Baithak baithak = this.baithakRepo.findByBithakId(baithakId);
 			baithak.setBaithakType(baithakFE.getBaithakType());
-			baithak.setDayOfWeek(baithakFE.getDayOfWeek());
+			baithak.setDayOfWeek(baithakFE.getBaithakType());
 			baithak.setFromTime(baithakFE.getFromTime());
 			baithak.setToTime(baithakFE.getToTime());
 			baithak.setLocation(location);

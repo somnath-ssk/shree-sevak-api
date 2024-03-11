@@ -30,7 +30,10 @@ public class Baithak2 {
 	
 	@NotEmpty
 	private String baithakType;
-	private String dayOfWeek;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="dayOfWeek")
+	private WeeklyOff dayOfWeek;
 	private String fromTime;
 	private String status;
 	private String toTime;

@@ -15,10 +15,10 @@ public class BaithakFrontEnd {
 
 	 private String bithakId;
 		private String baithakType;
-		private String dayOfWeek;
+		private int dayOfWeek;
 //		private String date;
 		private String fromTime;
 		private String status;
 		private String toTime;
-       private int locationId;
+       private int location;
 }

@@ -34,7 +34,7 @@ public class Bathak2ServiceImpl implements Baithak2service {
 
 	@Autowired
 	private WeekRepo weekRepo;
-    
+
 	@Autowired
 	private Baithak2Repo baithak2Repo;
 
@@ -48,15 +48,15 @@ public class Bathak2ServiceImpl implements Baithak2service {
 	public Baithak2Dto createBaithakForGentsAndLadies(BaithakFrontEnd baithak) {
 		Baithak2 baithak2 = new Baithak2();
 		List<WeeklyOff> days = this.weekRepo.findAll();
-		WeeklyOff day = null;
+		WeeklyOff day=null;
 		for (WeeklyOff day1 : days) {
-			if (baithak.getDayOfWeek().equals(day1.getDay())) {
+			if (baithak.getDayOfWeek() == day1.getId()) {
 				day = day1;
 				break;
 			}
 		}
 
-		Location location = this.locationRepo.findByLocationId(baithak.getLocationId());
+		Location location = this.locationRepo.findByLocationId(baithak.getLocation());
 //		int areaId = location.getArea().getAreaId();
 //		Area area=this.areaRepo.findById(areaId).get();
 //		String createId =area.getCountry().getCode()+""+area.getCity().getNumber()+""+area.getDivision().getName()+""+day.getId();	
@@ -66,23 +66,22 @@ public class Bathak2ServiceImpl implements Baithak2service {
 //		        baithak2.setBithakId(generatedId);
 		baithak2.setBaithakType(baithak.getBaithakType());
 
-		baithak2.setDayOfWeek(baithak.getDayOfWeek());
+		baithak2.setDayOfWeek(day);
 
 		baithak2.setFromTime(baithak.getFromTime());
 
 		baithak2.setStatus(baithak.getStatus());
-
 		baithak2.setLocation(location);
 
 		baithak2.setToTime(baithak.getToTime());
 
-		Baithak2 baithakFound = this.baithak2Repo.findByDayOfWeekAndFromTimeAndBaithakType(baithak2.getDayOfWeek(),
-				baithak2.getFromTime(), baithak2.getBaithakType());
+		Baithak2 baithakFound = this.baithak2Repo.findByBaithak2ByLocTypeDayTime(baithak.getLocation(),
+				baithak.getBaithakType(), baithak2.getDayOfWeek().getId(), baithak2.getFromTime());
 		if (baithakFound != null) {
 //			throw new ResourceAllReadyExist(baithak2.getDayOfWeek() + " from Time : " + baithak2.getFromTime() + " for "
 //					+ baithak2.getBaithakType());
-			throw new ResourceAllReadyExist(baithak2.getDayOfWeek() + " from Time : " + baithak2.getFromTime() + " for "
-					+ baithak2.getBaithakType());
+			throw new ResourceAllReadyExist(baithakFound.getDayOfWeek().getDay() + " from Time : " + baithak2.getFromTime()
+					+ " for " + baithak2.getBaithakType());
 		} else {
 
 			Baithak2 saveBaithak = this.baithak2Repo.save(baithak2);
@@ -122,18 +121,18 @@ public class Bathak2ServiceImpl implements Baithak2service {
 
 	@Override
 	public Baithak2Dto updateBaithak2(BaithakFrontEnd baithak, Integer baithakId) {
-		
+
 		Baithak2 baithak2 = this.baithak2Repo.findByBaithakId(baithakId);
 		List<WeeklyOff> days = this.weekRepo.findAll();
 		WeeklyOff day = null;
 		for (WeeklyOff day1 : days) {
-			if (baithak.getDayOfWeek().equals(day1.getDay())) {
+			if (baithak.getBaithakType() == day1.getDay()) {
 				day = day1;
 				break;
 			}
 		}
 
-		Location location = this.locationRepo.findByLocationId(baithak.getLocationId());
+		Location location = this.locationRepo.findByLocationId(baithak.getLocation());
 //	int areaId = location.getArea().getAreaId();
 //	Area area=this.areaRepo.findById(areaId).get();
 //	String createId =area.getCountry().getCode()+""+area.getCity().getNumber()+""+area.getDivision().getName()+""+day.getId();	
@@ -143,7 +142,7 @@ public class Bathak2ServiceImpl implements Baithak2service {
 //	        baithak2.setBithakId(generatedId);
 		baithak2.setBaithakType(baithak.getBaithakType());
 
-		baithak2.setDayOfWeek(baithak.getDayOfWeek());
+		baithak2.setDayOfWeek(day);
 
 		baithak2.setFromTime(baithak.getFromTime());
 
@@ -152,13 +151,13 @@ public class Bathak2ServiceImpl implements Baithak2service {
 		baithak2.setLocation(location);
 
 		baithak2.setToTime(baithak.getToTime());
-		Baithak2 baithakFound = this.baithak2Repo.findByDayOfWeekAndFromTimeAndBaithakType(baithak2.getDayOfWeek(),
-				baithak2.getFromTime(), baithak2.getBaithakType());
+		Baithak2 baithakFound = this.baithak2Repo.findByBaithak2ByLocTypeDayTime(baithak.getLocation(),
+				baithak2.getBaithakType(), baithak2.getDayOfWeek().getId(), baithak2.getFromTime());
 		if (baithakFound != null) {
 //			throw new ResourceAllReadyExist(baithak2.getDayOfWeek() + " from Time : " + baithak2.getFromTime() + " for "
 //					+ baithak2.getBaithakType());
-			throw new ResourceAllReadyExist(baithak2.getDayOfWeek() + " from Time : " + baithak2.getFromTime() + " for "
-					+ baithak2.getBaithakType());
+			throw new ResourceAllReadyExist(
+					day + "from Time : " + baithak2.getFromTime() + " for " + baithak2.getBaithakType());
 		} else {
 			Baithak2 saveBaithak = this.baithak2Repo.save(baithak2);
 			saveBaithak.setLocation(this.modifyLocation(location));
@@ -166,16 +165,13 @@ public class Bathak2ServiceImpl implements Baithak2service {
 
 		}
 
-		
-
 		// Save the baithak object
 
 	}
 
 	@Override
-	public Baithak2Dto getbaithakByLocTypeDayTime(Integer locationId, String baithakType, String day, String fromTime) {
-		Baithak2 foundBaithak = this.baithak2Repo.findByBaithak2ByLocTypeDayTime(locationId, baithakType, day,
-				fromTime);
+	public Baithak2Dto getbaithakByLocTypeDayTime(Integer locationId, Integer baithakType, String day, String fromTime) {
+		Baithak2 foundBaithak = this.baithak2Repo.findByBaithak2ByLocTypeDayTime(locationId, day, baithakType, fromTime);
 		Location location = foundBaithak.getLocation();
 
 		foundBaithak.setLocation(this.modifyLocation(location));
