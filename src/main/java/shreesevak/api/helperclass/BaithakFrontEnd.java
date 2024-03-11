@@ -16,7 +16,7 @@ public class BaithakFrontEnd {
 	 private String bithakId;
 		private String baithakType;
 		private String dayOfWeek;
-		private String date;
+//		private String date;
 		private String fromTime;
 		private String status;
 		private String toTime;

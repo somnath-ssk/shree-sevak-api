@@ -6,11 +6,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import shreesevak.api.helperclass.UserFrontEndData;
 import shreesevak.api.model.User;
 import shreesevak.api.payloads.PaginationResponse;
 import shreesevak.api.payloads.RoleDto;
 import shreesevak.api.payloads.UserDto;
-import shreesevak.api.payloads.UserFrontEndData;
 
 public interface UserService  {
 

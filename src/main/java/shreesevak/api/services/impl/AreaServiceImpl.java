@@ -113,6 +113,7 @@ public class AreaServiceImpl implements AreaService {
 
 	@Override
 	public AreaDto getSingleAreas(Integer areaId) {
+		
 		Area area = this.areaRepo.findById(areaId)
 				.orElseThrow(() -> new ResourceNotFoundException("Area not found with this id", "=", areaId));
 		return this.areaToDto(area);

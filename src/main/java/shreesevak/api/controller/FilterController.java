@@ -36,8 +36,8 @@ public class FilterController {
 	@Autowired
 	UserService userService;
 	
-	@Autowired
-	RoleService roleService;
+//	@Autowired
+//	RoleService roleService;
 	// To search user using keyword from User Entity properties
 //	@GetMapping("/search/user")
 //	 public ResponseEntity<List<User>> searchByKeyword(@RequestParam("keyword") String keyword) {
@@ -53,10 +53,10 @@ public class FilterController {
 //	}
 	
 	// To search role using keyword from Role Entity properties
-	@GetMapping("/search/role")
-	public ResponseEntity<List<Role>> searchRoleByKeyword(@RequestParam("keyword") String keyword) {
-		List<Role> foundLocation	=roleService.searchRole(keyword);
-		return ResponseEntity.ok(foundLocation);
-	}
+//	@GetMapping("/search/role")
+//	public ResponseEntity<List<Role>> searchRoleByKeyword(@RequestParam("keyword") String keyword) {
+//		List<Role> foundLocation	=roleService.searchRole(keyword);
+//		return ResponseEntity.ok(foundLocation);
+//	}
 
 }

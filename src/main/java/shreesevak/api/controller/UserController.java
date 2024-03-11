@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
+import shreesevak.api.helperclass.UserFrontEndData;
 import shreesevak.api.model.OtpEmail;
 import shreesevak.api.model.User;
 import shreesevak.api.payloads.ApiResponse;
 import shreesevak.api.payloads.PaginationResponse;
 import shreesevak.api.payloads.UserDto;
-import shreesevak.api.payloads.UserFrontEndData;
 import shreesevak.api.repository.OtpEmailRepo;
 import shreesevak.api.repository.RoleRepo;
 import shreesevak.api.repository.UserRepo;

@@ -12,23 +12,6 @@ import shreesevak.api.model.Area;
 @AllArgsConstructor
 public class LocationFrontEnd {
 	private int locationId;
-//	private String locationName;
-//	private String add1;
-//	private String add2;
-//	private String division;
-//	private String state ;
-//	private String country;
-//	private String city;
-//	@NotEmpty(message = "Pincode  is required")
-////	@Pattern(regexp="^[0-4]{4}$")
-//	private String pincode;
-//	
-//@NotEmpty(message = "Phone number is required")
-////@Pattern(regexp="^[0-9]{10}$")
-//	private String phoneNumber;
-//	private String longitude;
-//	private String latitude;
-//	private String status;
 
 	private String locationName;
 	private String  add1 ;

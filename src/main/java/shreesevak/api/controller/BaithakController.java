@@ -37,17 +37,12 @@ public class BaithakController {
 //	
 	
 	@PostMapping("/createbaithak")
-	public ResponseEntity<Baithak> createBaithaks(@RequestBody BaithakFrontEnd baithak){
+	public ResponseEntity<Baithak> createBaithaks(@RequestBody Baithak baithak){
 		
 	 Baithak saveBaithak =this.baithakService.createBaithak(baithak);
 	 return new ResponseEntity<Baithak>(saveBaithak,HttpStatus.CREATED);
 	}
-	@PostMapping("/createbaithak/gents_ladies")
-	public ResponseEntity<Baithak2> createBaithaksforGentsAndLadies(@RequestBody BaithakFrontEnd baithak){
-		
-		Baithak2 saveBaithak =this.baithak2service.createBaithakForGentsAndLadies(baithak);
-		return new ResponseEntity<Baithak2>(saveBaithak,HttpStatus.CREATED);
-	}
+
 	
 	@PutMapping("/update-baithak/{baithakId}")
 	public ResponseEntity<Baithak>updateBaithak(@RequestBody BaithakFrontEnd baithak,@PathVariable Integer baithakId ){

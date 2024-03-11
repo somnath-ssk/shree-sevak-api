@@ -46,10 +46,10 @@ public class BaithakServiceImpl implements BaithakService {
 	private LocationRepo locationRepo;
 
 	@Override
-	public Baithak createBaithak(BaithakFrontEnd baithak) {
-		Baithak baithak2 = new Baithak();
+	public Baithak createBaithak(Baithak baithak) {
+//		Baithak baithak2 = new Baithak();
 
-		Location location = this.locationRepo.findByLocationId(baithak.getLocationId());
+//		Location location = this.locationRepo.findByLocationId(baithak.getLocationId());
 
 //    Baithak baithak =this.dtoToBaithak(baithakDto);
 //    Location location=locationRepo.findByLocationId(baithakDto.getLocation());
@@ -58,13 +58,13 @@ public class BaithakServiceImpl implements BaithakService {
 
 //    System.out.println(members);
 //    System.out.println("member detail");
-		baithak2.setBaithakType(baithak.getBaithakType());
-		baithak2.setDayOfWeek(baithak.getDayOfWeek());
-		baithak2.setFromTime(baithak.getFromTime());
-		baithak2.setToTime(baithak.getToTime());
-		baithak2.setStatus(baithak.getStatus());
-		baithak2.setLocation(location);
-		Baithak saveBaithak = this.baithakRepo.save(baithak2);
+//		baithak2.setBaithakType(baithak.getBaithakType());
+//		baithak2.setDayOfWeek(baithak.getDayOfWeek());
+//		baithak2.setFromTime(baithak.getFromTime());
+//		baithak2.setToTime(baithak.getToTime());
+//		baithak2.setStatus(baithak.getStatus());
+//		baithak2.setLocation(location);
+		Baithak saveBaithak = this.baithakRepo.save(baithak);
 		System.out.println(saveBaithak);
 		System.out.println("baithakserviceImpl");
 		return saveBaithak;
