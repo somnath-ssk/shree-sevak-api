@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ApiResponse>resourceAllReadyExistHandler(ResourceAllReadyExist ex){
 		String message=ex.getMessage();
 		ApiResponse apiResponse =new ApiResponse(message, false);
-		return new  ResponseEntity<ApiResponse>(apiResponse,HttpStatus.OK);
+		return new  ResponseEntity<ApiResponse>(apiResponse,HttpStatus.CONFLICT);
 		
 	}
 	
