@@ -41,7 +41,7 @@ public class Baithak {
 	private String dayOfWeek;
 //	private String date;
 	private String fromTime;
-	private boolean status;
+	private String status;
 	private String toTime;
 	
 

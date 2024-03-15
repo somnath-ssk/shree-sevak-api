@@ -18,7 +18,7 @@ public class BaithakFrontEnd {
 		private int dayOfWeek;
 //		private String date;
 		private String fromTime;
-		private boolean status;
+		private String status;
 		private String toTime;
        private int location;
 }

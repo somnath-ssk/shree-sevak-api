@@ -35,7 +35,7 @@ public class Baithak2 {
 	@JoinColumn(name="dayOfWeek")
 	private WeeklyOff dayOfWeek;
 	private String fromTime;
-	private boolean status;
+	private String status;
 	private String toTime;
 	
 

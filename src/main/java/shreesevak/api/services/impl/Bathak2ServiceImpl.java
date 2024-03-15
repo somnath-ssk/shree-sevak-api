@@ -72,10 +72,10 @@ public class Bathak2ServiceImpl implements Baithak2service {
 		baithak2.setBaithakType(baithak.getBaithakType());
 
 		baithak2.setDayOfWeek(day);
-   baithak2.setStatus(true);
+   baithak2.setStatus("1");
 		baithak2.setFromTime(baithak.getFromTime());
 
-		baithak2.setStatus(true);
+		
 		baithak2.setLocation(location);
 
 		baithak2.setToTime(baithak.getToTime());
@@ -151,7 +151,7 @@ public class Bathak2ServiceImpl implements Baithak2service {
 
 		baithak2.setFromTime(baithak.getFromTime());
 
-		baithak2.setStatus(baithak.isStatus());
+		baithak2.setStatus(baithak.getStatus());
 
 		baithak2.setLocation(location);
 
@@ -205,7 +205,7 @@ public class Bathak2ServiceImpl implements Baithak2service {
         baithak2Dto.setFromTime(saveBaithak.getFromTime());
      
         baithak2Dto.setLocation(locationServiceImpl.locationToDto(this.modifyLocation(saveBaithak.getLocation())));
-        baithak2Dto.setStatus(saveBaithak.isStatus());
+        baithak2Dto.setStatus(saveBaithak.getStatus());
         
         baithak2Dto.setToTime(saveBaithak.getToTime());
 		return baithak2Dto;
