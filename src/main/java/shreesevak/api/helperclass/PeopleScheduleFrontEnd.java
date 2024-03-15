@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Schedule2FrontEnd {
+public class PeopleScheduleFrontEnd {
 
 	private int scheduleId;
 	private String date;

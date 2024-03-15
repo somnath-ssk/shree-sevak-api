@@ -26,7 +26,7 @@ public class Baithak2Dto {
 	private String baithakType;
 	private WeeklyOff dayOfWeek;
 	private String fromTime;
-	private String status;
+	private boolean status;
 	private String toTime;
 	private LocationDto location;
 	
