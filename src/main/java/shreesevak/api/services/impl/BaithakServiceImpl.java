@@ -112,7 +112,7 @@ public class BaithakServiceImpl implements BaithakService {
 			baithak.setFromTime(baithakFE.getFromTime());
 			baithak.setToTime(baithakFE.getToTime());
 			baithak.setLocation(location);
-			baithak.setStatus(baithakFE.getStatus());
+			baithak.setStatus(baithakFE.isStatus());
 			
 			Baithak updatedBaithak = this.baithakRepo.save(baithak);
 			return updatedBaithak;

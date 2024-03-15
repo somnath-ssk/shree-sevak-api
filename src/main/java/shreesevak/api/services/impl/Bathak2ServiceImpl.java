@@ -232,7 +232,6 @@ public class Bathak2ServiceImpl implements Baithak2service {
 		State state = location.getState();
 		state.setCities(null);
 		state.setCountry(null);
-
 		location.setCountry(country);
 		location.setState(state);
 		location.setCity(city);
